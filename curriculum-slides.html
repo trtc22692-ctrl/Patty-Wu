@@ -1,0 +1,1043 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>六項講課流程圖 · 獨立展開</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Noto+Serif+TC:wght@300;400;600;900&family=Noto+Sans+TC:wght@300;400;500&family=DM+Mono:wght@300;400;500&display=swap');
+
+  :root {
+    --bg:    #0d0c0a;
+    --s1:    #161412;
+    --s2:    #1e1c18;
+    --bd:    #2a2722;
+    --bd2:   #3a3630;
+    --text:  #ede8de;
+    --muted: #7a7468;
+    --dim:   #484440;
+    --gold:  #c9a84c; --gold-d: #6a5828; --gold-bg: #1a1508;
+    --red:   #e08878; --red-d:  #8b2a1a; --red-bg:  #180a08;
+    --blue:  #6a90d8; --blue-d: #2a4080; --blue-bg: #0a0f20;
+  }
+
+  *, *::before, *::after { margin:0; padding:0; box-sizing:border-box; }
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'Noto Sans TC', sans-serif;
+    font-weight: 300;
+    line-height: 1.7;
+  }
+
+  /* ── NAV ── */
+  .nav {
+    position: sticky;
+    top: 0;
+    z-index: 200;
+    background: rgba(13,12,10,0.96);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid var(--bd2);
+    padding: 0 32px;
+    display: flex;
+    gap: 2px;
+    overflow-x: auto;
+  }
+
+  .nav-btn {
+    font-family: 'DM Mono', monospace;
+    font-size: 9px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    padding: 14px 18px;
+    background: transparent;
+    color: var(--muted);
+    border: none;
+    border-bottom: 2px solid transparent;
+    cursor: pointer;
+    white-space: nowrap;
+    transition: all 0.2s;
+    flex-shrink: 0;
+  }
+
+  .nav-btn:hover { color: var(--text); }
+  .nav-btn.active { color: var(--text); }
+  .nav-btn[data-i="1"].active { border-color: var(--gold); color: var(--gold); }
+  .nav-btn[data-i="2"].active { border-color: var(--gold); color: var(--gold); }
+  .nav-btn[data-i="3"].active { border-color: var(--blue); color: var(--blue); }
+  .nav-btn[data-i="4"].active { border-color: var(--red);  color: var(--red);  }
+  .nav-btn[data-i="5"].active { border-color: var(--red);  color: var(--red);  }
+  .nav-btn[data-i="6"].active { border-color: var(--blue); color: var(--blue); }
+
+  /* ── SLIDE ── */
+  .slide { display: none; padding: 48px 48px 80px; max-width: 960px; margin: 0 auto; }
+  .slide.active { display: block; }
+
+  /* ── SLIDE HEADER ── */
+  .sh {
+    display: grid;
+    grid-template-columns: auto 1fr;
+    gap: 24px;
+    align-items: start;
+    margin-bottom: 36px;
+    padding-bottom: 24px;
+    border-bottom: 1px solid var(--bd2);
+  }
+
+  .sh-num {
+    font-family: 'Noto Serif TC', serif;
+    font-size: 4rem;
+    font-weight: 900;
+    line-height: 1;
+    opacity: 0.15;
+  }
+
+  .sh-right {}
+
+  .sh-label {
+    font-family: 'DM Mono', monospace;
+    font-size: 8px;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-bottom: 8px;
+  }
+
+  .sh-title {
+    font-family: 'Noto Serif TC', serif;
+    font-size: 1.8rem;
+    font-weight: 900;
+    line-height: 1.25;
+    margin-bottom: 6px;
+  }
+
+  .sh-sub {
+    font-size: 0.82rem;
+    color: var(--muted);
+    line-height: 1.6;
+  }
+
+  /* ── PREMISE BOX ── */
+  .premise {
+    padding: 18px 22px;
+    margin-bottom: 32px;
+    font-family: 'Noto Serif TC', serif;
+    font-size: 0.95rem;
+    line-height: 1.75;
+    border-left: 3px solid;
+  }
+
+  .premise strong { font-weight: 600; }
+
+  /* ── LAYER FLOW ── */
+  .layers {
+    display: flex;
+    flex-direction: column;
+    gap: 3px;
+    margin-bottom: 32px;
+    position: relative;
+  }
+
+  .layers::before {
+    content: '';
+    position: absolute;
+    left: 28px;
+    top: 32px;
+    bottom: 32px;
+    width: 1px;
+    background: linear-gradient(180deg, var(--bd2), transparent);
+    z-index: 0;
+  }
+
+  .layer-card {
+    display: grid;
+    grid-template-columns: 56px 1fr;
+    gap: 0;
+    position: relative;
+    z-index: 1;
+  }
+
+  .lc-left {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding-top: 18px;
+    gap: 0;
+  }
+
+  .lc-dot {
+    width: 14px;
+    height: 14px;
+    border-radius: 50%;
+    border: 2px solid var(--bd2);
+    background: var(--bg);
+    flex-shrink: 0;
+    z-index: 2;
+  }
+
+  .lc-line {
+    width: 1px;
+    flex: 1;
+    background: var(--bd);
+    min-height: 12px;
+  }
+
+  .lc-right {
+    background: var(--s1);
+    border: 1px solid var(--bd);
+    padding: 16px 20px;
+    margin-bottom: 3px;
+  }
+
+  .lc-num {
+    font-family: 'DM Mono', monospace;
+    font-size: 8px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--dim);
+    margin-bottom: 6px;
+  }
+
+  .lc-title {
+    font-size: 0.92rem;
+    font-weight: 500;
+    line-height: 1.4;
+    margin-bottom: 8px;
+  }
+
+  .lc-desc {
+    font-size: 0.8rem;
+    color: var(--muted);
+    line-height: 1.65;
+  }
+
+  .lc-sub {
+    margin-top: 10px;
+    padding-top: 10px;
+    border-top: 1px solid var(--bd);
+  }
+
+  .lcs-title {
+    font-family: 'DM Mono', monospace;
+    font-size: 7.5px;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    color: var(--dim);
+    margin-bottom: 6px;
+  }
+
+  .lcs-items {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+  }
+
+  .lcs-tag {
+    font-family: 'DM Mono', monospace;
+    font-size: 7.5px;
+    letter-spacing: 0.5px;
+    padding: 2px 8px;
+    border-radius: 1px;
+    border: 1px solid;
+  }
+
+  /* ── AVOID BOX ── */
+  .avoid {
+    padding: 14px 18px;
+    margin-top: 8px;
+  }
+
+  .avoid-title {
+    font-family: 'DM Mono', monospace;
+    font-size: 8px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    margin-bottom: 8px;
+  }
+
+  .avoid-list {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+  }
+
+  .avoid-list li {
+    font-size: 0.8rem;
+    color: var(--muted);
+    display: flex;
+    gap: 10px;
+    align-items: flex-start;
+    line-height: 1.5;
+  }
+
+  .avoid-list li::before {
+    content: '✕';
+    font-size: 0.7rem;
+    flex-shrink: 0;
+    margin-top: 2px;
+  }
+
+  /* ── TAKEAWAY ── */
+  .takeaway {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 2px;
+    margin-bottom: 28px;
+  }
+
+  .tk-card {
+    padding: 16px 14px;
+    background: var(--s2);
+    border: 1px solid var(--bd);
+    text-align: center;
+  }
+
+  .tk-icon {
+    font-family: 'DM Mono', monospace;
+    font-size: 22px;
+    font-weight: 500;
+    line-height: 1;
+    margin-bottom: 8px;
+    opacity: 0.3;
+  }
+
+  .tk-title {
+    font-family: 'Noto Serif TC', serif;
+    font-size: 0.85rem;
+    font-weight: 600;
+    margin-bottom: 4px;
+    line-height: 1.4;
+  }
+
+  .tk-desc {
+    font-size: 0.72rem;
+    color: var(--muted);
+    line-height: 1.5;
+  }
+
+  /* ── RESULT GRID ── */
+  .result-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 2px;
+    margin-bottom: 24px;
+  }
+
+  .rg-card {
+    padding: 16px 16px;
+    border: 1px solid var(--bd);
+  }
+
+  .rg-label {
+    font-family: 'DM Mono', monospace;
+    font-size: 7.5px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    margin-bottom: 8px;
+  }
+
+  .rg-list {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+  }
+
+  .rg-list li {
+    font-size: 0.78rem;
+    color: var(--muted);
+    display: flex;
+    gap: 8px;
+    align-items: flex-start;
+    line-height: 1.5;
+  }
+
+  .rg-mark { font-family: 'DM Mono', monospace; font-size: 9px; flex-shrink: 0; margin-top: 1px; }
+
+  /* ── SUMMARY ── */
+  .summary {
+    padding: 20px 24px;
+    border: 1px solid var(--bd2);
+    margin-bottom: 28px;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .summary::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 2px;
+  }
+
+  .sum-label {
+    font-family: 'DM Mono', monospace;
+    font-size: 8px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--dim);
+    margin-bottom: 10px;
+  }
+
+  .sum-text {
+    font-family: 'Noto Serif TC', serif;
+    font-size: 0.92rem;
+    line-height: 1.75;
+    color: var(--text);
+  }
+
+  .sum-text strong { font-weight: 600; }
+
+  /* ── FOOTER ── */
+  .slide-footer {
+    border-top: 1px solid var(--bd);
+    padding-top: 14px;
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 10px;
+  }
+
+  .sf-note {
+    font-family: 'DM Mono', monospace;
+    font-size: 7px;
+    letter-spacing: 0.5px;
+    color: var(--dim);
+    line-height: 1.6;
+  }
+
+  .sf-mono {
+    font-family: 'DM Mono', monospace;
+    font-size: 7px;
+    letter-spacing: 1.5px;
+    color: var(--dim);
+    text-align: right;
+    text-transform: uppercase;
+    line-height: 2;
+  }
+
+  /* ── COLOR THEMES PER SLIDE ── */
+  .s1 .sh-num, .s2 .sh-num { color: var(--gold); }
+  .s3 .sh-num, .s6 .sh-num { color: var(--blue); }
+  .s4 .sh-num, .s5 .sh-num { color: var(--red); }
+
+  .s1 .sh-title, .s2 .sh-title { color: var(--gold); }
+  .s3 .sh-title, .s6 .sh-title { color: var(--blue); }
+  .s4 .sh-title, .s5 .sh-title { color: var(--red); }
+
+  .s1 .premise, .s2 .premise { border-color: var(--gold-d); background: var(--gold-bg); color: #c8b880; }
+  .s1 .premise strong, .s2 .premise strong { color: var(--gold); }
+  .s3 .premise, .s6 .premise { border-color: var(--blue-d); background: var(--blue-bg); color: #90a8d0; }
+  .s3 .premise strong, .s6 .premise strong { color: var(--blue); }
+  .s4 .premise, .s5 .premise { border-color: var(--red-d); background: var(--red-bg); color: #c09090; }
+  .s4 .premise strong, .s5 .premise strong { color: var(--red); }
+
+  .s1 .lc-dot, .s2 .lc-dot { border-color: var(--gold-d); }
+  .s3 .lc-dot, .s6 .lc-dot { border-color: var(--blue-d); }
+  .s4 .lc-dot, .s5 .lc-dot { border-color: var(--red-d); }
+
+  .s1 .lc-num, .s2 .lc-num { color: var(--gold-d); }
+  .s3 .lc-num, .s6 .lc-num { color: var(--blue-d); }
+  .s4 .lc-num, .s5 .lc-num { color: var(--red-d); }
+
+  .s1 .lc-title, .s2 .lc-title { color: var(--gold); }
+  .s3 .lc-title, .s6 .lc-title { color: var(--blue); }
+  .s4 .lc-title, .s5 .lc-title { color: var(--red); }
+
+  .s1 .lcs-tag, .s2 .lcs-tag { color: var(--gold); border-color: var(--gold-d); background: var(--gold-bg); }
+  .s3 .lcs-tag, .s6 .lcs-tag { color: var(--blue); border-color: var(--blue-d); background: var(--blue-bg); }
+  .s4 .lcs-tag, .s5 .lcs-tag { color: var(--red);  border-color: var(--red-d);  background: var(--red-bg); }
+
+  .s1 .avoid, .s2 .avoid { background: var(--red-bg); border: 1px solid var(--red-d); }
+  .s1 .avoid-title, .s2 .avoid-title { color: var(--red); }
+  .s1 .avoid-list li::before, .s2 .avoid-list li::before { color: var(--red-d); }
+
+  .s1 .summary::before, .s2 .summary::before { background: var(--gold); }
+  .s3 .summary::before, .s6 .summary::before { background: var(--blue); }
+  .s4 .summary::before, .s5 .summary::before { background: var(--red); }
+
+  .s1 .summary, .s2 .summary { background: var(--gold-bg); border-color: var(--gold-d); }
+  .s3 .summary, .s6 .summary { background: var(--blue-bg); border-color: var(--blue-d); }
+  .s4 .summary, .s5 .summary { background: var(--red-bg);  border-color: var(--red-d); }
+
+  .s4 .rg-card:first-child { background: var(--red-bg); border-color: var(--red-d); }
+  .s4 .rg-card:last-child  { background: var(--blue-bg); border-color: var(--blue-d); }
+  .s4 .rg-card:first-child .rg-label { color: var(--red); }
+  .s4 .rg-card:last-child  .rg-label { color: var(--blue); }
+  .s4 .rg-card:first-child .rg-mark  { color: var(--red-d); }
+  .s4 .rg-card:last-child  .rg-mark  { color: var(--blue-d); }
+
+  .s5 .takeaway .tk-card:nth-child(1) { border-color: var(--red-d); background: var(--red-bg); }
+  .s5 .takeaway .tk-card:nth-child(2) { border-color: var(--gold-d); background: var(--gold-bg); }
+  .s5 .takeaway .tk-card:nth-child(3) { border-color: var(--blue-d); background: var(--blue-bg); }
+
+  .s5 .tk-icon { opacity: 1; }
+  .s5 .takeaway .tk-card:nth-child(1) .tk-icon { color: var(--red); }
+  .s5 .takeaway .tk-card:nth-child(2) .tk-icon { color: var(--gold); }
+  .s5 .takeaway .tk-card:nth-child(3) .tk-icon { color: var(--blue); }
+
+  .s6 .avoid { background: var(--red-bg); border: 1px solid var(--red-d); }
+  .s6 .avoid-title { color: var(--red); }
+  .s6 .avoid-list li::before { color: var(--red-d); }
+
+  @media (max-width: 700px) {
+    .slide { padding: 32px 20px 60px; }
+    .sh { grid-template-columns: 1fr; gap: 8px; }
+    .sh-num { font-size: 2.5rem; }
+    .takeaway { grid-template-columns: 1fr; }
+    .result-grid { grid-template-columns: 1fr; }
+  }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav class="nav">
+  <button class="nav-btn active" data-i="1">01 成分核查</button>
+  <button class="nav-btn" data-i="2">02 客人話術</button>
+  <button class="nav-btn" data-i="3">03 教學者框架</button>
+  <button class="nav-btn" data-i="4">04 罰則歸屬</button>
+  <button class="nav-btn" data-i="5">05 PIF連帶風險</button>
+  <button class="nav-btn" data-i="6">06 稽查危機</button>
+</nav>
+
+
+<!-- ══════════ SLIDE 1 ══════════ -->
+<div class="slide s1 active" data-slide="1">
+
+  <div class="sh">
+    <div class="sh-num">01</div>
+    <div class="sh-right">
+      <div class="sh-label">技術者工具 · 第一項</div>
+      <div class="sh-title">成分核查清單</div>
+      <div class="sh-sub">拿到新產品，五分鐘內知道能不能用</div>
+    </div>
+  </div>
+
+  <div class="premise">
+    成分表比品牌名稱更可靠。<strong>品牌可以換名字，成分騙不了人。</strong><br>
+    法規稽查看的是成分，不是你的服務叫什麼名稱。
+  </div>
+
+  <div class="layers">
+    <div class="layer-card">
+      <div class="lc-left"><div class="lc-dot"></div><div class="lc-line"></div></div>
+      <div class="lc-right">
+        <div class="lc-num">第一層 · 建立認知</div>
+        <div class="lc-title">為什麼成分表比品牌可靠</div>
+        <div class="lc-desc">市場上大多數人看到成分表是茫然的。你要做的不是讓學員背成分名稱，而是讓他們建立一個習慣——拿到新產品，先看這三個字有沒有出現。同一個服務，叫「角蛋白療程」還是「燙睫毛」，法律看的是成分，名稱不影響判定。</div>
+        <div class="lc-sub">
+          <div class="lcs-title">帶出問題</div>
+          <div class="lcs-items">
+            <span class="lcs-tag">你知道你用的產品成分表嗎？</span>
+            <span class="lcs-tag">上次進新品有看成分表嗎？</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="layer-card">
+      <div class="lc-left"><div class="lc-dot"></div><div class="lc-line"></div></div>
+      <div class="lc-right">
+        <div class="lc-num">第二層 · 三區分色系統</div>
+        <div class="lc-title">紅區立即停止 / 黃區需確認 / 綠區一般安全</div>
+        <div class="lc-desc">紅區是核心。只要成分表裡出現以下任何一個，立即停止採購——不管品牌知名度多高，不管供應商怎麼說。黃區出現時需要確認用途和濃度。綠區的水解角蛋白、角蛋白胺基酸本身沒問題，問題永遠是它旁邊有沒有紅區成分。</div>
+        <div class="lc-sub">
+          <div class="lcs-title">紅區五大成分（需熟記）</div>
+          <div class="lcs-items">
+            <span class="lcs-tag">Thioglycolic Acid</span>
+            <span class="lcs-tag">Ammonium Thioglycolate</span>
+            <span class="lcs-tag">Cysteamine</span>
+            <span class="lcs-tag">Glyceryl Thioglycolate</span>
+            <span class="lcs-tag">L-Cysteine（高濃度）</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="layer-card">
+      <div class="lc-left"><div class="lc-dot"></div></div>
+      <div class="lc-right">
+        <div class="lc-num">第三層 · 立即可執行</div>
+        <div class="lc-title">習慣建立比記憶重要</div>
+        <div class="lc-desc">給學員一個立刻能做的動作：把這張清單拍下來，存在手機裡。下次進新品，先開手機查。這個習慣做到，就算記不住所有成分名稱，也能在關鍵時刻保護自己。</div>
+        <div class="lc-sub">
+          <div class="lcs-title">進新貨四步驟</div>
+          <div class="lcs-items">
+            <span class="lcs-tag">找成分表</span>
+            <span class="lcs-tag">對照紅區</span>
+            <span class="lcs-tag">確認PIF文件</span>
+            <span class="lcs-tag">確認中文標示</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="summary">
+    <div class="sum-label">這項的核心句</div>
+    <div class="sum-text">「成分表看不到不代表沒有。來源不明、無中文標示、供應商無法提供文件的產品，<strong>視同高風險產品處理</strong>。」</div>
+  </div>
+
+  <div class="slide-footer">
+    <div class="sf-note">本圖為課程教學輔助素材 · 依《化粧品衛生安全管理法》現行規定製作</div>
+    <div class="sf-mono">01 of 06 · 成分核查清單 · 2026.05</div>
+  </div>
+</div>
+
+
+<!-- ══════════ SLIDE 2 ══════════ -->
+<div class="slide s2" data-slide="2">
+
+  <div class="sh">
+    <div class="sh-num">02</div>
+    <div class="sh-right">
+      <div class="sh-label">技術者工具 · 第二項</div>
+      <div class="sh-title">客人問答話術卡</div>
+      <div class="sh-sub">遇到客人質疑時，有根據地回答——不閃避、不誇大</div>
+    </div>
+  </div>
+
+  <div class="premise">
+    客人不需要你懂所有法規，他只需要感覺到<strong>你比他更清楚。</strong><br>
+    而你清楚的前提，是你真的確認過你使用的東西。
+  </div>
+
+  <div class="layers">
+    <div class="layer-card">
+      <div class="lc-left"><div class="lc-dot"></div><div class="lc-line"></div></div>
+      <div class="lc-right">
+        <div class="lc-num">第一層 · 情境代入</div>
+        <div class="lc-title">帶出五個真實場景，讓學員舉手確認</div>
+        <div class="lc-desc">不要直接給答案。先問：「有沒有人被客人問過這個問題？」讓學員舉手，確認遇過的情境。從「聽理論」變成「對號入座」，記憶效果完全不同。五個情境：安全性疑問、合法性疑問、產品來源、價格差異、效果宣稱。</div>
+        <div class="lc-sub">
+          <div class="lcs-title">五個必練情境</div>
+          <div class="lcs-items">
+            <span class="lcs-tag">這個安全嗎</span>
+            <span class="lcs-tag">合法嗎</span>
+            <span class="lcs-tag">哪裡進口的</span>
+            <span class="lcs-tag">為什麼比較貴</span>
+            <span class="lcs-tag">會變濃密嗎</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="layer-card">
+      <div class="lc-left"><div class="lc-dot"></div><div class="lc-line"></div></div>
+      <div class="lc-right">
+        <div class="lc-num">第二層 · 話術結構示範</div>
+        <div class="lc-title">每句話背後都有邏輯——不是背答案</div>
+        <div class="lc-desc">正確回答的三段結構：① 說清楚「是什麼」（角蛋白本身是什麼）② 說清楚「真正的風險在哪裡」（不是成分名稱，是還原劑）③ 說「你確認過」（有根據，不是猜的）。這三段缺一不可，少了哪段客人都感受得到。</div>
+        <div class="lc-sub">
+          <div class="lcs-title">話術三段結構</div>
+          <div class="lcs-items">
+            <span class="lcs-tag">① 是什麼</span>
+            <span class="lcs-tag">② 風險在哪</span>
+            <span class="lcs-tag">③ 我確認過</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="layer-card">
+      <div class="lc-left"><div class="lc-dot"></div></div>
+      <div class="lc-right">
+        <div class="lc-num">第三層 · 四句絕對不能說的話</div>
+        <div class="lc-title">說錯了比沒說更危險</div>
+        <div class="lc-desc">這四句話說了，客人不會因此放心，反而更不安——因為她聽出來你其實不確定。</div>
+        <div class="avoid">
+          <div class="avoid-title">絕對不能說</div>
+          <ul class="avoid-list">
+            <li>「大家都在用」——沒有根據，不是合規依據</li>
+            <li>「我老師說沒問題」——不是你確認過</li>
+            <li>「這牌子很有名」——知名度不等於合規</li>
+            <li>「可以促進生長／修復毛囊」——醫療效能宣稱，說了就是法律風險</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="summary">
+    <div class="sum-label">這項的核心句</div>
+    <div class="sum-text">「說你確認過的事，不說你不確定的事。<strong>遇到答不出來的問題，誠實說『我去確認一下再回覆你』比亂答更好。</strong>」</div>
+  </div>
+
+  <div class="slide-footer">
+    <div class="sf-note">本圖為課程教學輔助素材 · 依《化粧品衛生安全管理法》現行規定製作</div>
+    <div class="sf-mono">02 of 06 · 客人問答話術卡 · 2026.05</div>
+  </div>
+</div>
+
+
+<!-- ══════════ SLIDE 3 ══════════ -->
+<div class="slide s3" data-slide="3">
+
+  <div class="sh">
+    <div class="sh-num">03</div>
+    <div class="sh-right">
+      <div class="sh-label">教學者專用 · 第三項</div>
+      <div class="sh-title">教學者產品審查框架</div>
+      <div class="sh-sub">在學員被影響之前，你自己先把關</div>
+    </div>
+  </div>
+
+  <div class="premise">
+    你的責任不只是教技術，是教完之後<strong>學員不會因為你的推薦而出問題。</strong><br>
+    你的口碑是你最重要的資產，這份框架讓你的背書有根據。
+  </div>
+
+  <div class="layers">
+    <div class="layer-card">
+      <div class="lc-left"><div class="lc-dot"></div><div class="lc-line"></div></div>
+      <div class="lc-right">
+        <div class="lc-num">第一層 · 帶出衝擊</div>
+        <div class="lc-title">讓教學者正視一個具體的風險情境</div>
+        <div class="lc-desc">問一個問題讓現場安靜：「你課程裡示範用的那瓶產品，如果今天被稽查認定違規，你的第一個反應是什麼？」大多數教學者從來沒想過這個問題——帶出這個問題本身，就是課程最有衝擊力的一刻。</div>
+        <div class="lc-sub">
+          <div class="lcs-title">衝擊設計關鍵</div>
+          <div class="lcs-items">
+            <span class="lcs-tag">讓現場安靜</span>
+            <span class="lcs-tag">不急著給答案</span>
+            <span class="lcs-tag">讓學員自己想</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="layer-card">
+      <div class="lc-left"><div class="lc-dot"></div><div class="lc-line"></div></div>
+      <div class="lc-right">
+        <div class="lc-num">第二層 · 兩個執行階段</div>
+        <div class="lc-title">現有產品盤點（立即）+ 新品審查標準（日後）</div>
+        <div class="lc-desc">第一階段立即執行：列出課程中所有推薦產品，逐一對照成分表和PIF文件。不以廠商說法或同業使用作為採用依據。第二階段建立習慣：每次引入新產品前先完成審查，每季重新確認一次。</div>
+        <div class="lc-sub">
+          <div class="lcs-title">審查記錄四欄位</div>
+          <div class="lcs-items">
+            <span class="lcs-tag">產品名稱</span>
+            <span class="lcs-tag">成分確認</span>
+            <span class="lcs-tag">PIF文件</span>
+            <span class="lcs-tag">中文標示</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="layer-card">
+      <div class="lc-left"><div class="lc-dot"></div></div>
+      <div class="lc-right">
+        <div class="lc-num">第三層 · 三個高風險情境</div>
+        <div class="lc-title">出問題時，正確的處理順序</div>
+        <div class="lc-desc">情境一：學員反映推薦產品被認定違規——立即停用、主動告知學員、更新課程。情境二：供應商無法提供文件——暫緩採購、尋找替代、通知學員。情境三：舊影片有違規產品——下架舊內容、主動說明更正。主動更正反而強化信任；沉默和推卸是最快讓口碑崩塌的方式。</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="summary">
+    <div class="sum-label">這項的核心句</div>
+    <div class="sum-text">「你推薦給學生的每一樣產品，都是你的商譽背書。<strong>這份框架讓你的背書有根據。</strong>」</div>
+  </div>
+
+  <div class="slide-footer">
+    <div class="sf-note">本圖為課程教學輔助素材 · 依《化粧品衛生安全管理法》現行規定製作</div>
+    <div class="sf-mono">03 of 06 · 教學者產品審查框架 · 2026.05</div>
+  </div>
+</div>
+
+
+<!-- ══════════ SLIDE 4 ══════════ -->
+<div class="slide s4" data-slide="4">
+
+  <div class="sh">
+    <div class="sh-num">04</div>
+    <div class="sh-right">
+      <div class="sh-label">法規核心 · 第四項</div>
+      <div class="sh-title">罰則歸屬地圖</div>
+      <div class="sh-sub">違規發生時，誰被罰、罰什麼、法條是哪條</div>
+    </div>
+  </div>
+
+  <div class="premise">
+    很多人以為<strong>法律沒有寫到我，我就沒事。</strong><br>
+    這個認知是錯的——不是沒有寫到你，是寫到你的方式你不知道。
+  </div>
+
+  <div class="layers">
+    <div class="layer-card">
+      <div class="lc-left"><div class="lc-dot"></div><div class="lc-line"></div></div>
+      <div class="lc-right">
+        <div class="lc-num">第一層 · 違規觸發條件</div>
+        <div class="lc-title">先講清楚前提，再展開各角色責任</div>
+        <div class="lc-desc">觸發條件：含燙髮還原劑成分（Thioglycolic Acid等）的產品用於睫毛，且未取得特定用途化粧品查驗登記許可或PIF。三個條件同時成立才構成違規——這個前提必須先說清楚，才能展開下一層。</div>
+        <div class="lc-sub">
+          <div class="lcs-title">三個觸發條件</div>
+          <div class="lcs-items">
+            <span class="lcs-tag">含燙髮還原劑</span>
+            <span class="lcs-tag">用於睫毛</span>
+            <span class="lcs-tag">無合規PIF</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="layer-card">
+      <div class="lc-left"><div class="lc-dot"></div><div class="lc-line"></div></div>
+      <div class="lc-right">
+        <div class="lc-num">第二層 · 四個角色責任落點</div>
+        <div class="lc-title">製造商 / 店家 / 技術者 / 教學者</div>
+        <div class="lc-desc">製造商與進口商是第一義務人：罰鍰1萬到100萬元、可按次處罰、停業1月到1年、廢止登記、產品沒入銷毀。店家是現場責任人：販售違規產品進入同等罰則，衛生稽查不符另有行政罰鍰。技術者：目前無直接法條，透過店家連帶受影響，無照執業另計。教學者：無直接法律責任，但商譽與師生信任的損失是真實的。</div>
+      </div>
+    </div>
+
+    <div class="layer-card">
+      <div class="lc-left"><div class="lc-dot"></div></div>
+      <div class="lc-right">
+        <div class="lc-num">第三層 · 核心翻轉</div>
+        <div class="lc-title">「沒寫到你」≠「你沒有風險」</div>
+        <div class="lc-desc">法條沒寫到技術者，不代表技術者沒有風險。法條沒寫到你的意思，是你的風險以另一種方式呈現——現場連帶、商譽崩塌、無照執業。這些不在罰款欄位裡，但對職業生命的傷害一樣真實。這個翻轉是讓學員從「跟我沒關係」變成「我需要注意」的關鍵一刻。</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="result-grid">
+    <div class="rg-card">
+      <div class="rg-label">在法條裡的</div>
+      <ul class="rg-list">
+        <li><span class="rg-mark" style="color:var(--red-d)">▮</span>製造/進口商：罰鍰、停業、廢止</li>
+        <li><span class="rg-mark" style="color:var(--red-d)">▮</span>店家：現場稽查行政罰則</li>
+        <li><span class="rg-mark" style="color:var(--red-d)">▮</span>違規產品：沒入銷毀</li>
+      </ul>
+    </div>
+    <div class="rg-card">
+      <div class="rg-label">不在法條裡但一樣真實</div>
+      <ul class="rg-list">
+        <li><span class="rg-mark" style="color:var(--blue-d)">▮</span>技術者：現場連帶、無照執業</li>
+        <li><span class="rg-mark" style="color:var(--blue-d)">▮</span>教學者：口碑崩塌、師生信任斷裂</li>
+        <li><span class="rg-mark" style="color:var(--blue-d)">▮</span>所有人：稽查後的社群輿論傷害</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="summary">
+    <div class="sum-label">這項的核心句</div>
+    <div class="sum-text">「法條沒寫到你，不代表你沒有風險。<strong>寫到你的方式你不知道——這才是最危險的位置。</strong>」</div>
+  </div>
+
+  <div class="slide-footer">
+    <div class="sf-note">本圖為課程教學輔助素材 · 依《化粧品衛生安全管理法》現行規定製作</div>
+    <div class="sf-mono">04 of 06 · 罰則歸屬地圖 · 2026.05</div>
+  </div>
+</div>
+
+
+<!-- ══════════ SLIDE 5 ══════════ -->
+<div class="slide s5" data-slide="5">
+
+  <div class="sh">
+    <div class="sh-num">05</div>
+    <div class="sh-right">
+      <div class="sh-label">法規核心 · 第五項</div>
+      <div class="sh-title">PIF 連帶風險說明</div>
+      <div class="sh-sub">採購時就能完成保護的三個動作</div>
+    </div>
+  </div>
+
+  <div class="premise">
+    法律說義務人是製造商，但<strong>稽查發生在現場，現場只有你。</strong><br>
+    這兩件事同時為真——你需要同時理解兩件事。
+  </div>
+
+  <div class="layers">
+    <div class="layer-card">
+      <div class="lc-left"><div class="lc-dot"></div><div class="lc-line"></div></div>
+      <div class="lc-right">
+        <div class="lc-num">第一層 · 稽查現場流程圖</div>
+        <div class="lc-title">義務人在工廠或國外，現場只有你</div>
+        <div class="lc-desc">用流程圖說明稽查的物理現實：製造商在日本、進口商找不到、供應商不在場——但衛生局站在你面前。稽查人員要求出示產品合規文件，你是現場唯一能被要求的人。這不是在嚇人，這是稽查的實際運作方式。</div>
+        <div class="lc-sub">
+          <div class="lcs-title">稽查流程關鍵節點</div>
+          <div class="lcs-items">
+            <span class="lcs-tag">進入現場</span>
+            <span class="lcs-tag">要求文件</span>
+            <span class="lcs-tag">你能出示？</span>
+            <span class="lcs-tag">→ 裁處啟動</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="layer-card">
+      <div class="lc-left"><div class="lc-dot"></div><div class="lc-line"></div></div>
+      <div class="lc-right">
+        <div class="lc-num">第二層 · 三條風險路徑</div>
+        <div class="lc-title">技術者進入風險的三個方式</div>
+        <div class="lc-desc">路徑一：現場無法出示合規文件——產品被認定來源不明，店家進入行政處分，技術者連帶受影響。路徑二：採購行為的默示責任——你應該知道你買的東西是不是合法的，「不知道」不是免責理由。路徑三：教學者推薦連帶——學員因你的推薦使用違規產品，商譽連帶受損。</div>
+        <div class="lc-sub">
+          <div class="lcs-title">三條路徑</div>
+          <div class="lcs-items">
+            <span class="lcs-tag">現場無文件</span>
+            <span class="lcs-tag">採購默示責任</span>
+            <span class="lcs-tag">教學者連帶</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="layer-card">
+      <div class="lc-left"><div class="lc-dot"></div></div>
+      <div class="lc-right">
+        <div class="lc-num">第三層 · 採購三個保護動作</div>
+        <div class="lc-title">在採購時就完成保護，不是等到稽查現場</div>
+        <div class="lc-desc">做到這三件事，稽查時你能說：「這個產品有台灣合法登錄」「成分我確認過」「文件我保存著」。這三句話是你的防護網。</div>
+        <div class="lc-sub">
+          <div class="lcs-title">三個動作</div>
+          <div class="lcs-items">
+            <span class="lcs-tag">① 索取台灣登錄截圖</span>
+            <span class="lcs-tag">② 確認完整中文標示</span>
+            <span class="lcs-tag">③ 對照成分清單</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="takeaway">
+    <div class="tk-card">
+      <div class="tk-icon">①</div>
+      <div class="tk-title">索取台灣產品登錄截圖</div>
+      <div class="tk-desc">付款前完成。合法進口商應能立即提供，無法提供就是警訊。</div>
+    </div>
+    <div class="tk-card">
+      <div class="tk-icon">②</div>
+      <div class="tk-title">確認完整中文標示</div>
+      <div class="tk-desc">收到產品時當場確認。不接受「中文貼紙後補」的說法。</div>
+    </div>
+    <div class="tk-card">
+      <div class="tk-icon">③</div>
+      <div class="tk-title">對照高風險成分清單</div>
+      <div class="tk-desc">每次進新品入庫時執行，不只是第一次採購。</div>
+    </div>
+  </div>
+
+  <div class="summary">
+    <div class="sum-label">這項的核心句</div>
+    <div class="sum-text">「把保護建立在採購端，不是等到稽查現場才臨時找文件。<strong>三件事都做到，稽查時你有話說。</strong>」</div>
+  </div>
+
+  <div class="slide-footer">
+    <div class="sf-note">本圖為課程教學輔助素材 · 依《化粧品衛生安全管理法》現行規定製作</div>
+    <div class="sf-mono">05 of 06 · PIF連帶風險說明 · 2026.05</div>
+  </div>
+</div>
+
+
+<!-- ══════════ SLIDE 6 ══════════ -->
+<div class="slide s6" data-slide="6">
+
+  <div class="sh">
+    <div class="sh-num">06</div>
+    <div class="sh-right">
+      <div class="sh-label">危機應對 · 第六項</div>
+      <div class="sh-title">稽查危機處理流程</div>
+      <div class="sh-sub">被稽查不等於違規——但不知道怎麼應對，可能把沒事搞成有事</div>
+    </div>
+  </div>
+
+  <div class="premise">
+    被稽查不等於違規，但<strong>不知道怎麼應對，可能把一個本來沒事的稽查搞成一個有事的稽查。</strong><br>
+    這項教的是：不慌亂、有依據、知道自己的權利。
+  </div>
+
+  <div class="layers">
+    <div class="layer-card">
+      <div class="lc-left"><div class="lc-dot"></div><div class="lc-line"></div></div>
+      <div class="lc-right">
+        <div class="lc-num">第一層 · 稽查當下的正確應對</div>
+        <div class="lc-title">出示三樣東西，不做兩件事</div>
+        <div class="lc-desc">配合出示：① 技術者國家美容丙/乙級證照 ② 使用中產品的標示與來源文件 ③ 店家商業登記。這三樣能出示，稽查現場最大的風險就解除了。不做：不要試圖隱藏產品、不要在被詢問時推諉「去問供應商」——這兩個反應都會讓情況更糟。</div>
+        <div class="lc-sub">
+          <div class="lcs-title">出示三樣</div>
+          <div class="lcs-items">
+            <span class="lcs-tag">國家證照</span>
+            <span class="lcs-tag">產品合規文件</span>
+            <span class="lcs-tag">商業登記</span>
+          </div>
+        </div>
+        <div class="avoid">
+          <div class="avoid-title">絕對不做</div>
+          <ul class="avoid-list">
+            <li>試圖隱藏產品或阻礙檢查</li>
+            <li>說「去問供應商」——你是現場責任人</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <div class="layer-card">
+      <div class="lc-left"><div class="lc-dot"></div><div class="lc-line"></div></div>
+      <div class="lc-right">
+        <div class="lc-num">第二層 · 釐清違規性質</div>
+        <div class="lc-title">三種性質、三條路徑——搞清楚自己在哪個位置</div>
+        <div class="lc-desc">產品本身的問題（製造商責任）：重點是確認產品來源和文件，你是使用端。現場使用的問題（店家責任）：與衛生局溝通現場操作情況，配合改正。人員資格的問題（技術者個人責任）：無照執業是另一條法律路徑，需要立刻處理證照問題。三種性質的處理路徑不同，搞清楚才知道下一步做什麼。</div>
+        <div class="lc-sub">
+          <div class="lcs-title">三種違規性質</div>
+          <div class="lcs-items">
+            <span class="lcs-tag">產品違規</span>
+            <span class="lcs-tag">使用違規</span>
+            <span class="lcs-tag">資格問題</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="layer-card">
+      <div class="lc-left"><div class="lc-dot"></div></div>
+      <div class="lc-right">
+        <div class="lc-num">第三層 · 裁處書後的權利與程序</div>
+        <div class="lc-title">14天救濟期限——不要放棄</div>
+        <div class="lc-desc">很多人看到裁處書就慌了直接繳錢。裁處書上有：違反條文、罰鍰金額、救濟期限（通常14天內可提訴願）。如果認為處分有誤，救濟期限是你的法律保護，放棄了就沒有了。後續改正三步驟：停用違規產品→補件完成登記→建立採購核查流程，讓同樣的事不要再發生。</div>
+        <div class="lc-sub">
+          <div class="lcs-title">後續改正三步驟</div>
+          <div class="lcs-items">
+            <span class="lcs-tag">停用違規產品</span>
+            <span class="lcs-tag">補件登記</span>
+            <span class="lcs-tag">建立採購核查機制</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="summary">
+    <div class="sum-label">這項的核心句</div>
+    <div class="sum-text">「被稽查時，你能做的最好的事就是：<strong>出示你早就準備好的文件。</strong>那三樣東西，現在就備好。」</div>
+  </div>
+
+  <div class="slide-footer">
+    <div class="sf-note">本圖為課程教學輔助素材 · 依《化粧品衛生安全管理法》現行規定製作</div>
+    <div class="sf-mono">06 of 06 · 稽查危機處理流程 · 2026.05</div>
+  </div>
+</div>
+
+
+<script>
+  const btns   = document.querySelectorAll('.nav-btn');
+  const slides = document.querySelectorAll('.slide');
+
+  btns.forEach(btn => {
+    btn.addEventListener('click', () => {
+      const i = btn.dataset.i;
+      btns.forEach(b => b.classList.remove('active'));
+      slides.forEach(s => s.classList.remove('active'));
+      btn.classList.add('active');
+      document.querySelector(`.slide[data-slide="${i}"]`).classList.add('active');
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    });
+  });
+</script>
+</body>
+</html>

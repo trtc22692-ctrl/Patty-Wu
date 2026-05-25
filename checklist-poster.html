@@ -1,0 +1,495 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>美睫從業者合規確認清單</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Noto+Serif+TC:wght@300;400;600;900&family=Noto+Sans+TC:wght@300;400;500&family=DM+Mono:wght@300;400;500&display=swap');
+
+  :root {
+    --bg: #0f0e0c;
+    --surface: #181714;
+    --border: #2e2b27;
+    --border-light: #3d3a34;
+    --text: #e8e2d8;
+    --muted: #7a7568;
+    --dim: #4a4640;
+    --gold: #c9a84c;
+    --gold-dim: #7a6330;
+    --gold-bg: #1e1a10;
+    --red: #a03030;
+    --red-bg: #1a0f0f;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    background: var(--bg);
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    min-height: 100vh;
+    padding: 48px 24px;
+    font-family: 'Noto Sans TC', sans-serif;
+  }
+
+  .poster {
+    width: 640px;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    position: relative;
+    overflow: hidden;
+  }
+
+  /* Corner marks */
+  .corner {
+    position: absolute;
+    width: 16px;
+    height: 16px;
+    z-index: 10;
+  }
+  .corner::before, .corner::after {
+    content: '';
+    position: absolute;
+    background: var(--gold);
+  }
+  .corner::before { width: 1px; height: 100%; }
+  .corner::after  { width: 100%; height: 1px; }
+  .corner.tl { top: 12px; left: 12px; }
+  .corner.tl::before { top: 0; left: 0; }
+  .corner.tl::after  { top: 0; left: 0; }
+  .corner.tr { top: 12px; right: 12px; }
+  .corner.tr::before { top: 0; right: 0; }
+  .corner.tr::after  { top: 0; right: 0; }
+  .corner.bl { bottom: 12px; left: 12px; }
+  .corner.bl::before { bottom: 0; left: 0; }
+  .corner.bl::after  { bottom: 0; left: 0; }
+  .corner.br { bottom: 12px; right: 12px; }
+  .corner.br::before { bottom: 0; right: 0; }
+  .corner.br::after  { bottom: 0; right: 0; }
+
+  /* Noise texture overlay */
+  .poster::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E");
+    pointer-events: none;
+    opacity: 0.4;
+    z-index: 0;
+  }
+
+  /* Gold line top */
+  .gold-bar {
+    height: 3px;
+    background: linear-gradient(90deg, transparent, var(--gold), var(--gold-dim), transparent);
+  }
+
+  /* HEADER */
+  .header {
+    padding: 40px 48px 32px;
+    position: relative;
+    z-index: 1;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .eyebrow {
+    font-family: 'DM Mono', monospace;
+    font-size: 9px;
+    letter-spacing: 3.5px;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 16px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+
+  .eyebrow::after {
+    content: '';
+    flex: 1;
+    height: 1px;
+    background: var(--gold-dim);
+    opacity: 0.5;
+  }
+
+  h1 {
+    font-family: 'Noto Serif TC', serif;
+    font-size: 1.8rem;
+    font-weight: 900;
+    color: var(--text);
+    line-height: 1.25;
+    letter-spacing: 1px;
+    margin-bottom: 6px;
+  }
+
+  .h1-sub {
+    font-family: 'Noto Serif TC', serif;
+    font-size: 1rem;
+    font-weight: 300;
+    color: var(--muted);
+    letter-spacing: 2px;
+  }
+
+  .header-meta {
+    display: flex;
+    gap: 24px;
+    margin-top: 20px;
+  }
+
+  .hm-item {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+  }
+
+  .hm-key {
+    font-family: 'DM Mono', monospace;
+    font-size: 8px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--dim);
+  }
+
+  .hm-val {
+    font-size: 0.78rem;
+    color: var(--muted);
+    font-weight: 300;
+  }
+
+  /* CHECKLIST */
+  .checklist-wrap {
+    padding: 0 48px 36px;
+    position: relative;
+    z-index: 1;
+  }
+
+  .item {
+    display: grid;
+    grid-template-columns: 48px 1fr;
+    border-bottom: 1px solid var(--border);
+    transition: background 0.2s;
+    cursor: default;
+    animation: fadeUp 0.5s ease both;
+  }
+
+  .item:first-child { margin-top: 0; }
+  .item:last-child  { border-bottom: none; }
+
+  .item:hover { background: rgba(201,168,76,0.03); }
+
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(8px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+
+  .item:nth-child(1) { animation-delay: 0.05s; }
+  .item:nth-child(2) { animation-delay: 0.10s; }
+  .item:nth-child(3) { animation-delay: 0.15s; }
+  .item:nth-child(4) { animation-delay: 0.20s; }
+  .item:nth-child(5) { animation-delay: 0.25s; }
+  .item:nth-child(6) { animation-delay: 0.30s; }
+  .item:nth-child(7) { animation-delay: 0.35s; }
+  .item:nth-child(8) { animation-delay: 0.40s; }
+
+  .item-num {
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    color: var(--gold-dim);
+    padding: 22px 0 22px;
+    border-right: 1px solid var(--border);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    letter-spacing: 1px;
+  }
+
+  .item-body {
+    padding: 20px 0 20px 20px;
+    display: flex;
+    align-items: flex-start;
+    gap: 14px;
+  }
+
+  /* Custom checkbox */
+  .cb {
+    width: 18px;
+    height: 18px;
+    border: 1.5px solid var(--border-light);
+    flex-shrink: 0;
+    margin-top: 1px;
+    position: relative;
+    transition: border-color 0.2s;
+  }
+
+  .item:hover .cb { border-color: var(--gold-dim); }
+
+  .item-text {
+    font-size: 0.88rem;
+    color: var(--text);
+    font-weight: 300;
+    line-height: 1.65;
+    letter-spacing: 0.3px;
+  }
+
+  /* Tag per item */
+  .tag {
+    display: inline-block;
+    font-family: 'DM Mono', monospace;
+    font-size: 8px;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    padding: 1px 6px;
+    border-radius: 1px;
+    margin-left: 8px;
+    vertical-align: middle;
+    position: relative;
+    top: -1px;
+  }
+
+  .tag-cert { background: var(--gold-bg); color: var(--gold); border: 1px solid var(--gold-dim); }
+  .tag-prod { background: var(--red-bg); color: var(--red); border: 1px solid #5a1e1e; }
+  .tag-ops  { background: #0f1a10; color: #4a8a55; border: 1px solid #2a5a35; }
+
+  /* DIVIDER inside list */
+  .section-divider {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 12px 0 8px;
+    margin-left: 48px;
+  }
+
+  .sd-label {
+    font-family: 'DM Mono', monospace;
+    font-size: 8px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--dim);
+    white-space: nowrap;
+  }
+
+  .sd-line {
+    height: 1px;
+    flex: 1;
+    background: var(--border);
+  }
+
+  /* FOOTER */
+  .footer {
+    border-top: 1px solid var(--border);
+    padding: 20px 48px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    position: relative;
+    z-index: 1;
+    background: rgba(0,0,0,0.2);
+  }
+
+  .footer-note {
+    font-size: 0.72rem;
+    color: var(--dim);
+    font-weight: 300;
+    line-height: 1.6;
+    max-width: 360px;
+    font-family: 'DM Mono', monospace;
+    letter-spacing: 0.3px;
+  }
+
+  .footer-badge {
+    font-family: 'DM Mono', monospace;
+    font-size: 8px;
+    letter-spacing: 2px;
+    color: var(--gold-dim);
+    text-align: right;
+    text-transform: uppercase;
+    line-height: 1.8;
+  }
+
+  /* Gold bottom bar */
+  .gold-bar-bottom {
+    height: 2px;
+    background: linear-gradient(90deg, transparent, var(--gold-dim), transparent);
+    opacity: 0.5;
+  }
+
+  /* Subtle bg pattern */
+  .bg-pattern {
+    position: absolute;
+    top: 0; right: 0;
+    width: 200px;
+    height: 200px;
+    background: radial-gradient(ellipse at top right, rgba(201,168,76,0.04) 0%, transparent 70%);
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  .item-4-alert {
+    background: var(--red-bg);
+    border-left: 2px solid var(--red);
+    margin-left: -2px;
+  }
+
+  .item-4-alert .item-text { color: #d4a0a0; }
+</style>
+</head>
+<body>
+
+<div class="poster">
+  <div class="corner tl"></div>
+  <div class="corner tr"></div>
+  <div class="corner bl"></div>
+  <div class="corner br"></div>
+  <div class="bg-pattern"></div>
+
+  <div class="gold-bar"></div>
+
+  <div class="header">
+    <div class="eyebrow">MODULE 06 · 課程結語</div>
+    <h1>從業者合規<br>自我確認清單</h1>
+    <div class="h1-sub">COMPLIANCE SELF-CHECKLIST</div>
+    <div class="header-meta">
+      <div class="hm-item">
+        <span class="hm-key">適用對象</span>
+        <span class="hm-val">技術者 / 店家經營者</span>
+      </div>
+      <div class="hm-item">
+        <span class="hm-key">法規依據</span>
+        <span class="hm-val">化粧品衛生安全管理法（現行）</span>
+      </div>
+      <div class="hm-item">
+        <span class="hm-key">建議頻率</span>
+        <span class="hm-val">每季自我核查一次</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- Section: 人員資格 -->
+  <div class="section-divider">
+    <span class="sd-label">人員資格</span>
+    <div class="sd-line"></div>
+  </div>
+
+  <div class="checklist-wrap">
+    <div class="item">
+      <div class="item-num">01</div>
+      <div class="item-body">
+        <div class="cb"></div>
+        <div class="item-text">
+          我持有有效的國家美容技術士<strong style="color:#e8e2d8">丙/乙級</strong>證照
+          <span class="tag tag-cert">證照</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="item">
+      <div class="item-num">02</div>
+      <div class="item-body">
+        <div class="cb"></div>
+        <div class="item-text">
+          店家已完成商業登記，歸類於<strong style="color:#e8e2d8">美容業</strong>
+          <span class="tag tag-cert">登記</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Section: 產品合規 -->
+    <div class="section-divider" style="margin-left:0; padding-left: 0;">
+      <span class="sd-label">產品合規</span>
+      <div class="sd-line"></div>
+    </div>
+
+    <div class="item">
+      <div class="item-num">03</div>
+      <div class="item-body">
+        <div class="cb"></div>
+        <div class="item-text">
+          目前使用的所有產品均有<strong style="color:#e8e2d8">完整中文標示</strong>及成分表
+          <span class="tag tag-prod">產品</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="item item-4-alert">
+      <div class="item-num" style="color:#a03030; border-right-color: #2e1515;">04</div>
+      <div class="item-body">
+        <div class="cb" style="border-color: #5a1e1e;"></div>
+        <div class="item-text">
+          確認使用產品的成分表，<strong style="color:#e8e2d8">不含</strong>已知燙髮還原劑成分<br>
+          <span style="font-family:'DM Mono',monospace; font-size:0.72rem; color:#7a4040; letter-spacing:0.5px; margin-top:4px; display:block;">
+            Thioglycolic Acid · Ammonium Thioglycolate · Cysteamine
+          </span>
+        </div>
+      </div>
+    </div>
+
+    <div class="item">
+      <div class="item-num">05</div>
+      <div class="item-body">
+        <div class="cb"></div>
+        <div class="item-text">
+          產品來源具備台灣合法進口管道或<strong style="color:#e8e2d8">PIF 登錄</strong>紀錄
+          <span class="tag tag-prod">產品</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Section: 操作與宣傳 -->
+    <div class="section-divider" style="margin-left:0; padding-left: 0;">
+      <span class="sd-label">操作與宣傳</span>
+      <div class="sd-line"></div>
+    </div>
+
+    <div class="item">
+      <div class="item-num">06</div>
+      <div class="item-body">
+        <div class="cb"></div>
+        <div class="item-text">
+          我的服務廣告<strong style="color:#e8e2d8">未使用</strong>醫療效能相關文字
+          <span class="tag tag-ops">宣傳</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="item">
+      <div class="item-num">07</div>
+      <div class="item-body">
+        <div class="cb"></div>
+        <div class="item-text">
+          店內衛生設施符合<strong style="color:#e8e2d8">衛生局稽查</strong>基準
+          <span class="tag tag-ops">環境</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="item">
+      <div class="item-num">08</div>
+      <div class="item-body">
+        <div class="cb"></div>
+        <div class="item-text">
+          我知道被稽查時應出示哪些<strong style="color:#e8e2d8">文件</strong>，並已備妥
+          <span class="tag tag-ops">應對</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="footer">
+    <div class="footer-note">
+      本清單為法規教育用途。<br>
+      如有具體法律疑問，請諮詢主管機關或專業律師。
+    </div>
+    <div class="footer-badge">
+      化粧品衛生安全管理法<br>
+      現行規定 · 台灣適用<br>
+      2026.05
+    </div>
+  </div>
+
+  <div class="gold-bar-bottom"></div>
+</div>
+
+</body>
+</html>

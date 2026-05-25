@@ -1,0 +1,713 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>報名表｜2026美業PIF</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Noto+Serif+TC:wght@200;300;400;600&family=Playfair+Display:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --gold: #C9A96E;
+    --gold-light: #E8D5A3;
+    --cream: #FAF7F2;
+    --dark: #1A1612;
+    --card: #211C17;
+    --mid: #2A231D;
+    --line: rgba(201,169,110,0.2);
+  }
+  * { margin:0; padding:0; box-sizing:border-box; }
+  body { background:var(--dark); color:var(--cream); font-family:'Noto Serif TC',serif; min-height:100vh; }
+
+  /* HEADER */
+  .header {
+    text-align:center; padding:60px 24px 40px; position:relative; overflow:hidden;
+  }
+  .header::before {
+    content:''; position:absolute; inset:0;
+    background:radial-gradient(ellipse 70% 50% at 50% 0%, rgba(201,169,110,0.1) 0%, transparent 70%);
+    pointer-events:none;
+  }
+  .header-eyebrow {
+    font-family:'Cormorant Garamond',serif; font-size:10px; letter-spacing:6px;
+    color:var(--gold); text-transform:uppercase; margin-bottom:18px;
+    opacity:0; animation:fadeUp 0.8s ease 0.1s forwards;
+  }
+  .header-title {
+    font-family:'Playfair Display',serif; font-size:clamp(30px,6vw,56px);
+    font-weight:400; line-height:1.15; margin-bottom:10px;
+    opacity:0; animation:fadeUp 0.8s ease 0.25s forwards;
+  }
+  .header-title em { font-style:italic; color:var(--gold); }
+  .header-sub {
+    font-size:12px; color:rgba(250,247,242,0.4); letter-spacing:3px;
+    font-family:'Cormorant Garamond',serif;
+    opacity:0; animation:fadeUp 0.8s ease 0.4s forwards;
+  }
+  .header-line {
+    width:80px; height:1px;
+    background:linear-gradient(90deg,transparent,var(--gold),transparent);
+    margin:24px auto 0; opacity:0; animation:fadeUp 0.8s ease 0.5s forwards;
+  }
+
+  /* COURSE INFO BANNER */
+  .info-banner {
+    max-width:640px; margin:32px auto 0; padding:0 24px;
+    
+  }
+  .info-grid {
+    display:grid; grid-template-columns:1fr 1fr; gap:1px;
+    background:var(--line); border:1px solid var(--line);
+  }
+  .info-cell {
+    background:var(--card); padding:20px 22px;
+  }
+  .info-cell-label {
+    font-family:'Cormorant Garamond',serif; font-size:9px;
+    letter-spacing:4px; color:var(--gold); text-transform:uppercase; margin-bottom:6px;
+  }
+  .info-cell-value { font-size:13px; color:var(--cream); font-weight:300; line-height:1.7; }
+  .info-cell-value strong { color:var(--gold-light); font-weight:400; }
+
+  /* NOTICE BOX */
+  .notice {
+    max-width:640px; margin:16px auto 0; padding:0 24px;
+    
+  }
+  .notice-inner {
+    border:1px solid rgba(201,169,110,0.15); background:rgba(201,169,110,0.04);
+    padding:20px 24px;
+  }
+  .notice-title {
+    font-family:'Cormorant Garamond',serif; font-size:10px;
+    letter-spacing:4px; color:var(--gold); text-transform:uppercase; margin-bottom:10px;
+  }
+  .notice-body { font-size:12px; color:rgba(250,247,242,0.55); line-height:2; font-weight:200; }
+  .notice-body strong { color:rgba(250,247,242,0.8); }
+
+  /* FORM WRAPPER */
+  .form-wrapper {
+    max-width:640px; margin:32px auto 0; padding:0 24px 80px;
+  }
+
+  /* STEPS */
+  .steps {
+    display:flex; align-items:center; justify-content:center; gap:0; margin-bottom:36px;
+  }
+  .step { display:flex; flex-direction:column; align-items:center; gap:6px; }
+  .step-dot {
+    width:28px; height:28px; border:1px solid var(--line); border-radius:50%;
+    display:flex; align-items:center; justify-content:center;
+    font-family:'Cormorant Garamond',serif; font-size:11px;
+    color:rgba(250,247,242,0.3); transition:all 0.4s;
+  }
+  .step.active .step-dot { border-color:var(--gold); color:var(--gold); background:rgba(201,169,110,0.08); box-shadow:0 0 16px rgba(201,169,110,0.15); }
+  .step.done .step-dot { border-color:var(--gold); background:var(--gold); color:var(--dark); }
+  .step-label { font-size:9px; letter-spacing:2px; color:rgba(250,247,242,0.3); font-family:'Cormorant Garamond',serif; white-space:nowrap; }
+  .step.active .step-label { color:var(--gold); }
+  .step-line { width:50px; height:1px; background:var(--line); margin-bottom:20px; }
+
+  /* SECTION CARD */
+  .form-section { background:var(--card); border:1px solid var(--line); padding:32px 28px; margin-bottom:16px; display:none; }
+  .form-section.active { display:block; }
+  .form-section-label {
+    font-family:'Cormorant Garamond',serif; font-size:10px;
+    letter-spacing:5px; color:var(--gold); text-transform:uppercase; margin-bottom:24px;
+  }
+
+  /* FIELD */
+  .field { margin-bottom:24px; }
+  .field label {
+    display:block; font-size:11px; letter-spacing:2px;
+    color:rgba(250,247,242,0.5); margin-bottom:10px;
+    font-family:'Cormorant Garamond',serif; text-transform:uppercase;
+  }
+  .field label .req { color:var(--gold); margin-left:3px; }
+  .field input, .field select, .field textarea {
+    width:100%; background:transparent; border:none;
+    border-bottom:1px solid rgba(201,169,110,0.25);
+    padding:10px 0; color:var(--cream);
+    font-family:'Noto Serif TC',serif; font-size:14px; font-weight:200;
+    outline:none; transition:border-color 0.3s; appearance:none; -webkit-appearance:none;
+  }
+  .field input::placeholder, .field textarea::placeholder { color:rgba(250,247,242,0.2); font-size:13px; }
+  .field input:focus, .field select:focus, .field textarea:focus { border-bottom-color:var(--gold); }
+  .field select {
+    cursor:pointer;
+    background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6'%3E%3Cpath d='M0 0l5 6 5-6z' fill='%23C9A96E'/%3E%3C/svg%3E");
+    background-repeat:no-repeat; background-position:right 4px center; padding-right:20px;
+  }
+  .field select option { background:var(--mid); color:var(--cream); }
+
+  /* VENUE OPTIONS */
+  .venue-options { display:grid; gap:10px; margin-top:4px; }
+  .venue-option {
+    border:1px solid var(--line); padding:18px 20px; cursor:pointer;
+    transition:all 0.25s; display:flex; align-items:center; gap:14px;
+  }
+  .venue-option:hover { border-color:rgba(201,169,110,0.5); background:rgba(201,169,110,0.04); }
+  .venue-option.selected { border-color:var(--gold); background:rgba(201,169,110,0.07); }
+  .venue-option input[type="radio"] { display:none; }
+  .venue-radio {
+    width:16px; height:16px; border:1px solid rgba(201,169,110,0.4); border-radius:50%;
+    flex-shrink:0; display:flex; align-items:center; justify-content:center; transition:all 0.2s;
+  }
+  .venue-option.selected .venue-radio { border-color:var(--gold); background:var(--gold); }
+  .venue-radio-inner { width:6px; height:6px; background:var(--dark); border-radius:50%; opacity:0; transition:opacity 0.2s; }
+  .venue-option.selected .venue-radio-inner { opacity:1; }
+  .venue-info { flex:1; }
+  .venue-name { font-size:14px; color:var(--cream); font-weight:300; letter-spacing:1px; margin-bottom:3px; }
+  .venue-sub { font-size:11px; color:rgba(250,247,242,0.35); font-family:'Cormorant Garamond',serif; letter-spacing:1px; }
+  .venue-badge {
+    font-family:'Cormorant Garamond',serif; font-size:9px; letter-spacing:2px;
+    color:var(--gold); border:1px solid rgba(201,169,110,0.3); padding:2px 8px; white-space:nowrap;
+  }
+
+  /* IDENTITY OPTIONS */
+  .identity-options { display:grid; grid-template-columns:1fr 1fr 1fr; gap:10px; margin-top:4px; }
+  .identity-option {
+    border:1px solid var(--line); padding:18px 16px; cursor:pointer;
+    transition:all 0.25s; text-align:center;
+  }
+  .identity-option:hover { border-color:rgba(201,169,110,0.5); background:rgba(201,169,110,0.04); }
+  .identity-option.selected { border-color:var(--gold); background:rgba(201,169,110,0.07); }
+  .identity-option input { display:none; }
+  .identity-name { font-size:13px; color:var(--cream); font-weight:300; letter-spacing:1px; margin-bottom:4px; }
+  .identity-fee { font-family:'Cormorant Garamond',serif; font-size:16px; color:var(--gold); letter-spacing:1px; }
+
+  /* PAYMENT */
+  .payment-options { display:grid; gap:10px; margin-top:4px; }
+  .payment-option {
+    border:1px solid var(--line); padding:18px 20px; cursor:pointer;
+    transition:all 0.25s; display:flex; align-items:center; gap:14px;
+  }
+  .payment-option:hover { border-color:rgba(201,169,110,0.5); background:rgba(201,169,110,0.04); }
+  .payment-option.selected { border-color:var(--gold); background:rgba(201,169,110,0.07); }
+  .payment-option input { display:none; }
+  .pay-radio {
+    width:16px; height:16px; border:1px solid rgba(201,169,110,0.4); border-radius:50%;
+    flex-shrink:0; display:flex; align-items:center; justify-content:center; transition:all 0.2s;
+  }
+  .payment-option.selected .pay-radio { border-color:var(--gold); background:var(--gold); }
+  .pay-radio-inner { width:6px; height:6px; background:var(--dark); border-radius:50%; opacity:0; transition:opacity 0.2s; }
+  .payment-option.selected .pay-radio-inner { opacity:1; }
+  .pay-info { flex:1; }
+  .pay-name { font-size:14px; color:var(--cream); font-weight:300; letter-spacing:1px; margin-bottom:3px; }
+  .pay-detail { font-size:11px; color:rgba(250,247,242,0.35); font-family:'Cormorant Garamond',serif; letter-spacing:1px; }
+
+  /* BANK INFO BOX */
+  .bank-box {
+    border:1px solid rgba(201,169,110,0.15); background:rgba(201,169,110,0.04);
+    padding:16px 20px; margin-top:12px;
+    font-size:12px; color:rgba(250,247,242,0.6); line-height:2.2; font-weight:200;
+    display:none;
+  }
+  .bank-box.show { display:block; }
+  .bank-box strong { color:var(--gold-light); font-weight:400; }
+
+  /* BUTTONS */
+  .btn-row { display:flex; gap:12px; margin-top:28px; justify-content:flex-end; }
+  .btn-prev {
+    border:1px solid var(--line); background:transparent; color:rgba(250,247,242,0.4);
+    font-family:'Cormorant Garamond',serif; font-size:11px; letter-spacing:3px;
+    padding:13px 24px; cursor:pointer; text-transform:uppercase; transition:all 0.3s;
+  }
+  .btn-prev:hover { border-color:rgba(201,169,110,0.4); color:var(--gold); }
+  .btn-next {
+    border:1px solid var(--gold); background:transparent; color:var(--gold);
+    font-family:'Cormorant Garamond',serif; font-size:11px; letter-spacing:3px;
+    padding:13px 32px; cursor:pointer; text-transform:uppercase; transition:all 0.3s;
+  }
+  .btn-next:hover { background:var(--gold); color:var(--dark); }
+
+  /* ERROR */
+  .error-msg { font-size:11px; color:#e07070; margin-top:6px; letter-spacing:1px; font-family:'Cormorant Garamond',serif; display:none; }
+  .error-msg.show { display:block; }
+
+  /* SUCCESS */
+  .success-screen { display:none; text-align:center; padding:60px 24px; max-width:500px; margin:0 auto; }
+  .success-screen.show { display:block; }
+  .success-icon { font-size:36px; margin-bottom:20px; opacity:0; animation:fadeUp 0.6s ease 0.1s forwards; }
+  .success-title { font-family:'Playfair Display',serif; font-size:32px; font-style:italic; color:var(--gold); margin-bottom:10px; opacity:0; animation:fadeUp 0.6s ease 0.25s forwards; }
+  .success-divider { width:60px; height:1px; background:linear-gradient(90deg,transparent,var(--gold),transparent); margin:24px auto; opacity:0; animation:fadeUp 0.6s ease 0.4s forwards; }
+  .success-sub { font-size:12px; color:rgba(250,247,242,0.45); letter-spacing:2px; font-family:'Cormorant Garamond',serif; line-height:2.2; opacity:0; animation:fadeUp 0.6s ease 0.5s forwards; }
+  .success-summary { background:var(--card); border:1px solid var(--line); padding:24px; margin:24px 0; text-align:left; opacity:0; animation:fadeUp 0.6s ease 0.6s forwards; }
+  .summary-row { display:flex; gap:12px; padding:8px 0; border-bottom:1px solid var(--line); font-size:12px; }
+  .summary-row:last-child { border-bottom:none; }
+  .summary-label { color:var(--gold); font-family:'Cormorant Garamond',serif; letter-spacing:1px; min-width:70px; }
+  .summary-value { color:rgba(250,247,242,0.7); font-weight:200; flex:1; }
+
+  /* FOOTER */
+  .form-footer { text-align:center; padding-bottom:48px; font-family:'Cormorant Garamond',serif; font-size:11px; letter-spacing:2px; color:rgba(201,169,110,0.3); }
+
+  @keyframes fadeUp {
+    from { opacity:0; transform:translateY(16px); }
+    to { opacity:1; transform:translateY(0); }
+  }
+
+  @media(max-width:420px) {
+    .info-grid { grid-template-columns:1fr; }
+    .identity-options { grid-template-columns:1fr; }
+  }
+</style>
+</head>
+<body>
+
+<!-- HEADER -->
+<div class="header">
+  <div class="header-eyebrow">Nunushop Academy Taiwan</div>
+  <h1 class="header-title">2026 美業 <em>PIF</em><br>關我啥事？</h1>
+  <div class="header-sub">課程報名申請 · Enrollment Application</div>
+  <div class="header-line"></div>
+</div>
+
+<!-- COURSE INFO -->
+<div style="max-width:640px; margin:24px auto 0; padding:0 24px;">
+
+  <!-- 破題大標 -->
+  <div style="border:1px solid rgba(201,169,110,0.2); background:var(--card); padding:32px 28px; margin-bottom:12px;">
+    <div style="font-size:20px; font-weight:600; color:var(--cream); line-height:1.6; margin-bottom:20px;">
+      2026/7/1 法規大限在怕啥？
+    </div>
+    <div style="font-size:15px; font-weight:600; color:var(--cream); margin-bottom:16px;">
+      如果這些事你遇過，這堂課就是為你準備的
+    </div>
+    <div style="font-size:13px; color:rgba(250,247,242,0.65); line-height:2.4; font-weight:200;">
+      <div style="padding:8px 0; border-bottom:1px solid rgba(201,169,110,0.08);">· LINE 群組一直傳「2026/7/1 沒做 PIF 罰 500 萬！」不知道是真是假，我該怎麼辦？</div>
+      <div style="padding:8px 0; border-bottom:1px solid rgba(201,169,110,0.08);">· 使用角蛋白產品幫客人做睫毛管理，不確定到底合不合法</div>
+      <div style="padding:8px 0; border-bottom:1px solid rgba(201,169,110,0.08);">· 自己從韓國進口睫毛產品，不知道能不能直接幫客人操作</div>
+      <div style="padding:8px 0; border-bottom:1px solid rgba(201,169,110,0.08);">· 開睫毛工作室，不清楚手上的產品到底合不合 TFDA 規範</div>
+      <div style="padding:8px 0; border-bottom:1px solid rgba(201,169,110,0.08);">· 代理韓國睫毛品牌，怕在不知情的狀況下踩到法規雷區</div>
+      <div style="padding:8px 0;">· 發睫毛相關貼文時，不知道怎麼寫才不會被檢舉</div>
+    </div>
+  </div>
+
+  <!-- 為什麼非學不可 -->
+  <div style="border:1px solid rgba(201,169,110,0.2); background:var(--card); padding:28px; margin-bottom:12px;">
+    <div style="font-size:16px; font-weight:600; color:var(--cream); margin-bottom:12px;">⭐ 為什麼非學不可？</div>
+    <div style="font-size:13px; color:rgba(250,247,242,0.65); line-height:2; font-weight:200; margin-bottom:16px;">
+      你可能不知道──檢舉違規廣告，是有獎金的。<br>
+      當你知道檢舉獎金的真相，一切就明朗了。
+    </div>
+    <div style="font-size:14px; color:var(--gold); font-weight:600; line-height:1.8; margin-bottom:16px;">
+      這就是為什麼你身邊永遠有人在等你犯錯──<br>競爭對手、離職員工、職業檢舉人。
+    </div>
+    <div style="font-size:13px; color:rgba(250,247,242,0.6); line-height:2; font-weight:200;">
+      學完這堂課，你會知道「不違規」不是道德問題，<br>是「風險＝獎金」的現實問題。
+    </div>
+  </div>
+
+  <!-- 課程裡你會知道 -->
+  <div style="border:1px solid rgba(201,169,110,0.2); background:var(--card); padding:28px; margin-bottom:12px;">
+    <div style="font-family:'Cormorant Garamond',serif; font-size:10px; letter-spacing:4px; color:var(--gold); margin-bottom:20px; text-transform:uppercase;">課程裡，你會知道……</div>
+    <div style="display:flex; flex-direction:column; gap:0;">
+      <div style="padding:14px 0; border-bottom:1px solid rgba(201,169,110,0.1); font-size:13px; color:rgba(250,247,242,0.7); display:flex; gap:12px;"><span style="color:var(--gold); flex-shrink:0;">✦</span><span>哪些行為踩到法規紅線，你現在可能正在做</span></div>
+      <div style="padding:14px 0; border-bottom:1px solid rgba(201,169,110,0.1); font-size:13px; color:rgba(250,247,242,0.7); display:flex; gap:12px;"><span style="color:var(--gold); flex-shrink:0;">✦</span><span>PIF 是什麼？為什麼它會影響你的生意</span></div>
+      <div style="padding:14px 0; border-bottom:1px solid rgba(201,169,110,0.1); font-size:13px; color:rgba(250,247,242,0.7); display:flex; gap:12px;"><span style="color:var(--gold); flex-shrink:0;">✦</span><span>新手小白在 2026 年最值得搶佔的賽道</span></div>
+      <div style="padding:14px 0; font-size:13px; color:rgba(250,247,242,0.7); display:flex; gap:12px;"><span style="color:var(--gold); flex-shrink:0;">✦</span><span>還有更多……現場才說得出口的東西</span></div>
+    </div>
+    <div style="margin-top:20px; padding:16px; background:rgba(201,169,110,0.06); border-left:2px solid var(--gold); font-size:13px; color:var(--gold-light); line-height:2; font-style:italic;">
+      如果你對其中任何一題沒有把握……<br>這堂課，你需要來。
+    </div>
+  </div>
+
+  <!-- 22份工具索引 -->
+  <div style="border:1px solid rgba(201,169,110,0.2); background:var(--card); padding:28px; margin-bottom:12px;">
+    <div style="font-family:'Cormorant Garamond',serif; font-size:10px; letter-spacing:4px; color:var(--gold); margin-bottom:6px; text-transform:uppercase;">全日研討會 · 帶走工具索引</div>
+    <div style="font-size:18px; font-weight:600; color:var(--cream); margin-bottom:4px;">22 份工具完整分類索引</div>
+    <div style="font-size:11px; color:rgba(250,247,242,0.35); letter-spacing:2px; font-family:'Cormorant Garamond',serif; margin-bottom:24px;">睫毛管理法規層面透析 · 2026.05</div>
+
+    <div style="display:flex; flex-direction:column; gap:12px;">
+      <div style="border-left:3px solid #C9A96E; padding:12px 16px; background:rgba(0,0,0,0.2);">
+        <div style="font-size:11px; color:var(--gold); letter-spacing:1px; margin-bottom:6px;">01 · 原有課程附件</div>
+        <div style="font-size:12px; color:rgba(250,247,242,0.45);">01 成分核查清單 · 02 話術卡 · 03 教學者框架</div>
+      </div>
+      <div style="border-left:3px solid #e07070; padding:12px 16px; background:rgba(0,0,0,0.2);">
+        <div style="font-size:11px; color:#e09090; letter-spacing:1px; margin-bottom:6px;">02 · 法規核心圖示</div>
+        <div style="font-size:12px; color:rgba(250,247,242,0.45);">04 罰則歸屬 · 05 稽查流程 · 06 PIF 風險地圖</div>
+      </div>
+      <div style="border-left:3px solid #7090e0; padding:12px 16px; background:rgba(0,0,0,0.2);">
+        <div style="font-size:11px; color:#90a0e0; letter-spacing:1px; margin-bottom:6px;">03 · 風險評估工具</div>
+        <div style="font-size:12px; color:rgba(250,247,242,0.45);">07 課前版 · 08 課後版</div>
+      </div>
+      <div style="border-left:3px solid #70b0e0; padding:12px 16px; background:rgba(0,0,0,0.2);">
+        <div style="font-size:11px; color:#90c0e0; letter-spacing:1px; margin-bottom:6px;">04 · 申訴與救濟</div>
+        <div style="font-size:12px; color:rgba(250,247,242,0.45);">09 裁處書對照卡 · 10 申訴判斷流程 · 11 訴願清單</div>
+      </div>
+      <div style="border-left:3px solid #90c070; padding:12px 16px; background:rgba(0,0,0,0.2);">
+        <div style="font-size:11px; color:#a0d080; letter-spacing:1px; margin-bottom:6px;">05 · 破解法規迷思</div>
+        <div style="font-size:12px; color:rgba(250,247,242,0.45);">12 五大迷思卡 · 13 資訊可信度清單</div>
+      </div>
+      <div style="border-left:3px solid #e09030; padding:12px 16px; background:rgba(0,0,0,0.2);">
+        <div style="font-size:11px; color:#e0a050; letter-spacing:1px; margin-bottom:6px;">06 · 社群宣傳法律邊界</div>
+        <div style="font-size:12px; color:rgba(250,247,242,0.45);">14 可說vs不可說 · 15 兩問題審查卡 · 16 替換建議</div>
+      </div>
+      <div style="border-left:3px solid #9070c0; padding:12px 16px; background:rgba(0,0,0,0.2);">
+        <div style="font-size:11px; color:#b090d0; letter-spacing:1px; margin-bottom:6px;">07 · 國際市場工具</div>
+        <div style="font-size:12px; color:rgba(250,247,242,0.45);">17 四市場對照 · 18 免責聲明範本 · 19 官網入口</div>
+      </div>
+      <div style="border-left:3px solid #e0c030; padding:12px 16px; background:rgba(0,0,0,0.2);">
+        <div style="font-size:11px; color:#e0d050; letter-spacing:1px; margin-bottom:6px;">08 · 合規品牌差異化</div>
+        <div style="font-size:12px; color:rgba(250,247,242,0.45);">20 個人化合規聲明 · 21 社群文案三則 · 22 四場景清單</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 講師 Patty -->
+  <div style="border:1px solid rgba(201,169,110,0.2); background:var(--card); padding:32px 28px; margin-bottom:12px; text-align:center;">
+    <div style="font-family:'Cormorant Garamond',serif; font-size:10px; letter-spacing:4px; color:var(--gold); margin-bottom:20px; text-transform:uppercase;">由誰來說，很重要</div>
+    <div style="font-family:'Playfair Display',serif; font-size:32px; font-style:italic; color:var(--cream); margin-bottom:6px;">Patty Wu</div>
+    <div style="font-size:11px; color:var(--gold); letter-spacing:2px; margin-bottom:20px; font-family:'Cormorant Garamond',serif;">NUNU 亞太華人地區執行長</div>
+    <div style="font-size:12px; color:rgba(250,247,242,0.55); line-height:2.4; margin-bottom:20px; text-align:left;">
+      <div style="display:flex; gap:10px; padding:6px 0; border-bottom:1px solid rgba(201,169,110,0.08);"><span style="color:var(--gold); flex-shrink:0;">✓</span><span>NUNU 亞太華人地區執行長 · 台灣分院長</span></div>
+      <div style="display:flex; gap:10px; padding:6px 0; border-bottom:1px solid rgba(201,169,110,0.08);"><span style="color:var(--gold); flex-shrink:0;">✓</span><span>工研院 PIF 建置認證 · 睫毛管理 9 年資歷</span></div>
+      <div style="display:flex; gap:10px; padding:6px 0; border-bottom:1px solid rgba(201,169,110,0.08);"><span style="color:var(--gold); flex-shrink:0;">✓</span><span>台北醫學大學化妝品產品安全資料培訓結業</span></div>
+      <div style="display:flex; gap:10px; padding:6px 0;"><span style="color:var(--gold); flex-shrink:0;">✓</span><span>由台北醫學大學、工研院、南護教授指導合格</span></div>
+    </div>
+    <div style="font-size:13px; color:rgba(250,247,242,0.5); line-height:2; font-style:italic; border-top:1px solid rgba(201,169,110,0.15); padding-top:16px;">
+      她用真實踩坑的經歷，<br>
+      把艱澀的法規條文，<br>
+      轉換成你能立刻用上的知識。
+    </div>
+  </div>
+
+  <!-- NU 助 -->
+  <div style="border:1px solid rgba(201,169,110,0.2); background:var(--card); padding:28px; margin-bottom:12px;">
+    <div style="font-family:'Cormorant Garamond',serif; font-size:10px; letter-spacing:4px; color:var(--gold); margin-bottom:16px; text-transform:uppercase;">NU 助背景</div>
+    <div style="font-size:12px; color:rgba(250,247,242,0.55); line-height:2.4;">
+      <div style="display:flex; gap:10px; padding:6px 0; border-bottom:1px solid rgba(201,169,110,0.08);"><span style="color:var(--gold); flex-shrink:0;">✓</span><span>六年以上化粧品相關工作實戰經驗</span></div>
+      <div style="display:flex; gap:10px; padding:6px 0; border-bottom:1px solid rgba(201,169,110,0.08);"><span style="color:var(--gold); flex-shrink:0;">✓</span><span>PIF 簽署人員培訓學員資格</span></div>
+      <div style="display:flex; gap:10px; padding:6px 0; border-bottom:1px solid rgba(201,169,110,0.08);"><span style="color:var(--gold); flex-shrink:0;">✓</span><span>臺北醫學大學「化粧品產品安全資料簽署人員培訓班」結業（共 54 小時）</span></div>
+      <div style="display:flex; gap:10px; padding:6px 0;"><span style="color:var(--gold); flex-shrink:0;">✓</span><span>由台北醫學大學、工研院、南護妝品教授指導合格</span></div>
+    </div>
+    <div style="margin-top:16px; padding:14px; background:rgba(0,0,0,0.2); font-size:12px; color:rgba(250,247,242,0.45); line-height:2; font-style:italic;">
+      市面上懂法規的人很多，<br>
+      但同時具備<strong style="color:rgba(250,247,242,0.7);">實務資歷 + 官方認證</strong>的人，少之又少。<br>
+      這堂課，兩位講師都是。
+    </div>
+  </div>
+
+</div>
+
+<!-- FORM -->
+<div style="max-width:640px; margin:0 auto; padding:0 24px;">
+  <div style="text-align:center; padding:32px 0 24px;">
+    <div style="width:60px; height:1px; background:linear-gradient(90deg,transparent,var(--gold),transparent); margin:0 auto 16px;"></div>
+    <div style="font-family:'Cormorant Garamond',serif; font-size:11px; letter-spacing:5px; color:var(--gold); text-transform:uppercase;">立即報名</div>
+    <div style="width:60px; height:1px; background:linear-gradient(90deg,transparent,var(--gold),transparent); margin:16px auto 0;"></div>
+  </div>
+</div>
+<div class="form-wrapper" id="formWrapper">
+
+  <!-- STEPS -->
+  <div class="steps" id="stepIndicator">
+    <div class="step active" id="step-ind-1">
+      <div class="step-dot">1</div>
+      <div class="step-label">基本資料</div>
+    </div>
+    <div class="step-line"></div>
+    <div class="step" id="step-ind-2">
+      <div class="step-dot">2</div>
+      <div class="step-label">場次 / 身份</div>
+    </div>
+    <div class="step-line"></div>
+    <div class="step" id="step-ind-3">
+      <div class="step-dot">3</div>
+      <div class="step-label">付款確認</div>
+    </div>
+  </div>
+
+  <!-- STEP 1 -->
+  <div class="form-section active" id="section-1">
+    <div class="form-section-label">Step 01 — 基本資料</div>
+
+    <div class="field">
+      <label>中文姓名 <span class="req">*</span></label>
+      <input type="text" id="name" placeholder="請輸入中文姓名">
+      <div class="error-msg" id="err-name">請填寫中文姓名</div>
+    </div>
+    <div class="field">
+      <label>證書英文姓名 <span class="req">*</span></label>
+      <input type="text" id="name_en" placeholder="e.g. WANG XIAO MING（需與護照/身分證相符）">
+      <div class="error-msg" id="err-name-en">請填寫英文姓名</div>
+    </div>
+    <div class="field">
+      <label>直屬講師 <span class="req">*</span></label>
+      <input type="text" id="instructor" placeholder="請輸入您的直屬講師姓名">
+      <div class="error-msg" id="err-instructor">請填寫直屬講師</div>
+    </div>
+    <div class="field">
+      <label>聯絡電話 <span class="req">*</span></label>
+      <input type="tel" id="phone" placeholder="09XX-XXX-XXX">
+      <div class="error-msg" id="err-phone">請填寫有效的電話號碼</div>
+    </div>
+    <div class="field">
+      <label>電子信箱 <span class="req">*</span></label>
+      <input type="email" id="email" placeholder="your@email.com">
+      <div class="error-msg" id="err-email">請填寫有效的 Email</div>
+    </div>
+
+    <div class="btn-row">
+      <button class="btn-next" onclick="goNext(1)">下一步 →</button>
+    </div>
+  </div>
+
+  <!-- STEP 2 -->
+  <div class="form-section" id="section-2">
+    <div class="form-section-label">Step 02 — 場次選擇 &amp; 學員身份</div>
+
+    <div class="field">
+      <label>上課場次 <span class="req">*</span></label>
+      <div class="venue-options">
+        <div class="venue-option" onclick="selectVenue(this)">
+          <input type="radio" name="venue" value="taichung">
+          <div class="venue-radio"><div class="venue-radio-inner"></div></div>
+          <div class="venue-info">
+            <div class="venue-name">台中場</div>
+            <div class="venue-sub">7月6日（一）· 11:00–17:00</div>
+          </div>
+          <span class="venue-badge">台中</span>
+        </div>
+
+      </div>
+      <div class="error-msg" id="err-venue">請選擇上課場次</div>
+    </div>
+
+    <div class="field">
+      <label>學員身份 <span class="req">*</span></label>
+      <div class="identity-options">
+        <div class="identity-option" onclick="selectIdentity(this, 'earlybird')">
+          <input type="radio" name="identity" value="earlybird">
+          <div class="identity-name">早鳥優惠</div>
+          <div class="identity-fee" style="font-size:12px;color:rgba(201,169,110,0.7);margin-bottom:2px;">7/1 前報名</div>
+          <div class="identity-fee">$5,000</div>
+        </div>
+        <div class="identity-option" onclick="selectIdentity(this, 'nunu')">
+          <input type="radio" name="identity" value="nunu">
+          <div class="identity-name">NU 學員</div>
+          <div class="identity-fee">$5,000</div>
+        </div>
+        <div class="identity-option" onclick="selectIdentity(this, 'other')">
+          <input type="radio" name="identity" value="other">
+          <div class="identity-name">非學員</div>
+          <div class="identity-fee" style="font-size:12px;color:rgba(201,169,110,0.7);margin-bottom:2px;">早鳥後</div>
+          <div class="identity-fee">$6,600</div>
+        </div>
+      </div>
+      <div class="error-msg" id="err-identity">請選擇學員身份</div>
+    </div>
+
+    <div class="btn-row">
+      <button class="btn-prev" onclick="goPrev(2)">← 上一步</button>
+      <button class="btn-next" onclick="goNext(2)">下一步 →</button>
+    </div>
+  </div>
+
+  <!-- STEP 3 -->
+  <div class="form-section" id="section-3">
+    <div class="form-section-label">Step 03 — 付款方式</div>
+
+    <div class="field">
+      <label>付款方式</label>
+      <div class="payment-options">
+        <div class="payment-option selected" onclick="selectPayment(this,'transfer')">
+          <input type="radio" name="payment" value="transfer" checked>
+          <div class="pay-radio"><div class="pay-radio-inner"></div></div>
+          <div class="pay-info">
+            <div class="pay-name">銀行匯款</div>
+            <div class="pay-detail">上海銀行（代號 011）</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 銀行資訊 - 永遠顯示 -->
+      <div class="bank-box show" id="bankBox">
+        <strong>匯款資訊</strong><br>
+        戶名：艾昕全球美業有限公司<br>
+        銀行代號：011（上海銀行）<br>
+        帳號：51102000036889<br><br>
+        ⚠ 匯款完成後請保留收據，確認款項後將通知上課資訊
+      </div>
+
+      <!-- 後五碼輸入 -->
+      <div class="field" style="margin-top:20px;">
+        <label>匯款帳號後五碼 <span class="req">*</span></label>
+        <input type="text" id="acct5" maxlength="5" placeholder="請輸入匯款帳號後五碼" style="letter-spacing:4px;">
+        <div class="error-msg" id="err-acct5">請填寫匯款帳號後五碼</div>
+      </div>
+    </div>
+
+    <div class="btn-row">
+      <button class="btn-prev" onclick="goPrev(3)">← 上一步</button>
+      <button class="btn-next" onclick="submitForm()">確認送出 ✦</button>
+    </div>
+  </div>
+
+</div>
+
+<!-- SUCCESS -->
+<div class="success-screen" id="successScreen">
+  <div class="success-icon">✅</div>
+  <div class="success-title">報名完成</div>
+  <div class="success-divider"></div>
+
+  <!-- 截圖提醒 -->
+  <div style="background:rgba(201,169,110,0.08); border:1px solid var(--gold); padding:16px 20px; margin-bottom:16px; text-align:center;">
+    <div style="font-size:13px; color:var(--gold); letter-spacing:2px; font-family:'Cormorant Garamond',serif; margin-bottom:6px;">📸 請截圖保存此頁面</div>
+    <div style="font-size:11px; color:rgba(250,247,242,0.5); letter-spacing:1px; font-family:'Cormorant Garamond',serif;">離開後將無法再次查看報名資料</div>
+  </div>
+
+  <!-- 報名摘要 -->
+  <div class="success-summary" id="summaryBox"></div>
+
+  <!-- 後續步驟 -->
+  <div style="background:var(--card); border:1px solid var(--line); padding:24px; margin:16px 0; text-align:left;">
+    <div style="font-family:'Cormorant Garamond',serif; font-size:10px; letter-spacing:4px; color:var(--gold); margin-bottom:16px; text-transform:uppercase;">接下來的步驟</div>
+    <div style="font-size:13px; color:rgba(250,247,242,0.7); line-height:2.4; font-weight:200;">
+      <div style="display:flex; gap:12px; padding:8px 0; border-bottom:1px solid var(--line);">
+        <span style="color:var(--gold); min-width:20px;">1</span>
+        <span>完成銀行匯款（上海銀行 51102000036889）</span>
+      </div>
+      <div style="display:flex; gap:12px; padding:8px 0; border-bottom:1px solid var(--line);">
+        <span style="color:var(--gold); min-width:20px;">2</span>
+        <span style="color:#ff6b6b; font-weight:600; line-height:1.8;">請將完成報名頁面拍照或截圖，傳送至下圖官方 LINE 或 IG 私訊，方才確定完成報名程序</span>
+      </div>
+      <div style="display:flex; gap:12px; padding:8px 0; border-bottom:1px solid var(--line);">
+        <span style="color:var(--gold); min-width:20px;">3</span>
+        <span>我們確認款項後，將通知上課相關資訊</span>
+      </div>
+      <div style="display:flex; gap:12px; padding:8px 0;">
+        <span style="color:var(--gold); min-width:20px;">4</span>
+        <span>如有問題請透過以下方式聯繫</span>
+      </div>
+    </div>
+  </div>
+
+  <div style="text-align:center; padding:24px 0; border-top:1px solid var(--line); margin-top:8px;">
+    <div style="font-family:'Cormorant Garamond',serif; font-size:10px; letter-spacing:4px; color:var(--gold); margin-bottom:16px; text-transform:uppercase;">聯絡我們</div>
+    <a href="https://page.line.me/vyy3675g" style="display:inline-block; border:1px solid var(--gold); color:var(--gold); font-family:'Cormorant Garamond',serif; font-size:12px; letter-spacing:3px; padding:12px 28px; text-decoration:none; margin:6px;">LINE 聯絡</a>
+    <a href="https://www.instagram.com/nunushop_academy_tw" style="display:inline-block; border:1px solid rgba(201,169,110,0.4); color:rgba(201,169,110,0.7); font-family:'Cormorant Garamond',serif; font-size:12px; letter-spacing:3px; padding:12px 28px; text-decoration:none; margin:6px;">Instagram</a>
+  </div>
+</div>
+
+<div class="form-footer">© Nunushop Academy Taiwan &nbsp;·&nbsp; @nunushop_academy_tw</div>
+
+<script>
+  function showStep(step) {
+    document.querySelectorAll('.form-section').forEach(s => s.classList.remove('active'));
+    document.getElementById('section-' + step).classList.add('active');
+    for (let i = 1; i <= 3; i++) {
+      const ind = document.getElementById('step-ind-' + i);
+      ind.classList.remove('active','done');
+      if (i < step) ind.classList.add('done');
+      if (i === step) ind.classList.add('active');
+    }
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }
+
+  function goNext(step) { if (validateStep(step)) showStep(step + 1); }
+  function goPrev(step) { showStep(step - 1); }
+
+  function toggleErr(id, show) {
+    const el = document.getElementById(id);
+    show ? el.classList.add('show') : el.classList.remove('show');
+  }
+
+  function validateStep(step) {
+    let valid = true;
+    if (step === 1) {
+      const n = document.getElementById('name').value.trim();
+      const ne = document.getElementById('name_en').value.trim();
+      const ins = document.getElementById('instructor').value.trim();
+      const p = document.getElementById('phone').value.trim();
+      const e = document.getElementById('email').value.trim();
+      toggleErr('err-name', !n);
+      toggleErr('err-name-en', !ne);
+      toggleErr('err-instructor', !ins);
+      toggleErr('err-phone', !p);
+      toggleErr('err-email', !e || !e.includes('@'));
+      if (!n || !ne || !ins || !p || !e || !e.includes('@')) valid = false;
+    }
+    if (step === 2) {
+      const v = document.querySelector('.venue-option.selected');
+      const id = document.querySelector('.identity-option.selected');
+      toggleErr('err-venue', !v);
+      toggleErr('err-identity', !id);
+      if (!v || !id) valid = false;
+    }
+    if (step === 3) {
+      const pay = document.querySelector('.payment-option.selected');
+      toggleErr('err-payment', !pay);
+      if (!pay) valid = false;
+    }
+    return valid;
+  }
+
+  function selectVenue(el) {
+    document.querySelectorAll('.venue-option').forEach(v => v.classList.remove('selected'));
+    el.classList.add('selected');
+    toggleErr('err-venue', false);
+  }
+
+  function selectIdentity(el, val) {
+    document.querySelectorAll('.identity-option').forEach(v => v.classList.remove('selected'));
+    el.classList.add('selected');
+    toggleErr('err-identity', false);
+  }
+
+  function selectPayment(el, val) {
+    document.querySelectorAll('.payment-option').forEach(v => v.classList.remove('selected'));
+    el.classList.add('selected');
+    toggleErr('err-payment', false);
+    document.getElementById('bankBox').classList.toggle('show', val === 'transfer');
+    document.getElementById('linepayBox').classList.toggle('show', val === 'linepay');
+  }
+
+  function submitForm() {
+    const name = document.getElementById('name').value.trim();
+    const name_en = document.getElementById('name_en').value.trim();
+    const instructor = document.getElementById('instructor').value.trim();
+    const phone = document.getElementById('phone').value.trim();
+    const email = document.getElementById('email').value.trim();
+    const acct5 = document.getElementById('acct5').value.trim();
+    if (!acct5) { toggleErr('err-acct5', true); return; }
+    toggleErr('err-acct5', false);
+    const venue = document.querySelector('.venue-option.selected .venue-name')?.textContent || '';
+    const venueDate = document.querySelector('.venue-option.selected .venue-sub')?.textContent || '';
+    const identityEl = document.querySelector('.identity-option.selected');
+    const identity = identityEl?.querySelector('.identity-name')?.textContent || '';
+    const feeEls = identityEl?.querySelectorAll('.identity-fee');
+    const fee = feeEls?.[feeEls.length - 1]?.textContent || '';
+
+    const summary = document.getElementById('summaryBox');
+    summary.innerHTML = `
+      <div class="summary-row"><span class="summary-label">中文姓名</span><span class="summary-value">${name}</span></div>
+      <div class="summary-row"><span class="summary-label">英文姓名</span><span class="summary-value">${name_en}</span></div>
+      <div class="summary-row"><span class="summary-label">直屬講師</span><span class="summary-value">${instructor}</span></div>
+      <div class="summary-row"><span class="summary-label">電話</span><span class="summary-value">${phone}</span></div>
+      <div class="summary-row"><span class="summary-label">Email</span><span class="summary-value">${email}</span></div>
+      <div class="summary-row"><span class="summary-label">場次</span><span class="summary-value">${venue}・${venueDate}</span></div>
+      <div class="summary-row"><span class="summary-label">身份</span><span class="summary-value">${identity}・${fee}</span></div>
+      <div class="summary-row"><span class="summary-label">付款</span><span class="summary-value">銀行匯款</span></div>
+      <div class="summary-row"><span class="summary-label">帳號後五碼</span><span class="summary-value" style="color:var(--gold);letter-spacing:3px;">${acct5}</span></div>
+    `;
+    document.getElementById('formWrapper').style.display = 'none';
+    document.getElementById('successScreen').classList.add('show');
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+
+    fetch('https://formspree.io/f/mzdwvqay', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
+      body: JSON.stringify({
+        中文姓名: name, 英文姓名: name_en, 直屬講師: instructor,
+        電話: phone, Email: email,
+        場次: `${venue}・${venueDate}`,
+        學員身份: `${identity}・${fee}`,
+        付款方式: '銀行匯款',
+        匯款帳號後五碼: acct5,
+        _subject: `【PIF課程報名】${name}・${venue}`
+      })
+    }).catch(() => {});
+  }
+</script>
+</body>
+</html>m

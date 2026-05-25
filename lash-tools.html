@@ -1,0 +1,814 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>22份工具完整集合｜睫毛管理法規層面透析</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Noto+Serif+TC:wght@300;400;600;900&family=Noto+Sans+TC:wght@300;400;500&family=DM+Mono:wght@300;400;500&display=swap');
+:root{--bg:#0d0c0a;--s1:#161412;--s2:#1e1c18;--s3:#242018;--bd:#2a2722;--bd2:#3a3630;--text:#ede8de;--muted:#7a7468;--dim:#484440;--gold:#c9a84c;--gold-d:#6a5828;--gold-bg:#1a1508;--red:#e08878;--red-d:#8b2a1a;--red-bg:#180a08;--blue:#6a90d8;--blue-d:#2a4080;--blue-bg:#0a0f20;--green:#70c888;--grn-d:#2a6040;--grn-bg:#0a1810;--amber:#d4a040;--amb-d:#7a5010;--amb-bg:#1a1005;--purple:#a080d8;--pur-d:#4a3080;--pur-bg:#100a20;--navy:#5a88c8;--nav-d:#1e3a5a;--nav-bg:#080f1a;--paper:#f5f1e8;--p-ink:#1a1814;--p-muted:#7a7060;--p-rule:#ddd5c4;--p-s1:#faf7f2;--p-s2:#f0ece4;}
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box;}
+body{background:var(--bg);color:var(--text);font-family:'Noto Sans TC',sans-serif;font-weight:300;line-height:1.7;min-height:100vh;}
+.layout{display:grid;grid-template-columns:240px 1fr;min-height:100vh;align-items:start;}
+.sidebar{background:var(--s1);border-right:1px solid var(--bd2);position:sticky;top:0;align-self:start;max-height:100vh;overflow-y:auto;scrollbar-width:thin;scrollbar-color:var(--bd2) transparent;}
+.sidebar::-webkit-scrollbar{width:4px;}.sidebar::-webkit-scrollbar-thumb{background:var(--bd2);}
+.sb-header{padding:20px 18px 14px;border-bottom:1px solid var(--bd);position:sticky;top:0;background:var(--s1);z-index:2;}
+.sb-title{font-family:'Noto Serif TC',serif;font-size:.82rem;font-weight:900;color:var(--gold);line-height:1.3;margin-bottom:3px;}
+.sb-sub{font-family:'DM Mono',monospace;font-size:7px;letter-spacing:1.5px;text-transform:uppercase;color:var(--dim);}
+.sb-count{display:inline-block;background:var(--gold-bg);border:1px solid var(--gold-d);color:var(--gold);font-family:'DM Mono',monospace;font-size:7px;letter-spacing:1px;padding:1px 7px;margin-top:6px;}
+.sb-group{padding:10px 0;border-bottom:1px solid var(--bd);}
+.sb-group:last-child{border-bottom:none;}
+.sg-label{font-family:'DM Mono',monospace;font-size:7px;letter-spacing:2px;text-transform:uppercase;color:var(--dim);padding:4px 18px 6px;display:flex;align-items:center;gap:8px;}
+.sg-label::after{content:'';flex:1;height:1px;background:var(--bd);}
+.sb-btn{display:flex;align-items:center;gap:10px;padding:7px 18px;background:transparent;border:none;color:var(--muted);cursor:pointer;width:100%;text-align:left;transition:all .15s;border-left:2px solid transparent;font-family:'Noto Sans TC',sans-serif;font-weight:300;}
+.sb-btn:hover{color:var(--text);background:rgba(255,255,255,.03);}
+.sb-btn.active{color:var(--text);background:rgba(255,255,255,.05);}
+.sb-num{font-family:'DM Mono',monospace;font-size:8px;color:var(--dim);flex-shrink:0;width:18px;text-align:right;}
+.sb-btn.active .sb-num{color:inherit;}
+.sb-name{font-size:.78rem;line-height:1.4;}
+.cat-a .sb-btn.active{border-color:var(--gold);color:var(--gold);}
+.cat-b .sb-btn.active{border-color:var(--red);color:var(--red);}
+.cat-c .sb-btn.active{border-color:var(--blue);color:var(--blue);}
+.cat-d .sb-btn.active{border-color:var(--navy);color:var(--navy);}
+.cat-e .sb-btn.active{border-color:var(--amber);color:var(--amber);}
+.cat-f .sb-btn.active{border-color:var(--red);color:var(--red);}
+.cat-g .sb-btn.active{border-color:var(--purple);color:var(--purple);}
+.cat-h .sb-btn.active{border-color:var(--green);color:var(--green);}
+.main{overflow-y:visible;scrollbar-width:thin;scrollbar-color:var(--bd2) transparent;background:var(--paper);}
+.main::-webkit-scrollbar{width:4px;}.main::-webkit-scrollbar-thumb{background:var(--bd2);}
+.tool-panel{display:none;}
+.tool-panel.active{display:block;}
+.tp-bar{padding:16px 36px;border-bottom:1px solid var(--bd);display:flex;justify-content:space-between;align-items:center;background:var(--s2);position:sticky;top:0;z-index:10;}
+.tpb-left{display:flex;align-items:center;gap:12px;}
+.tpb-num{font-family:'DM Mono',monospace;font-size:9px;letter-spacing:2px;color:var(--dim);}
+.tpb-title{font-family:'Noto Serif TC',serif;font-size:.95rem;font-weight:600;}
+.tpb-tags{display:flex;gap:5px;}
+.tpb-tag{font-family:'DM Mono',monospace;font-size:7px;letter-spacing:1.5px;text-transform:uppercase;padding:2px 8px;border-radius:1px;border:1px solid;}
+.tp-content{padding:36px 36px 60px;background:var(--paper);color:var(--p-ink);font-family:'Noto Sans TC',sans-serif;font-weight:300;min-height:80vh;}
+.tool-header{margin-bottom:28px;padding-bottom:20px;border-bottom:2px solid;}
+.th-label{font-family:'DM Mono',monospace;font-size:8px;letter-spacing:3px;text-transform:uppercase;color:var(--p-muted);margin-bottom:8px;}
+.th-title{font-family:'Noto Serif TC',serif;font-size:1.5rem;font-weight:900;line-height:1.25;margin-bottom:4px;}
+.th-sub{font-size:.8rem;color:var(--p-muted);line-height:1.6;}
+.instr{padding:14px 18px;margin-bottom:24px;font-size:.83rem;line-height:1.7;border-left:3px solid;}
+.sec-lbl{font-family:'DM Mono',monospace;font-size:8px;letter-spacing:2.5px;text-transform:uppercase;color:var(--p-muted);margin:20px 0 10px;display:flex;align-items:center;gap:10px;}
+.sec-lbl::after{content:'';flex:1;height:1px;background:var(--p-rule);}
+.tool-table{width:100%;border-collapse:collapse;font-size:.8rem;margin:8px 0;}
+.tool-table th{font-family:'DM Mono',monospace;font-size:7.5px;letter-spacing:2px;text-transform:uppercase;color:var(--p-muted);font-weight:400;text-align:left;padding:8px 12px;border-bottom:1px solid var(--p-rule);background:var(--p-s2);}
+.tool-table td{padding:10px 12px;border-bottom:1px solid var(--p-rule);vertical-align:top;line-height:1.55;}
+.tool-table tr:last-child td{border-bottom:none;}
+.two-col{display:grid;grid-template-columns:1fr 1fr;gap:3px;margin:8px 0;}
+.col-box{padding:16px;border:1px solid var(--p-rule);}
+.cb-label{font-family:'DM Mono',monospace;font-size:7.5px;letter-spacing:2px;text-transform:uppercase;margin-bottom:10px;}
+.cb-list{list-style:none;display:flex;flex-direction:column;gap:6px;}
+.cb-list li{font-size:.8rem;display:flex;gap:8px;line-height:1.5;padding:5px 0;border-bottom:1px solid var(--p-rule);}
+.cb-list li:last-child{border-bottom:none;}
+.cb-mark{font-family:'DM Mono',monospace;font-size:9px;flex-shrink:0;margin-top:1px;}
+.check-rows{border:1px solid var(--p-rule);overflow:hidden;}
+.cr-header{display:grid;padding:8px 14px;background:var(--p-s2);border-bottom:1px solid var(--p-rule);font-family:'DM Mono',monospace;font-size:7px;letter-spacing:2px;text-transform:uppercase;color:var(--p-muted);}
+.cr-row{display:grid;border-bottom:1px solid var(--p-rule);align-items:center;}
+.cr-row:last-child{border-bottom:none;}
+.cr-cell{padding:10px 14px;font-size:.82rem;line-height:1.55;border-right:1px solid var(--p-rule);}
+.cr-cell:last-child{border-right:none;}
+.cr-check{width:16px;height:16px;border:1.5px solid var(--p-rule);flex-shrink:0;}
+.note-box{padding:12px 16px;border:1px solid var(--p-rule);background:var(--p-s1);font-size:.75rem;color:var(--p-muted);line-height:1.65;margin:10px 0;}
+.note-box strong{font-family:'DM Mono',monospace;font-size:7px;letter-spacing:1.5px;text-transform:uppercase;display:block;margin-bottom:4px;}
+.print-footer{margin-top:28px;padding-top:14px;border-top:1px solid var(--p-rule);display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:8px;}
+.pf-note{font-size:.7rem;color:var(--p-muted);line-height:1.6;max-width:480px;}
+.pf-mono{font-family:'DM Mono',monospace;font-size:7px;letter-spacing:1.5px;color:var(--p-muted);text-align:right;text-transform:uppercase;line-height:2;}
+.pill{font-family:'DM Mono',monospace;font-size:7.5px;letter-spacing:.5px;padding:2px 9px;border-radius:1px;border:1px solid;}
+.dim-block{border:1px solid var(--p-rule);margin-bottom:4px;overflow:hidden;}
+.dim-head{padding:10px 16px;display:flex;align-items:center;gap:10px;border-bottom:1px solid var(--p-rule);}
+.dh-icon{width:28px;height:28px;border-radius:1px;display:flex;align-items:center;justify-content:center;font-family:'DM Mono',monospace;font-size:9px;font-weight:500;flex-shrink:0;}
+.dh-title{font-family:'Noto Serif TC',serif;font-size:.88rem;font-weight:600;}
+.dh-desc{font-size:.72rem;color:var(--p-muted);margin-left:auto;}
+.qr-row{display:grid;grid-template-columns:1fr 80px 80px 80px;border-bottom:1px solid var(--p-rule);}
+.qr-row:last-child{border-bottom:none;}
+.qr-row.qr-header{background:var(--p-s2);}
+.qr-q{padding:10px 14px;font-size:.8rem;line-height:1.5;border-right:1px solid var(--p-rule);display:flex;align-items:center;}
+.qr-row.qr-header .qr-q{font-family:'DM Mono',monospace;font-size:7px;letter-spacing:1.5px;text-transform:uppercase;color:var(--p-muted);}
+.qr-opt{display:flex;align-items:center;justify-content:center;border-right:1px solid var(--p-rule);cursor:pointer;padding:8px 4px;}
+.qr-opt:last-child{border-right:none;}
+.qr-row.qr-header .qr-opt{font-family:'DM Mono',monospace;font-size:7px;letter-spacing:1px;text-transform:uppercase;color:var(--p-muted);}
+.radio-circle{width:15px;height:15px;border-radius:50%;border:1.5px solid var(--p-rule);cursor:pointer;transition:all .15s;}
+/* T04 prefixed */
+.t04-canvas{padding:36px 36px 60px;background:var(--paper);color:var(--p-ink);}
+.t04-hd{margin-bottom:24px;padding-bottom:20px;border-bottom:2px solid #b8922a;}
+.t04-hd-label{font-family:'DM Mono',monospace;font-size:8px;letter-spacing:3px;text-transform:uppercase;color:var(--p-muted);margin-bottom:8px;}
+.t04-hd-title{font-family:'Noto Serif TC',serif;font-size:1.4rem;font-weight:900;color:#8a6e2a;line-height:1.25;margin-bottom:4px;}
+.t04-hd-sub{font-size:.8rem;color:var(--p-muted);line-height:1.6;}
+.t04-premise{background:#fdf6e4;border:1px solid #d4b870;border-left:3px solid #7a5010;padding:14px 18px;font-size:.83rem;color:#7a5010;line-height:1.7;margin-bottom:20px;}
+.t04-trigger-row{display:grid;grid-template-columns:1fr 1fr 1fr;gap:3px;margin:10px 0;}
+.t04-trig-card{padding:14px;background:var(--p-s1);border:1px solid var(--p-rule);text-align:center;}
+.t04-tc-icon{font-family:'DM Mono',monospace;font-size:8px;letter-spacing:1.5px;text-transform:uppercase;color:#8b2a1a;margin-bottom:6px;}
+.t04-tc-text{font-size:.78rem;line-height:1.5;}
+.t04-trig-result{background:#fdf0ed;border:1px solid #e0a898;padding:10px 14px;text-align:center;font-size:.8rem;color:#8b2a1a;font-weight:500;margin-bottom:20px;}
+.t04-roles-layout{display:grid;grid-template-columns:1fr 2fr 1fr;gap:3px;margin-bottom:20px;}
+.t04-role-side{border:1px solid var(--p-rule);}
+.t04-rs-head{padding:12px 14px;border-bottom:1px solid var(--p-rule);background:var(--p-s2);}
+.t04-rs-label{font-family:'DM Mono',monospace;font-size:7px;letter-spacing:2px;text-transform:uppercase;color:var(--p-muted);margin-bottom:4px;}
+.t04-rs-title{font-family:'Noto Serif TC',serif;font-size:.88rem;font-weight:600;}
+.t04-rs-body{padding:12px 14px;}
+.t04-rs-item{font-size:.78rem;display:flex;gap:8px;padding:4px 0;border-bottom:1px solid var(--p-rule);}
+.t04-rs-item:last-of-type{border-bottom:none;}
+.t04-rs-bullet{color:var(--p-muted);flex-shrink:0;}
+.t04-rs-note{margin-top:10px;font-size:.72rem;color:var(--p-muted);font-style:italic;line-height:1.5;}
+.t04-role-center{border:1.5px solid #e08878;background:#fdf8f7;}
+.t04-rc-badge{background:#8b2a1a;color:#fdf0ed;font-family:'DM Mono',monospace;font-size:7px;letter-spacing:1.5px;text-transform:uppercase;padding:5px 14px;text-align:center;}
+.t04-rc-head{padding:12px 14px;border-bottom:1px solid #e0a898;display:flex;align-items:center;gap:12px;}
+.t04-rch-icon{width:36px;height:36px;background:#8b2a1a;color:#fdf0ed;border-radius:50%;display:flex;align-items:center;justify-content:center;font-family:'Noto Serif TC',serif;font-size:1rem;font-weight:900;flex-shrink:0;}
+.t04-rch-role{font-family:'DM Mono',monospace;font-size:7px;letter-spacing:1.5px;text-transform:uppercase;color:#8b2a1a;}
+.t04-rch-title{font-family:'Noto Serif TC',serif;font-size:.92rem;font-weight:600;color:#8b2a1a;}
+.t04-rc-body{padding:12px 14px;}
+.t04-risk-paths{display:flex;flex-direction:column;gap:6px;margin-bottom:12px;}
+.t04-risk-path{background:var(--p-s1);border:1px solid #e0a898;padding:10px 12px;}
+.t04-rp-head{display:flex;align-items:center;gap:8px;margin-bottom:4px;}
+.t04-rp-num{font-family:'DM Mono',monospace;font-size:7px;letter-spacing:1.5px;text-transform:uppercase;color:#8b2a1a;flex-shrink:0;}
+.t04-rp-title{font-size:.8rem;font-weight:500;color:#8b2a1a;}
+.t04-rp-body{font-size:.75rem;color:#a06050;line-height:1.55;margin-bottom:4px;}
+.t04-rp-result{font-family:'DM Mono',monospace;font-size:7.5px;color:#8b2a1a;}
+.t04-consequences{background:#fdf0ed;border:1px solid #e0a898;padding:10px 12px;}
+.t04-cons-label{font-family:'DM Mono',monospace;font-size:7.5px;letter-spacing:2px;text-transform:uppercase;color:#8b2a1a;margin-bottom:6px;}
+.t04-cons-list{list-style:none;display:flex;flex-direction:column;gap:4px;}
+.t04-cons-list li{font-size:.75rem;color:#a06050;display:flex;gap:8px;}
+.t04-cons-mark{flex-shrink:0;color:#8b2a1a;}
+.t04-protect-grid{display:grid;grid-template-columns:1fr 1fr 1fr;gap:3px;margin-top:10px;}
+.t04-protect-card{padding:14px;background:var(--p-s1);border:1px solid var(--p-rule);border-top:3px solid #2a5a3a;}
+.t04-pc-num{font-family:'DM Mono',monospace;font-size:20px;color:var(--p-rule);line-height:1;margin-bottom:8px;}
+.t04-pc-title{font-size:.82rem;font-weight:500;color:#2a5a3a;margin-bottom:5px;}
+.t04-pc-desc{font-size:.72rem;color:var(--p-muted);line-height:1.55;margin-bottom:6px;}
+.t04-pc-when{font-family:'DM Mono',monospace;font-size:7.5px;color:#2a5a3a;}
+.t04-law-table{width:100%;border-collapse:collapse;font-size:.78rem;}
+.t04-law-table th{font-family:'DM Mono',monospace;font-size:7px;letter-spacing:2px;text-transform:uppercase;color:var(--p-muted);font-weight:400;text-align:left;padding:8px 12px;border-bottom:1px solid var(--p-rule);background:var(--p-s2);}
+.t04-law-table td{padding:9px 12px;border-bottom:1px solid var(--p-rule);vertical-align:top;line-height:1.5;}
+.t04-law-table tr.t04-op td{background:#fdf8f7;}
+.t04-reminder{display:grid;grid-template-columns:1fr 1fr;gap:3px;margin-bottom:20px;}
+.t04-reminder>div{padding:16px 18px;border:1px solid var(--p-rule);}
+.t04-rm-label{font-family:'DM Mono',monospace;font-size:7.5px;letter-spacing:2px;text-transform:uppercase;margin-bottom:6px;}
+.t04-rm-title{font-family:'Noto Serif TC',serif;font-size:.88rem;font-weight:600;margin-bottom:8px;line-height:1.4;}
+.t04-rm-list{list-style:none;display:flex;flex-direction:column;gap:4px;}
+.t04-rm-list li{font-size:.75rem;display:flex;gap:8px;line-height:1.5;}
+.t04-rm-mark{flex-shrink:0;}
+.t04-footer{padding-top:14px;border-top:1px solid var(--p-rule);display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:8px;}
+.t04-footer-note{font-size:.7rem;color:var(--p-muted);line-height:1.6;max-width:480px;}
+.t04-footer-mono{font-family:'DM Mono',monospace;font-size:7px;letter-spacing:1.5px;color:var(--p-muted);text-align:right;text-transform:uppercase;line-height:2;}
+@media(max-width:760px){.layout{grid-template-columns:1fr;}.sidebar{position:fixed;left:-240px;top:0;z-index:100;transition:left .3s;height:100vh;width:240px;}.sidebar.open{left:0;}.mobile-menu-btn{display:flex !important;}#mobileNav{display:block !important;}}
+@media print{.sidebar,.tp-bar,.mobile-menu-btn{display:none;}.layout{grid-template-columns:1fr;}.main{height:auto;overflow:visible;}.tool-panel{display:block!important;page-break-before:always;}.tool-panel:first-child{page-break-before:avoid;}.tp-content,.t04-canvas{background:white;color:black;min-height:auto;}}
+.mobile-menu-btn{display:none;position:fixed;top:12px;left:12px;z-index:200;background:var(--s1);border:1px solid var(--bd2);color:var(--muted);padding:8px 10px;cursor:pointer;font-family:'DM Mono',monospace;font-size:8px;letter-spacing:1px;text-transform:uppercase;}
+</style>
+</head>
+<body>
+<button class="mobile-menu-btn" id="menuBtn">&#9776; 選單</button>
+<div class="layout">
+<nav class="sidebar" id="sidebar">
+<div class="sb-header"><div class="sb-title">睫毛管理法規<br>透析研討會</div><div class="sb-sub">帶走的工具集合</div><div class="sb-count">22份工具 · 全日研討會</div></div>
+<div class="sb-group cat-a"><div class="sg-label">原有課程附件</div>
+<button class="sb-btn active" data-tool="t01"><span class="sb-num">01</span><span class="sb-name">產品成分核查清單</span></button>
+<button class="sb-btn" data-tool="t02"><span class="sb-num">02</span><span class="sb-name">客人問答話術卡</span></button>
+<button class="sb-btn" data-tool="t03"><span class="sb-num">03</span><span class="sb-name">教學者產品審查框架</span></button></div>
+<div class="sb-group cat-b"><div class="sg-label">法規核心圖示</div>
+<button class="sb-btn" data-tool="t04"><span class="sb-num">04</span><span class="sb-name">罰則歸屬地圖</span></button>
+<button class="sb-btn" data-tool="t05"><span class="sb-num">05</span><span class="sb-name">稽查現場運作流程圖</span></button>
+<button class="sb-btn" data-tool="t06"><span class="sb-num">06</span><span class="sb-name">PIF 連帶風險地圖</span></button></div>
+<div class="sb-group cat-c"><div class="sg-label">風險評估工具</div>
+<button class="sb-btn" data-tool="t07"><span class="sb-num">07</span><span class="sb-name">風險判斷工具（課前）</span></button>
+<button class="sb-btn" data-tool="t08"><span class="sb-num">08</span><span class="sb-name">風險判斷工具（課後）</span></button></div>
+<div class="sb-group cat-d"><div class="sg-label">申訴與救濟</div>
+<button class="sb-btn" data-tool="t09"><span class="sb-num">09</span><span class="sb-name">裁處書五欄位對照卡</span></button>
+<button class="sb-btn" data-tool="t10"><span class="sb-num">10</span><span class="sb-name">申訴 vs 改正判斷流程</span></button>
+<button class="sb-btn" data-tool="t11"><span class="sb-num">11</span><span class="sb-name">訴願資源清單</span></button></div>
+<div class="sb-group cat-e"><div class="sg-label">破解法規迷思</div>
+<button class="sb-btn" data-tool="t12"><span class="sb-num">12</span><span class="sb-name">五大迷思對照卡</span></button>
+<button class="sb-btn" data-tool="t13"><span class="sb-num">13</span><span class="sb-name">法規資訊可信度清單</span></button></div>
+<div class="sb-group cat-f"><div class="sg-label">社群宣傳邊界</div>
+<button class="sb-btn" data-tool="t14"><span class="sb-num">14</span><span class="sb-name">可以說 vs 不能說對照卡</span></button>
+<button class="sb-btn" data-tool="t15"><span class="sb-num">15</span><span class="sb-name">社群自我審查兩問題卡</span></button>
+<button class="sb-btn" data-tool="t16"><span class="sb-num">16</span><span class="sb-name">10個違規詞彙替換建議</span></button></div>
+<div class="sb-group cat-g"><div class="sg-label">國際市場工具</div>
+<button class="sb-btn" data-tool="t17"><span class="sb-num">17</span><span class="sb-name">四市場法規對照表</span></button>
+<button class="sb-btn" data-tool="t18"><span class="sb-num">18</span><span class="sb-name">跨市場免責聲明範本</span></button>
+<button class="sb-btn" data-tool="t19"><span class="sb-num">19</span><span class="sb-name">各市場主管機關入口</span></button></div>
+<div class="sb-group cat-h"><div class="sg-label">合規品牌差異化</div>
+<button class="sb-btn" data-tool="t20"><span class="sb-num">20</span><span class="sb-name">個人化合規聲明</span></button>
+<button class="sb-btn" data-tool="t21"><span class="sb-num">21</span><span class="sb-name">合規工作室社群文案</span></button>
+<button class="sb-btn" data-tool="t22"><span class="sb-num">22</span><span class="sb-name">四場景行動清單</span></button></div>
+</nav>
+<main class="main" id="main">
+<div id="mobileNav" style="display:none;background:#161412;border-bottom:1px solid #3a3630;padding:10px 14px;position:sticky;top:0;z-index:20;">
+<select id="mobileSelect" style="width:100%;background:#1e1c18;color:#ede8de;border:1px solid #3a3630;padding:8px 10px;font-family:'Noto Sans TC',sans-serif;font-size:0.82rem;border-radius:2px;-webkit-appearance:none;appearance:none;cursor:pointer;background-image:url('data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 width=%2210%22 height=%226%22 viewBox=%220 0 10 6%22><path d=%22M0 0l5 6 5-6z%22 fill=%22%237a7468%22/></svg>');background-repeat:no-repeat;background-position:right 10px center;">
+<optgroup label="原有課程附件"><option value="t01">01 產品成分核查清單</option><option value="t02">02 客人問答話術卡</option><option value="t03">03 教學者產品審查框架</option></optgroup>
+<optgroup label="法規核心圖示"><option value="t04">04 罰則歸屬地圖</option><option value="t05">05 稽查現場運作流程圖</option><option value="t06">06 PIF 連帶風險地圖</option></optgroup>
+<optgroup label="風險評估工具"><option value="t07">07 風險判斷工具（課前）</option><option value="t08">08 風險判斷工具（課後）</option></optgroup>
+<optgroup label="申訴與救濟"><option value="t09">09 裁處書五欄位對照卡</option><option value="t10">10 申訴 vs 改正判斷流程</option><option value="t11">11 訴願資源清單</option></optgroup>
+<optgroup label="破解法規迷思"><option value="t12">12 五大迷思對照卡</option><option value="t13">13 法規資訊可信度清單</option></optgroup>
+<optgroup label="社群宣傳邊界"><option value="t14">14 可以說 vs 不能說對照卡</option><option value="t15">15 社群自我審查兩問題卡</option><option value="t16">16 10個違規詞彙替換建議</option></optgroup>
+<optgroup label="國際市場工具"><option value="t17">17 四市場法規對照表</option><option value="t18">18 跨市場免責聲明範本</option><option value="t19">19 各市場主管機關入口</option></optgroup>
+<optgroup label="合規品牌差異化"><option value="t20">20 個人化合規聲明</option><option value="t21">21 合規工作室社群文案</option><option value="t22">22 四場景行動清單</option></optgroup>
+</select>
+</div>
+<!-- T01 -->
+<div class="tool-panel active" id="t01">
+<div class="tp-bar" style="border-color:var(--gold-d);"><div class="tpb-left"><span class="tpb-num">01</span><span class="tpb-title" style="color:var(--gold);">產品成分核查清單</span></div><div class="tpb-tags"><span class="tpb-tag" style="color:var(--gold);border-color:var(--gold-d);background:var(--gold-bg);">實體印刷</span><span class="tpb-tag" style="color:var(--green);border-color:var(--grn-d);background:var(--grn-bg);">每次入庫使用</span></div></div>
+<div class="tp-content">
+<div class="tool-header" style="border-color:#b8922a;"><div class="th-label">課程附件 01 of 22</div><div class="th-title" style="color:#8a6e2a;">產品成分核查清單</div><div class="th-sub">進新貨時使用 · 每次入庫前對照 · 拿到新產品五分鐘內知道能不能用</div></div>
+<div class="instr" style="border-color:#b8922a;background:#fdf6e8;color:#7a5010;"><strong>使用方式：</strong>拿到新產品，翻到成分表（Ingredients），從第一區開始對照。只要在第一區找到任何一個成分，立即停止採購——無論品牌知名度或供應商說法為何。</div>
+<div class="sec-lbl" style="color:#b8922a;">第一區 · 立即停止採購</div>
+<table class="tool-table"><thead><tr><th>成分名稱（INCI）</th><th>中文名稱</th><th>作用說明</th><th>判定</th></tr></thead><tbody>
+<tr><td>Thioglycolic Acid / TGA</td><td>硫乙醇酸</td><td>燙髮還原劑核心成分，打斷毛髮雙硫鍵</td><td><span class="pill" style="color:#8b2a1a;border-color:#e0a898;background:#fdf0ed;">禁止</span></td></tr>
+<tr><td>Ammonium Thioglycolate / ATG</td><td>硫乙醇酸銨</td><td>燙髮劑主要活性成分，效力強</td><td><span class="pill" style="color:#8b2a1a;border-color:#e0a898;background:#fdf0ed;">禁止</span></td></tr>
+<tr><td>Cysteamine / Cysteamine HCl</td><td>半胱胺／鹽酸半胱胺</td><td>新型燙髮還原劑，台灣歸類燙髮劑成分</td><td><span class="pill" style="color:#8b2a1a;border-color:#e0a898;background:#fdf0ed;">禁止</span></td></tr>
+<tr><td>Glyceryl Thioglycolate</td><td>硫乙醇酸甘油酯</td><td>燙髮還原劑，常見於酸性燙</td><td><span class="pill" style="color:#8b2a1a;border-color:#e0a898;background:#fdf0ed;">禁止</span></td></tr>
+<tr><td>L-Cysteine</td><td>半胱胺酸</td><td>胺基酸類還原劑，高濃度時具燙髮效力</td><td><span class="pill" style="color:#8b2a1a;border-color:#e0a898;background:#fdf0ed;">高濃度禁止</span></td></tr>
+</tbody></table>
+<div class="sec-lbl" style="color:#7a5010;margin-top:16px;">第二區 · 需進一步確認</div>
+<table class="tool-table"><thead><tr><th>成分名稱</th><th>說明</th><th>判定</th></tr></thead><tbody>
+<tr><td>Sodium Bromate / 溴酸鈉</td><td>燙髮第二劑（定型劑），單獨出現需確認用途</td><td><span class="pill" style="color:#7a5010;border-color:#d4b870;background:#fdf6e4;">確認用途</span></td></tr>
+<tr><td>Hydrogen Peroxide / 過氧化氫</td><td>廣泛用於漂白、定型，高濃度需注意</td><td><span class="pill" style="color:#7a5010;border-color:#d4b870;background:#fdf6e4;">確認濃度</span></td></tr>
+<tr><td>Keratin Protein（高分子量）</td><td>單獨存在通常安全，需確認無同時含第一區成分</td><td><span class="pill" style="color:#7a5010;border-color:#d4b870;background:#fdf6e4;">對照第一區</span></td></tr>
+</tbody></table>
+<div class="sec-lbl" style="color:#2a5a3a;margin-top:16px;">第三區 · 一般安全成分</div>
+<table class="tool-table"><thead><tr><th>成分名稱</th><th>說明</th><th>判定</th></tr></thead><tbody>
+<tr><td>Hydrolyzed Keratin / 水解角蛋白</td><td>護髮、修護用途，廣泛存在於保養品</td><td><span class="pill" style="color:#2a5a3a;border-color:#90c4a0;background:#edf5ee;">安全</span></td></tr>
+<tr><td>Keratin Amino Acids / 角蛋白胺基酸</td><td>小分子修護成分，不具還原功效</td><td><span class="pill" style="color:#2a5a3a;border-color:#90c4a0;background:#edf5ee;">安全</span></td></tr>
+<tr><td>Panthenol / 泛醇（維他命B5）</td><td>保濕、修護，常見護髮成分</td><td><span class="pill" style="color:#2a5a3a;border-color:#90c4a0;background:#edf5ee;">安全</span></td></tr>
+<tr><td>Silk Protein / Sericin</td><td>絲蛋白／蠶絲蛋白，潤澤修護，無還原功效</td><td><span class="pill" style="color:#2a5a3a;border-color:#90c4a0;background:#edf5ee;">安全</span></td></tr>
+</tbody></table>
+<div class="sec-lbl" style="margin-top:16px;">進新貨四步驟</div>
+<div style="display:grid;grid-template-columns:repeat(4,1fr);gap:3px;margin-bottom:16px;">
+<div style="padding:12px;background:var(--p-s1);border:1px solid var(--p-rule);text-align:center;"><div style="font-family:'DM Mono',monospace;font-size:20px;color:var(--p-rule);line-height:1;margin-bottom:6px;">01</div><div style="font-size:.75rem;line-height:1.5;">找到產品<br>成分表</div></div>
+<div style="padding:12px;background:var(--p-s1);border:1px solid var(--p-rule);text-align:center;"><div style="font-family:'DM Mono',monospace;font-size:20px;color:var(--p-rule);line-height:1;margin-bottom:6px;">02</div><div style="font-size:.75rem;line-height:1.5;">對照<br>第一區</div></div>
+<div style="padding:12px;background:var(--p-s1);border:1px solid var(--p-rule);text-align:center;"><div style="font-family:'DM Mono',monospace;font-size:20px;color:var(--p-rule);line-height:1;margin-bottom:6px;">03</div><div style="font-size:.75rem;line-height:1.5;">確認PIF<br>文件</div></div>
+<div style="padding:12px;background:var(--p-s1);border:1px solid var(--p-rule);text-align:center;"><div style="font-family:'DM Mono',monospace;font-size:20px;color:var(--p-rule);line-height:1;margin-bottom:6px;">04</div><div style="font-size:.75rem;line-height:1.5;">確認中文<br>標示</div></div>
+</div>
+<div class="note-box"><strong>重要提醒</strong>成分表看不到不代表沒有。來源不明、無中文標示、供應商無法提供文件的產品，視同高風險產品處理。</div>
+<div class="print-footer"><div class="pf-note">依《化粧品衛生安全管理法》現行規定製作，僅供課程教學使用。</div><div class="pf-mono">附件 01／22 · 2026.05</div></div>
+</div></div>
+<!-- T02 -->
+<div class="tool-panel" id="t02">
+<div class="tp-bar" style="border-color:var(--gold-d);"><div class="tpb-left"><span class="tpb-num">02</span><span class="tpb-title" style="color:var(--gold);">客人問答話術卡</span></div><div class="tpb-tags"><span class="tpb-tag" style="color:var(--gold);border-color:var(--gold-d);background:var(--gold-bg);">實體印刷</span><span class="tpb-tag" style="color:var(--blue);border-color:var(--blue-d);background:var(--blue-bg);">遇客人質疑時使用</span></div></div>
+<div class="tp-content">
+<div class="tool-header" style="border-color:#b8922a;"><div class="th-label">課程附件 02 of 22</div><div class="th-title" style="color:#8a6e2a;">客人問答話術卡</div><div class="th-sub">遇到客人質疑時，有根據地回答——不閃避、不誇大</div></div>
+<div class="instr" style="border-color:#b8922a;background:#fdf6e8;color:#7a5010;"><strong>核心原則：</strong>說你確認過的事，不說你不確定的事。</div>
+<div class="sec-lbl">安全性與合法性疑問</div>
+<div style="border:1px solid var(--p-rule);overflow:hidden;margin-bottom:3px;">
+<div style="background:var(--p-s2);padding:8px 16px;border-bottom:1px solid var(--p-rule);display:flex;gap:10px;align-items:center;"><span style="font-family:'DM Mono',monospace;font-size:8px;letter-spacing:1.5px;color:var(--p-muted);">情境01</span><span style="font-size:.78rem;color:var(--p-muted);">客人看到網路文章，擔心角蛋白有化學成分</span></div>
+<div style="display:grid;grid-template-columns:1fr 1fr;">
+<div style="padding:12px 16px;border-right:1px solid var(--p-rule);background:var(--p-s1);"><div style="font-family:'DM Mono',monospace;font-size:7px;letter-spacing:2px;text-transform:uppercase;color:var(--p-muted);margin-bottom:6px;">客人問</div><div style="font-family:'Noto Serif TC',serif;font-size:.88rem;font-weight:600;">「角蛋白美睫有化學成分嗎？安全嗎？」</div></div>
+<div style="padding:12px 16px;"><div style="font-family:'DM Mono',monospace;font-size:7px;letter-spacing:2px;text-transform:uppercase;color:#2a5a3a;margin-bottom:6px;">你說</div><div style="font-size:.82rem;line-height:1.7;">「角蛋白本身是蛋白質。真正需要注意的是產品裡有沒有含<strong>燙髮用的還原劑成分</strong>。我使用的這款產品，我確認過成分表，不含那些成分。」</div></div>
+</div></div>
+<div style="border:1px solid var(--p-rule);overflow:hidden;margin-bottom:3px;">
+<div style="background:var(--p-s2);padding:8px 16px;border-bottom:1px solid var(--p-rule);display:flex;gap:10px;"><span style="font-family:'DM Mono',monospace;font-size:8px;letter-spacing:1.5px;color:var(--p-muted);">情境02</span><span style="font-size:.78rem;color:var(--p-muted);">客人直接問合法性</span></div>
+<div style="display:grid;grid-template-columns:1fr 1fr;">
+<div style="padding:12px 16px;border-right:1px solid var(--p-rule);background:var(--p-s1);"><div style="font-family:'DM Mono',monospace;font-size:7px;letter-spacing:2px;text-transform:uppercase;color:var(--p-muted);margin-bottom:6px;">客人問</div><div style="font-family:'Noto Serif TC',serif;font-size:.88rem;font-weight:600;">「角蛋白美睫在台灣是合法的嗎？」</div></div>
+<div style="padding:12px 16px;"><div style="font-family:'DM Mono',monospace;font-size:7px;letter-spacing:2px;text-transform:uppercase;color:#2a5a3a;margin-bottom:6px;">你說</div><div style="font-size:.82rem;line-height:1.7;">「法規規範的重點在使用的產品——如果產品含有燙髮用成分，用在睫毛上就不合規。我使用的產品是護理型，成分我確認過，符合規定。」</div></div>
+</div></div>
+<div style="border:1px solid var(--p-rule);overflow:hidden;margin-bottom:3px;">
+<div style="background:var(--p-s2);padding:8px 16px;border-bottom:1px solid var(--p-rule);display:flex;gap:10px;"><span style="font-family:'DM Mono',monospace;font-size:8px;letter-spacing:1.5px;color:var(--p-muted);">情境03</span><span style="font-size:.78rem;color:var(--p-muted);">客人問價格比別家高</span></div>
+<div style="display:grid;grid-template-columns:1fr 1fr;">
+<div style="padding:12px 16px;border-right:1px solid var(--p-rule);background:var(--p-s1);"><div style="font-family:'DM Mono',monospace;font-size:7px;letter-spacing:2px;text-transform:uppercase;color:var(--p-muted);margin-bottom:6px;">客人問</div><div style="font-family:'Noto Serif TC',serif;font-size:.88rem;font-weight:600;">「為什麼你家比別家貴？」</div></div>
+<div style="padding:12px 16px;"><div style="font-family:'DM Mono',monospace;font-size:7px;letter-spacing:2px;text-transform:uppercase;color:#2a5a3a;margin-bottom:6px;">你說</div><div style="font-size:.82rem;line-height:1.7;">「我使用的產品有經過成分確認，有台灣合法登錄。市場上很多標榜『角蛋白』的產品成分差異很大。我的價格反映的是我對產品合規性的把關，以及對你眼睛安全的負責。」</div></div>
+</div></div>
+<div style="border:1px solid var(--p-rule);overflow:hidden;margin-bottom:16px;">
+<div style="background:var(--p-s2);padding:8px 16px;border-bottom:1px solid var(--p-rule);display:flex;gap:10px;"><span style="font-family:'DM Mono',monospace;font-size:8px;letter-spacing:1.5px;color:var(--p-muted);">情境04</span><span style="font-size:.78rem;color:var(--p-muted);">客人問效果</span></div>
+<div style="display:grid;grid-template-columns:1fr 1fr;">
+<div style="padding:12px 16px;border-right:1px solid var(--p-rule);background:var(--p-s1);"><div style="font-family:'DM Mono',monospace;font-size:7px;letter-spacing:2px;text-transform:uppercase;color:var(--p-muted);margin-bottom:6px;">客人問</div><div style="font-family:'Noto Serif TC',serif;font-size:.88rem;font-weight:600;">「做完睫毛會變濃密、變長嗎？」</div></div>
+<div style="padding:12px 16px;"><div style="font-family:'DM Mono',monospace;font-size:7px;letter-spacing:2px;text-transform:uppercase;color:#2a5a3a;margin-bottom:6px;">你說</div><div style="font-size:.82rem;line-height:1.7;">「這個療程的效果是讓睫毛看起來更整齊、弧度更好看，同時補充角蛋白做護理。它不是生長療程，不會讓睫毛變長或變多。」</div></div>
+</div></div>
+<div style="background:#fdf0ed;border:1px solid #e0a898;padding:14px 16px;"><div style="font-family:'DM Mono',monospace;font-size:7.5px;letter-spacing:2px;text-transform:uppercase;color:#8b2a1a;margin-bottom:8px;">絕對不能說的四句話</div>
+<div style="display:grid;grid-template-columns:1fr 1fr;gap:6px;">
+<div style="font-size:.78rem;color:#8b2a1a;display:flex;gap:8px;"><span>✕</span><span>「大家都在用，應該沒問題」——沒有根據</span></div>
+<div style="font-size:.78rem;color:#8b2a1a;display:flex;gap:8px;"><span>✕</span><span>「我老師說沒關係」——不是你確認過</span></div>
+<div style="font-size:.78rem;color:#8b2a1a;display:flex;gap:8px;"><span>✕</span><span>「這牌子很有名」——知名度≠合規</span></div>
+<div style="font-size:.78rem;color:#8b2a1a;display:flex;gap:8px;"><span>✕</span><span>「可以促進生長／修復毛囊」——醫療宣稱，違法</span></div>
+</div></div>
+<div class="print-footer"><div class="pf-note">本話術卡為課程教學輔助工具。</div><div class="pf-mono">附件 02／22 · 2026.05</div></div>
+</div></div>
+<!-- T03 -->
+<div class="tool-panel" id="t03">
+<div class="tp-bar" style="border-color:var(--gold-d);"><div class="tpb-left"><span class="tpb-num">03</span><span class="tpb-title" style="color:var(--gold);">教學者產品審查框架</span></div><div class="tpb-tags"><span class="tpb-tag" style="color:var(--gold);border-color:var(--gold-d);background:var(--gold-bg);">教學者專用</span><span class="tpb-tag" style="color:var(--amber);border-color:var(--amb-d);background:var(--amb-bg);">每季執行</span></div></div>
+<div class="tp-content">
+<div class="tool-header" style="border-color:#b8922a;"><div class="th-label">課程附件 03 of 22 · 教學者專用</div><div class="th-title" style="color:#8a6e2a;">教學者產品審查框架</div><div class="th-sub">每季執行一次 · 保護你的課程口碑與學員安全</div></div>
+<div class="instr" style="border-color:#b8922a;background:#fdf6e8;color:#7a5010;"><strong>目的：</strong>在學員被影響之前，你自己先把關。你推薦給學生的每一樣產品，都是你的商譽背書。</div>
+<div class="sec-lbl">產品審查紀錄表</div>
+<table class="tool-table"><thead><tr><th>產品名稱</th><th>成分確認</th><th>PIF／登錄</th><th>中文標示</th><th>審查結果</th></tr></thead><tbody>
+<tr><td style="color:var(--p-muted);font-style:italic;">填入產品名稱</td><td style="color:var(--p-muted);">□ 無第一區成分</td><td style="color:var(--p-muted);">□ 已確認</td><td style="color:var(--p-muted);">□ 完整</td><td style="color:var(--p-muted);">待填</td></tr>
+<tr><td style="color:var(--p-muted);font-style:italic;">填入產品名稱</td><td style="color:var(--p-muted);">□ 無第一區成分</td><td style="color:var(--p-muted);">□ 已確認</td><td style="color:var(--p-muted);">□ 完整</td><td style="color:var(--p-muted);">待填</td></tr>
+<tr><td style="color:var(--p-muted);font-style:italic;">填入產品名稱</td><td style="color:var(--p-muted);">□ 無第一區成分</td><td style="color:var(--p-muted);">□ 已確認</td><td style="color:var(--p-muted);">□ 完整</td><td style="color:var(--p-muted);">待填</td></tr>
+<tr><td style="color:var(--p-muted);font-style:italic;">填入產品名稱</td><td style="color:var(--p-muted);">□ 無第一區成分</td><td style="color:var(--p-muted);">□ 已確認</td><td style="color:var(--p-muted);">□ 完整</td><td style="color:var(--p-muted);">待填</td></tr>
+</tbody></table>
+<div class="sec-lbl" style="margin-top:16px;">教學者產品審查聲明（自用）</div>
+<div style="background:#eef2f8;border:1px solid #90b0d0;border-left:3px solid #1e3a5a;padding:16px 18px;">
+<div style="font-size:.82rem;color:#1e3a5a;line-height:1.8;margin-bottom:16px;">本人已依照附件一成分核查清單，對目前課程中推薦或示範使用的所有產品進行審查確認，確認：① 成分不含已知燙髮還原劑　② 具備台灣合法登錄或PIF文件　③ 具有完整中文標示。本人承諾每季定期重新確認，並於引入新產品前先完成審查。</div>
+<div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:20px;">
+<div><div style="font-family:'DM Mono',monospace;font-size:7.5px;letter-spacing:1.5px;text-transform:uppercase;color:#5a88c8;margin-bottom:16px;">教學者姓名</div><div style="border-bottom:1px solid #90b0d0;"></div></div>
+<div><div style="font-family:'DM Mono',monospace;font-size:7.5px;letter-spacing:1.5px;text-transform:uppercase;color:#5a88c8;margin-bottom:16px;">審查日期</div><div style="border-bottom:1px solid #90b0d0;"></div></div>
+<div><div style="font-family:'DM Mono',monospace;font-size:7.5px;letter-spacing:1.5px;text-transform:uppercase;color:#5a88c8;margin-bottom:16px;">下次審查預定</div><div style="border-bottom:1px solid #90b0d0;"></div></div>
+</div></div>
+<div class="print-footer"><div class="pf-note">本框架為教學者自主管理工具，不構成法律文件。</div><div class="pf-mono">附件 03／22 · 2026.05</div></div>
+</div></div>
+<!-- T04 -->
+<div class="tool-panel" id="t04">
+<div class="tp-bar" style="border-color:var(--red-d);"><div class="tpb-left"><span class="tpb-num">04</span><span class="tpb-title" style="color:var(--red);">罰則歸屬地圖</span></div><div class="tpb-tags"><span class="tpb-tag" style="color:var(--red);border-color:var(--red-d);background:var(--red-bg);">永久備查</span></div></div>
+<div class="t04-canvas">
+<div class="t04-hd"><div class="t04-hd-label">課程附件 04 of 22 · 現場操作者強調版</div><div class="t04-hd-title">罰則歸屬地圖</div><div class="t04-hd-sub">法律說義務人是製造商——但稽查發生在現場，現場只有你</div></div>
+<div class="t04-premise">很多人以為「法律沒有寫到我，我就沒事」。這個認知是錯的。<br><strong>不是沒有寫到你——是寫到你的方式，你還不知道。</strong></div>
+<div class="sec-lbl" style="color:var(--p-muted);">違規觸發條件（三個同時成立才構成違規）</div>
+<div class="t04-trigger-row">
+<div class="t04-trig-card"><div class="t04-tc-icon">條件一</div><div class="t04-tc-text">產品含燙髮還原劑成分<br>TGA / ATG / Cysteamine 等</div></div>
+<div class="t04-trig-card"><div class="t04-tc-icon">條件二</div><div class="t04-tc-text">使用部位是睫毛</div></div>
+<div class="t04-trig-card"><div class="t04-tc-icon">條件三</div><div class="t04-tc-text">無合規 PIF 文件或查驗登記</div></div>
+</div>
+<div class="t04-trig-result">三個條件同時成立 → 違規啟動 → 各角色依位置承擔對應責任</div>
+<div class="t04-roles-layout">
+<div class="t04-role-side">
+<div class="t04-rs-head"><div class="t04-rs-label">第一義務人</div><div class="t04-rs-title" style="color:#2a4080;">製造商 ／ 進口商</div></div>
+<div class="t04-rs-body">
+<div class="t04-rs-item"><span class="t04-rs-bullet">▸</span>罰鍰 1萬～100萬</div>
+<div class="t04-rs-item"><span class="t04-rs-bullet">▸</span>可按次處罰</div>
+<div class="t04-rs-item"><span class="t04-rs-bullet">▸</span>停業 1月～1年</div>
+<div class="t04-rs-item"><span class="t04-rs-bullet">▸</span>廢止公司登記</div>
+<div class="t04-rs-item"><span class="t04-rs-bullet">▸</span>產品沒入銷毀</div>
+<div class="t04-rs-note">法定第一義務人<br>但不在現場</div>
+</div></div>
+<div class="t04-role-center">
+<div class="t04-rc-badge">⚠ 現場唯一在場者 · 稽查直接面對的人</div>
+<div class="t04-rc-head">
+<div class="t04-rch-icon">你</div>
+<div><div class="t04-rch-role">現場責任人</div><div class="t04-rch-title">技術者 ／ 店家</div></div>
+</div>
+<div class="t04-rc-body">
+<div style="font-family:'DM Mono',monospace;font-size:7.5px;letter-spacing:2px;text-transform:uppercase;color:#8b2a1a;margin-bottom:10px;">你的三條風險路徑</div>
+<div class="t04-risk-paths">
+<div class="t04-risk-path"><div class="t04-rp-head"><div class="t04-rp-num">路徑 01</div><div class="t04-rp-title">現場無法出示合規文件</div></div><div class="t04-rp-body">稽查要求出示產品來源文件。製造商在國外、進口商找不到——你是現場唯一能被要求的人。</div><div class="t04-rp-result">→ 產品認定來源不明，行政處分啟動</div></div>
+<div class="t04-risk-path"><div class="t04-rp-head"><div class="t04-rp-num">路徑 02</div><div class="t04-rp-title">採購行為的默示責任</div></div><div class="t04-rp-body">你有義務確認採購的產品符合法規。「我不知道」在稽查現場不是免責理由。</div><div class="t04-rp-result">→ 加重稽查判斷，影響處分結果</div></div>
+<div class="t04-risk-path"><div class="t04-rp-head"><div class="t04-rp-num">路徑 03</div><div class="t04-rp-title">無照執業的獨立風險</div></div><div class="t04-rp-body">無國家美容技術士丙/乙級證照執業，是另一條獨立的法律風險路徑，與產品是否合規完全無關。</div><div class="t04-rp-result">→ 職業管理罰則，另案獨立處理</div></div>
+</div>
+<div class="t04-consequences"><div class="t04-cons-label">實際後果——不只是罰款</div>
+<ul class="t04-cons-list">
+<li><span class="t04-cons-mark">▸</span>稽查紀錄存檔，成為後續稽查重點對象</li>
+<li><span class="t04-cons-mark">▸</span>客人得知被稽查，信任感立刻崩塌</li>
+<li><span class="t04-cons-mark">▸</span>教學者：學員追究「老師教我用這個」</li>
+</ul></div>
+</div></div>
+<div class="t04-role-side">
+<div class="t04-rs-head"><div class="t04-rs-label">商譽風險</div><div class="t04-rs-title" style="color:#7a5010;">教學者</div></div>
+<div class="t04-rs-body">
+<div class="t04-rs-item"><span class="t04-rs-bullet">▸</span>無直接法律責任</div>
+<div class="t04-rs-item"><span class="t04-rs-bullet">▸</span>廣告宣稱療效另計</div>
+<div class="t04-rs-item"><span class="t04-rs-bullet">▸</span>學員推薦產品出事</div>
+<div class="t04-rs-item"><span class="t04-rs-bullet">▸</span>師生信任關係破裂</div>
+<div class="t04-rs-note">法條沒寫到你<br>後果一樣真實</div>
+</div></div>
+</div>
+<div class="sec-lbl" style="color:var(--p-muted);">現場操作者三個採購保護動作</div>
+<div class="t04-protect-grid">
+<div class="t04-protect-card"><div class="t04-pc-num">01</div><div class="t04-pc-title">索取台灣產品登錄截圖或 PIF 確認文件</div><div class="t04-pc-desc">合法進口商應能立即提供。無法提供就是警訊，停止採購。</div><div class="t04-pc-when">→ 付款前完成</div></div>
+<div class="t04-protect-card"><div class="t04-pc-num">02</div><div class="t04-pc-title">確認產品有完整中文標示</div><div class="t04-pc-desc">包含全成分表（INCI）、製造商資訊。不接受「中文貼紙後補」。</div><div class="t04-pc-when">→ 收到產品時確認</div></div>
+<div class="t04-protect-card"><div class="t04-pc-num">03</div><div class="t04-pc-title">對照成分核查清單確認無高風險成分</div><div class="t04-pc-desc">確認無 TGA、ATG、Cysteamine、Glyceryl Thioglycolate。每次進新品都要執行。</div><div class="t04-pc-when">→ 每次入庫執行</div></div>
+</div>
+<div class="sec-lbl" style="color:var(--p-muted);margin-top:20px;">法條快查</div>
+<table class="t04-law-table"><thead><tr><th>角色</th><th>主要依據法條</th><th>罰則範圍</th><th>法律位置</th></tr></thead><tbody>
+<tr><td style="color:#2a4080;font-weight:500;">製造商 / 進口商</td><td style="font-size:.75rem;color:var(--p-muted);">化粧品衛生安全管理法 §5、§23</td><td>罰鍰1萬～100萬 · 停業 · 廢止 · 沒入</td><td style="font-size:.72rem;color:#2a4080;">第一義務人</td></tr>
+<tr class="t04-op"><td>技術者 ／ 店家</td><td style="font-size:.75rem;">化粧品衛生安全管理法 §23<br>職業管理法規（無照另計）</td><td>連帶罰則<br>無照執業：職業管理罰則</td><td style="font-size:.72rem;">⚠ 現場直接面對稽查</td></tr>
+<tr><td style="color:#7a5010;font-weight:500;">教學者</td><td style="font-size:.75rem;color:var(--p-muted);">化粧品廣告規範（宣稱醫療效能時）</td><td>廣告違規罰則</td><td style="font-size:.72rem;color:#7a5010;">商譽風險</td></tr>
+</tbody></table>
+<div class="t04-reminder">
+<div style="background:#fdf0ed;border:1px solid #e0a898;">
+<div class="t04-rm-label" style="color:#8b2a1a;">現場操作者的現實</div>
+<div class="t04-rm-title" style="color:#e08878;">法律沒寫到你 ≠ 你沒有風險</div>
+<ul class="t04-rm-list">
+<li style="color:#c08070;"><span class="t04-rm-mark" style="color:#8b2a1a;">✕</span>製造商是第一義務人，但不在現場</li>
+<li style="color:#c08070;"><span class="t04-rm-mark" style="color:#8b2a1a;">✕</span>稽查開單的對象是現場在場的人</li>
+<li style="color:#c08070;"><span class="t04-rm-mark" style="color:#8b2a1a;">✕</span>「我不知道」是最危險的稽查回答</li>
+</ul></div>
+<div style="background:#edf5ee;border:1px solid #90c4a0;">
+<div class="t04-rm-label" style="color:#2a6040;">你能完全控制的事</div>
+<div class="t04-rm-title" style="color:#70c888;">採購時做到這三件事，你有話說</div>
+<ul class="t04-rm-list">
+<li style="color:#80a888;"><span class="t04-rm-mark" style="color:#2a6040;">✓</span>付款前索取台灣登錄文件</li>
+<li style="color:#80a888;"><span class="t04-rm-mark" style="color:#2a6040;">✓</span>收貨時確認完整中文標示</li>
+<li style="color:#80a888;"><span class="t04-rm-mark" style="color:#2a6040;">✓</span>入庫時對照成分核查清單</li>
+</ul></div>
+</div>
+<div class="t04-footer"><div class="t04-footer-note">依《化粧品衛生安全管理法》現行規定製作。課程教學輔助素材，具體法律問題請諮詢專業律師。</div><div class="t04-footer-mono">附件 04 of 22<br>罰則歸屬地圖 · 2026.05</div></div>
+</div></div>
+<!-- T05 -->
+<div class="tool-panel" id="t05">
+<div class="tp-bar" style="border-color:var(--red-d);"><div class="tpb-left"><span class="tpb-num">05</span><span class="tpb-title" style="color:var(--red);">稽查現場運作流程圖</span></div><div class="tpb-tags"><span class="tpb-tag" style="color:var(--red);border-color:var(--red-d);background:var(--red-bg);">永久備查</span></div></div>
+<div class="tp-content">
+<div class="tool-header" style="border-color:#c05040;"><div class="th-label">課程附件 05 of 22 · 法規核心圖示</div><div class="th-title" style="color:#8b2a1a;">稽查現場運作流程圖</div><div class="th-sub">法律說義務人是製造商，但現場只有你</div></div>
+<div class="sec-lbl">產品流向鏈 · 義務人在哪裡</div>
+<div style="display:grid;grid-template-columns:1fr 30px 1fr 30px 1fr 30px 1fr;align-items:center;gap:0;margin-bottom:12px;">
+<div style="background:#eef2f8;border:1px solid #90b0d0;padding:14px 10px;text-align:center;"><div style="font-family:'DM Mono',monospace;font-size:7px;letter-spacing:1.5px;text-transform:uppercase;color:#5a88c8;margin-bottom:4px;">義務人</div><div style="font-weight:600;color:#1e3a5a;font-size:.85rem;">製造商<br>（國外）</div></div>
+<div style="text-align:center;color:#b0a898;font-size:12px;">→</div>
+<div style="background:#eef2f8;border:1px solid #90b0d0;padding:14px 10px;text-align:center;"><div style="font-family:'DM Mono',monospace;font-size:7px;letter-spacing:1.5px;text-transform:uppercase;color:#5a88c8;margin-bottom:4px;">義務人</div><div style="font-weight:600;color:#1e3a5a;font-size:.85rem;">進口商<br>（代理）</div></div>
+<div style="text-align:center;color:#b0a898;font-size:12px;">→</div>
+<div style="background:var(--p-s1);border:1px solid var(--p-rule);padding:14px 10px;text-align:center;"><div style="font-family:'DM Mono',monospace;font-size:7px;letter-spacing:1.5px;text-transform:uppercase;color:var(--p-muted);margin-bottom:4px;">通路</div><div style="font-weight:600;font-size:.85rem;">供應商</div></div>
+<div style="text-align:center;color:#b0a898;font-size:12px;">→</div>
+<div style="background:#fdf0ed;border:1.5px solid #e08878;padding:14px 10px;text-align:center;"><div style="font-family:'DM Mono',monospace;font-size:7px;letter-spacing:1.5px;text-transform:uppercase;color:#8b2a1a;margin-bottom:4px;">稽查現場</div><div style="font-weight:600;color:#8b2a1a;font-size:.85rem;">技術者<br>／店家</div></div>
+</div>
+<div style="background:#fdf0ed;border:1px solid #e0a898;padding:10px 14px;text-align:center;font-size:.78rem;color:#8b2a1a;margin-bottom:16px;">製造商在國外、進口商找不到。能被開單的，只有站在現場的你。</div>
+<div class="sec-lbl">稽查當天時序</div>
+<div style="display:flex;flex-direction:column;gap:3px;">
+<div style="display:grid;grid-template-columns:80px 1fr;border:1px solid var(--p-rule);"><div style="padding:10px;background:var(--p-s2);border-right:1px solid var(--p-rule);font-family:'DM Mono',monospace;font-size:8px;color:var(--p-muted);display:flex;align-items:center;">稽查排定</div><div style="padding:10px 14px;font-size:.8rem;">稽查可能是例行或檢舉。你不會事先知道。</div></div>
+<div style="display:grid;grid-template-columns:80px 1fr;border:1px solid var(--p-rule);"><div style="padding:10px;background:var(--p-s2);border-right:1px solid var(--p-rule);font-family:'DM Mono',monospace;font-size:8px;color:var(--p-muted);display:flex;align-items:center;">抵達現場</div><div style="padding:10px 14px;font-size:.8rem;">出示稽查證件，要求配合檢查操作環境與使用產品。</div></div>
+<div style="display:grid;grid-template-columns:80px 1fr;border:1px solid #d4b870;background:#fdf6e4;"><div style="padding:10px;background:#fdf6e4;border-right:1px solid #d4b870;font-family:'DM Mono',monospace;font-size:8px;color:#7a5010;display:flex;align-items:center;">要求文件</div><div style="padding:10px 14px;font-size:.8rem;color:#7a5010;"><strong>要求出示：</strong>技術者國家證照 · 產品來源合規文件 · 店家商業登記</div></div>
+<div style="display:grid;grid-template-columns:80px 1fr;border:1.5px solid #e08878;background:#fdf0ed;"><div style="padding:10px;background:#fdf0ed;border-right:1px solid #e0a898;font-family:'DM Mono',monospace;font-size:8px;color:#8b2a1a;display:flex;align-items:center;">關鍵點</div><div style="padding:10px 14px;font-size:.8rem;color:#8b2a1a;"><strong>你能出示，還是出示不了？</strong>文件只能靠你自己提前備好。</div></div>
+</div>
+<div class="print-footer"><div class="pf-note">依《化粧品衛生安全管理法》現行規定製作。</div><div class="pf-mono">附件 05／22 · 2026.05</div></div>
+</div></div>
+<!-- T06 -->
+<div class="tool-panel" id="t06">
+<div class="tp-bar" style="border-color:var(--red-d);"><div class="tpb-left"><span class="tpb-num">06</span><span class="tpb-title" style="color:var(--red);">PIF 連帶風險地圖</span></div><div class="tpb-tags"><span class="tpb-tag" style="color:var(--red);border-color:var(--red-d);background:var(--red-bg);">永久備查</span></div></div>
+<div class="tp-content">
+<div class="tool-header" style="border-color:#c05040;"><div class="th-label">課程附件 06 of 22 · 法規核心圖示</div><div class="th-title" style="color:#8b2a1a;">PIF 連帶風險地圖</div><div class="th-sub">技術者進入風險的三條路徑 · 採購時就能完成的三個保護動作</div></div>
+<div class="sec-lbl">三條風險路徑</div>
+<div style="display:flex;flex-direction:column;gap:3px;margin-bottom:16px;">
+<div style="display:grid;grid-template-columns:5px 1fr;"><div style="background:#8b2a1a;"></div><div style="background:#fdf0ed;border:1px solid #e0a898;border-left:none;padding:12px 16px;"><div style="font-family:'DM Mono',monospace;font-size:7.5px;letter-spacing:1.5px;text-transform:uppercase;color:#8b2a1a;margin-bottom:4px;">路徑一 · 現場無法出示文件</div><div style="font-size:.82rem;color:#8b2a1a;font-weight:500;margin-bottom:4px;">稽查時無法提示合規文件 → 產品認定來源不明 → 行政處分啟動</div><div style="font-size:.75rem;color:var(--p-muted);">現場唯一能被開單的是你。</div></div></div>
+<div style="display:grid;grid-template-columns:5px 1fr;"><div style="background:#7a5010;"></div><div style="background:#fdf6e4;border:1px solid #d4b870;border-left:none;padding:12px 16px;"><div style="font-family:'DM Mono',monospace;font-size:7.5px;letter-spacing:1.5px;text-transform:uppercase;color:#7a5010;margin-bottom:4px;">路徑二 · 採購默示責任</div><div style="font-size:.82rem;color:#7a5010;font-weight:500;margin-bottom:4px;">你應該知道你買的東西是不是合法的 → 「不知道」不是免責理由</div></div></div>
+<div style="display:grid;grid-template-columns:5px 1fr;"><div style="background:#2a4080;"></div><div style="background:#eef2fc;border:1px solid #90a8d8;border-left:none;padding:12px 16px;"><div style="font-family:'DM Mono',monospace;font-size:7.5px;letter-spacing:1.5px;text-transform:uppercase;color:#2a4080;margin-bottom:4px;">路徑三 · 教學者推薦連帶</div><div style="font-size:.82rem;color:#2a4080;font-weight:500;margin-bottom:4px;">你推薦的產品出問題 → 學員追究 → 口碑崩塌</div></div></div>
+</div>
+<div class="sec-lbl">採購三個保護動作</div>
+<div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:3px;">
+<div style="padding:16px;background:var(--p-s1);border:1px solid var(--p-rule);border-top:3px solid #2a5a3a;"><div style="font-family:'DM Mono',monospace;font-size:22px;color:var(--p-rule);line-height:1;margin-bottom:10px;">01</div><div style="font-size:.85rem;font-weight:500;color:#2a5a3a;margin-bottom:6px;">索取台灣產品登錄截圖</div><div style="font-size:.75rem;color:var(--p-muted);line-height:1.55;">付款前完成。無法提供就是警訊。</div><div style="margin-top:8px;font-family:'DM Mono',monospace;font-size:8px;color:#2a5a3a;">→ 採購前完成</div></div>
+<div style="padding:16px;background:var(--p-s1);border:1px solid var(--p-rule);border-top:3px solid #2a5a3a;"><div style="font-family:'DM Mono',monospace;font-size:22px;color:var(--p-rule);line-height:1;margin-bottom:10px;">02</div><div style="font-size:.85rem;font-weight:500;color:#2a5a3a;margin-bottom:6px;">確認完整中文標示</div><div style="font-size:.75rem;color:var(--p-muted);line-height:1.55;">收到產品時當場確認，不接受後補。</div><div style="margin-top:8px;font-family:'DM Mono',monospace;font-size:8px;color:#2a5a3a;">→ 收貨時確認</div></div>
+<div style="padding:16px;background:var(--p-s1);border:1px solid var(--p-rule);border-top:3px solid #2a5a3a;"><div style="font-family:'DM Mono',monospace;font-size:22px;color:var(--p-rule);line-height:1;margin-bottom:10px;">03</div><div style="font-size:.85rem;font-weight:500;color:#2a5a3a;margin-bottom:6px;">對照高風險成分清單</div><div style="font-size:.75rem;color:var(--p-muted);line-height:1.55;">確認無 TGA、ATG、Cysteamine。每次進新品執行。</div><div style="margin-top:8px;font-family:'DM Mono',monospace;font-size:8px;color:#2a5a3a;">→ 每次入庫</div></div>
+</div>
+<div class="print-footer"><div class="pf-note">依《化粧品衛生安全管理法》現行規定製作。</div><div class="pf-mono">附件 06／22 · 2026.05</div></div>
+</div></div>
+<!-- T07 -->
+<div class="tool-panel" id="t07">
+<div class="tp-bar" style="border-color:var(--blue-d);"><div class="tpb-left"><span class="tpb-num">07</span><span class="tpb-title" style="color:var(--blue);">風險精準判斷工具（課前版）</span></div><div class="tpb-tags"><span class="tpb-tag" style="color:var(--blue);border-color:var(--blue-d);background:var(--blue-bg);">課前填寫</span></div></div>
+<div class="tp-content">
+<div class="tool-header" style="border-color:#4a80c0;"><div class="th-label">課程附件 07 of 22 · 課前版</div><div class="th-title" style="color:#2a4080;">風險精準判斷工具</div><div class="th-sub">三個維度十二個問題 · 了解你現在的位置與缺口</div></div>
+<div class="instr" style="border-color:#4a80c0;background:#eef2fc;color:#2a4080;"><strong>說明：</strong>沒有對錯，只有你真實的現況。猜的不算，不確定就選「不確定」。填完後看顏色分布，紅色是需要立刻注意的缺口。</div>
+<div class="dim-block">
+<div class="dim-head" style="background:#fdf0ed;border-color:#e0a898;"><div class="dh-icon" style="background:#8b2a1a;color:#fdf0ed;">P</div><div><div class="dh-title" style="color:#8b2a1a;">產品維度</div></div><div class="dh-desc">你現在使用的產品，合規風險在哪裡</div></div>
+<div class="qr-row qr-header"><div class="qr-q">問題</div><div class="qr-opt">確認</div><div class="qr-opt">不確定</div><div class="qr-opt">不知道</div></div>
+<div class="qr-row"><div class="qr-q">我看過現在使用的主要產品的完整成分表</div><label class="qr-opt" onclick="markQ(this,'g')"><div class="radio-circle" style="border-color:#90c4a0;"></div></label><label class="qr-opt" onclick="markQ(this,'a')"><div class="radio-circle" style="border-color:#d4b870;"></div></label><label class="qr-opt" onclick="markQ(this,'r')"><div class="radio-circle" style="border-color:#e0a898;"></div></label></div>
+<div class="qr-row"><div class="qr-q">我能確認產品不含 TGA、ATG、Cysteamine</div><label class="qr-opt" onclick="markQ(this,'g')"><div class="radio-circle" style="border-color:#90c4a0;"></div></label><label class="qr-opt" onclick="markQ(this,'a')"><div class="radio-circle" style="border-color:#d4b870;"></div></label><label class="qr-opt" onclick="markQ(this,'r')"><div class="radio-circle" style="border-color:#e0a898;"></div></label></div>
+<div class="qr-row"><div class="qr-q">我使用的產品有台灣合法進口管道或PIF登錄紀錄</div><label class="qr-opt" onclick="markQ(this,'g')"><div class="radio-circle" style="border-color:#90c4a0;"></div></label><label class="qr-opt" onclick="markQ(this,'a')"><div class="radio-circle" style="border-color:#d4b870;"></div></label><label class="qr-opt" onclick="markQ(this,'r')"><div class="radio-circle" style="border-color:#e0a898;"></div></label></div>
+<div class="qr-row"><div class="qr-q">我使用的產品有完整中文標示</div><label class="qr-opt" onclick="markQ(this,'g')"><div class="radio-circle" style="border-color:#90c4a0;"></div></label><label class="qr-opt" onclick="markQ(this,'a')"><div class="radio-circle" style="border-color:#d4b870;"></div></label><label class="qr-opt" onclick="markQ(this,'r')"><div class="radio-circle" style="border-color:#e0a898;"></div></label></div>
+</div>
+<div class="dim-block" style="margin-top:4px;">
+<div class="dim-head" style="background:#fdf6e4;border-color:#d4b870;"><div class="dh-icon" style="background:#7a5010;color:#fdf6e4;">O</div><div><div class="dh-title" style="color:#7a5010;">操作維度</div></div><div class="dh-desc">你的執業資格和店家登記，有沒有缺口</div></div>
+<div class="qr-row qr-header"><div class="qr-q">問題</div><div class="qr-opt">確認</div><div class="qr-opt">不確定</div><div class="qr-opt">不知道</div></div>
+<div class="qr-row"><div class="qr-q">我持有有效的國家美容技術士丙/乙級證照</div><label class="qr-opt" onclick="markQ(this,'g')"><div class="radio-circle"></div></label><label class="qr-opt" onclick="markQ(this,'a')"><div class="radio-circle"></div></label><label class="qr-opt" onclick="markQ(this,'r')"><div class="radio-circle"></div></label></div>
+<div class="qr-row"><div class="qr-q">店家已完成商業登記，歸類於美容業</div><label class="qr-opt" onclick="markQ(this,'g')"><div class="radio-circle"></div></label><label class="qr-opt" onclick="markQ(this,'a')"><div class="radio-circle"></div></label><label class="qr-opt" onclick="markQ(this,'r')"><div class="radio-circle"></div></label></div>
+<div class="qr-row"><div class="qr-q">如果現在衛生局來稽查，我知道要出示哪三樣文件</div><label class="qr-opt" onclick="markQ(this,'g')"><div class="radio-circle"></div></label><label class="qr-opt" onclick="markQ(this,'a')"><div class="radio-circle"></div></label><label class="qr-opt" onclick="markQ(this,'r')"><div class="radio-circle"></div></label></div>
+<div class="qr-row"><div class="qr-q">我的廣告和社群內容沒有使用醫療效能相關文字</div><label class="qr-opt" onclick="markQ(this,'g')"><div class="radio-circle"></div></label><label class="qr-opt" onclick="markQ(this,'a')"><div class="radio-circle"></div></label><label class="qr-opt" onclick="markQ(this,'r')"><div class="radio-circle"></div></label></div>
+</div>
+<div class="dim-block" style="margin-top:4px;">
+<div class="dim-head" style="background:#eef2fc;border-color:#90a8d8;"><div class="dh-icon" style="background:#2a4080;color:#eef2fc;">K</div><div><div class="dh-title" style="color:#2a4080;">知識維度</div></div><div class="dh-desc">你對法規的理解程度</div></div>
+<div class="qr-row qr-header"><div class="qr-q">問題</div><div class="qr-opt">確認</div><div class="qr-opt">不確定</div><div class="qr-opt">不知道</div></div>
+<div class="qr-row"><div class="qr-q">我知道什麼是PIF，以及它對我作為技術者的影響</div><label class="qr-opt" onclick="markQ(this,'g')"><div class="radio-circle"></div></label><label class="qr-opt" onclick="markQ(this,'a')"><div class="radio-circle"></div></label><label class="qr-opt" onclick="markQ(this,'r')"><div class="radio-circle"></div></label></div>
+<div class="qr-row"><div class="qr-q">如果客人問我「角蛋白美睫合法嗎」，我能有根據地回答</div><label class="qr-opt" onclick="markQ(this,'g')"><div class="radio-circle"></div></label><label class="qr-opt" onclick="markQ(this,'a')"><div class="radio-circle"></div></label><label class="qr-opt" onclick="markQ(this,'r')"><div class="radio-circle"></div></label></div>
+<div class="qr-row"><div class="qr-q">我知道違規時罰則落在誰身上、法條是什麼</div><label class="qr-opt" onclick="markQ(this,'g')"><div class="radio-circle"></div></label><label class="qr-opt" onclick="markQ(this,'a')"><div class="radio-circle"></div></label><label class="qr-opt" onclick="markQ(this,'r')"><div class="radio-circle"></div></label></div>
+<div class="qr-row"><div class="qr-q">拿到一瓶新產品，我能在5分鐘內判斷它的法律風險位置</div><label class="qr-opt" onclick="markQ(this,'g')"><div class="radio-circle"></div></label><label class="qr-opt" onclick="markQ(this,'a')"><div class="radio-circle"></div></label><label class="qr-opt" onclick="markQ(this,'r')"><div class="radio-circle"></div></label></div>
+</div>
+<div class="note-box" style="margin-top:12px;"><strong>提醒</strong>課後請再填一次工具08（課後版），對比前後差異。</div>
+<div class="print-footer"><div class="pf-note">本工具為學員自我評估使用，不構成正式法律評估。</div><div class="pf-mono">附件 07／22 · 課前版 · 2026.05</div></div>
+</div></div>
+<!-- T08 -->
+<div class="tool-panel" id="t08">
+<div class="tp-bar" style="border-color:var(--blue-d);"><div class="tpb-left"><span class="tpb-num">08</span><span class="tpb-title" style="color:var(--blue);">風險精準判斷工具（課後版）</span></div><div class="tpb-tags"><span class="tpb-tag" style="color:var(--green);border-color:var(--grn-d);background:var(--grn-bg);">課後填寫</span></div></div>
+<div class="tp-content">
+<div class="tool-header" style="border-color:#4a80c0;"><div class="th-label">課程附件 08 of 22 · 課後版</div><div class="th-title" style="color:#2a4080;">風險精準判斷工具</div><div class="th-sub">與課前版相同的十二個問題 · 對比前後差異 · 看到這堂課對你的價值</div></div>
+<div class="instr" style="border-color:#2a6040;background:#edf5ee;color:#2a5a3a;"><strong>說明：</strong>和課前版（附件07）對比，看哪些格子從「不知道」或「不確定」變成了「確認」。每一格的改變，都是這五個小時帶給你的東西。</div>
+<div class="dim-block">
+<div class="dim-head" style="background:#fdf0ed;border-color:#e0a898;"><div class="dh-icon" style="background:#8b2a1a;color:#fdf0ed;">P</div><div><div class="dh-title" style="color:#8b2a1a;">產品維度</div></div></div>
+<div class="qr-row qr-header"><div class="qr-q">問題</div><div class="qr-opt">確認</div><div class="qr-opt">不確定</div><div class="qr-opt">不知道</div></div>
+<div class="qr-row"><div class="qr-q">我看過現在使用的主要產品的完整成分表</div><label class="qr-opt" onclick="markQ(this,'g')"><div class="radio-circle" style="border-color:#90c4a0;"></div></label><label class="qr-opt" onclick="markQ(this,'a')"><div class="radio-circle" style="border-color:#d4b870;"></div></label><label class="qr-opt" onclick="markQ(this,'r')"><div class="radio-circle" style="border-color:#e0a898;"></div></label></div>
+<div class="qr-row"><div class="qr-q">我能確認產品不含 TGA、ATG、Cysteamine</div><label class="qr-opt" onclick="markQ(this,'g')"><div class="radio-circle" style="border-color:#90c4a0;"></div></label><label class="qr-opt" onclick="markQ(this,'a')"><div class="radio-circle" style="border-color:#d4b870;"></div></label><label class="qr-opt" onclick="markQ(this,'r')"><div class="radio-circle" style="border-color:#e0a898;"></div></label></div>
+<div class="qr-row"><div class="qr-q">我使用的產品有台灣合法進口管道或PIF登錄紀錄</div><label class="qr-opt" onclick="markQ(this,'g')"><div class="radio-circle" style="border-color:#90c4a0;"></div></label><label class="qr-opt" onclick="markQ(this,'a')"><div class="radio-circle" style="border-color:#d4b870;"></div></label><label class="qr-opt" onclick="markQ(this,'r')"><div class="radio-circle" style="border-color:#e0a898;"></div></label></div>
+<div class="qr-row"><div class="qr-q">我使用的產品有完整中文標示</div><label class="qr-opt" onclick="markQ(this,'g')"><div class="radio-circle" style="border-color:#90c4a0;"></div></label><label class="qr-opt" onclick="markQ(this,'a')"><div class="radio-circle" style="border-color:#d4b870;"></div></label><label class="qr-opt" onclick="markQ(this,'r')"><div class="radio-circle" style="border-color:#e0a898;"></div></label></div>
+</div>
+<div class="dim-block" style="margin-top:4px;">
+<div class="dim-head" style="background:#fdf6e4;border-color:#d4b870;"><div class="dh-icon" style="background:#7a5010;color:#fdf6e4;">O</div><div><div class="dh-title" style="color:#7a5010;">操作維度</div></div></div>
+<div class="qr-row qr-header"><div class="qr-q">問題</div><div class="qr-opt">確認</div><div class="qr-opt">不確定</div><div class="qr-opt">不知道</div></div>
+<div class="qr-row"><div class="qr-q">我持有有效的國家美容技術士丙/乙級證照</div><label class="qr-opt" onclick="markQ(this,'g')"><div class="radio-circle"></div></label><label class="qr-opt" onclick="markQ(this,'a')"><div class="radio-circle"></div></label><label class="qr-opt" onclick="markQ(this,'r')"><div class="radio-circle"></div></label></div>
+<div class="qr-row"><div class="qr-q">店家已完成商業登記，歸類於美容業</div><label class="qr-opt" onclick="markQ(this,'g')"><div class="radio-circle"></div></label><label class="qr-opt" onclick="markQ(this,'a')"><div class="radio-circle"></div></label><label class="qr-opt" onclick="markQ(this,'r')"><div class="radio-circle"></div></label></div>
+<div class="qr-row"><div class="qr-q">如果現在衛生局來稽查，我知道要出示哪三樣文件</div><label class="qr-opt" onclick="markQ(this,'g')"><div class="radio-circle"></div></label><label class="qr-opt" onclick="markQ(this,'a')"><div class="radio-circle"></div></label><label class="qr-opt" onclick="markQ(this,'r')"><div class="radio-circle"></div></label></div>
+<div class="qr-row"><div class="qr-q">我的廣告和社群內容沒有使用醫療效能相關文字</div><label class="qr-opt" onclick="markQ(this,'g')"><div class="radio-circle"></div></label><label class="qr-opt" onclick="markQ(this,'a')"><div class="radio-circle"></div></label><label class="qr-opt" onclick="markQ(this,'r')"><div class="radio-circle"></div></label></div>
+</div>
+<div class="dim-block" style="margin-top:4px;">
+<div class="dim-head" style="background:#eef2fc;border-color:#90a8d8;"><div class="dh-icon" style="background:#2a4080;color:#eef2fc;">K</div><div><div class="dh-title" style="color:#2a4080;">知識維度</div></div></div>
+<div class="qr-row qr-header"><div class="qr-q">問題</div><div class="qr-opt">確認</div><div class="qr-opt">不確定</div><div class="qr-opt">不知道</div></div>
+<div class="qr-row"><div class="qr-q">我知道什麼是PIF，以及它對我作為技術者的影響</div><label class="qr-opt" onclick="markQ(this,'g')"><div class="radio-circle"></div></label><label class="qr-opt" onclick="markQ(this,'a')"><div class="radio-circle"></div></label><label class="qr-opt" onclick="markQ(this,'r')"><div class="radio-circle"></div></label></div>
+<div class="qr-row"><div class="qr-q">如果客人問我「角蛋白美睫合法嗎」，我能有根據地回答</div><label class="qr-opt" onclick="markQ(this,'g')"><div class="radio-circle"></div></label><label class="qr-opt" onclick="markQ(this,'a')"><div class="radio-circle"></div></label><label class="qr-opt" onclick="markQ(this,'r')"><div class="radio-circle"></div></label></div>
+<div class="qr-row"><div class="qr-q">我知道違規時罰則落在誰身上、法條是什麼</div><label class="qr-opt" onclick="markQ(this,'g')"><div class="radio-circle"></div></label><label class="qr-opt" onclick="markQ(this,'a')"><div class="radio-circle"></div></label><label class="qr-opt" onclick="markQ(this,'r')"><div class="radio-circle"></div></label></div>
+<div class="qr-row"><div class="qr-q">拿到一瓶新產品，我能在5分鐘內判斷它的法律風險位置</div><label class="qr-opt" onclick="markQ(this,'g')"><div class="radio-circle"></div></label><label class="qr-opt" onclick="markQ(this,'a')"><div class="radio-circle"></div></label><label class="qr-opt" onclick="markQ(this,'r')"><div class="radio-circle"></div></label></div>
+</div>
+<div style="background:#edf5ee;border:1px solid #90c4a0;border-left:3px solid #2a5a3a;padding:14px 18px;margin-top:12px;"><div style="font-family:'DM Mono',monospace;font-size:8px;letter-spacing:2px;text-transform:uppercase;color:#2a6040;margin-bottom:8px;">課後對比</div><div style="font-size:.82rem;color:#2a5a3a;line-height:1.7;">和課前版（附件07）比較，數一數：從「不知道」或「不確定」變成「確認」的格子有幾個？</div></div>
+<div class="print-footer"><div class="pf-note">本工具為學員自我評估使用，不構成正式法律評估。</div><div class="pf-mono">附件 08／22 · 課後版 · 2026.05</div></div>
+</div></div>
+<!-- T09 -->
+<div class="tool-panel" id="t09">
+<div class="tp-bar" style="border-color:var(--nav-d);"><div class="tpb-left"><span class="tpb-num">09</span><span class="tpb-title" style="color:var(--navy);">裁處書五欄位對照說明卡</span></div><div class="tpb-tags"><span class="tpb-tag" style="color:var(--navy);border-color:var(--nav-d);background:var(--nav-bg);">出事時備查</span></div></div>
+<div class="tp-content">
+<div class="tool-header" style="border-color:#4a80b0;"><div class="th-label">課程附件 09 of 22 · 申訴與救濟</div><div class="th-title" style="color:#1e3a5a;">裁處書五欄位對照說明卡</div><div class="th-sub">收到裁處書時逐欄對照——看懂後再決定下一步，不要慌了直接繳錢</div></div>
+<div class="instr" style="border-color:#4a80b0;background:#eef2f8;color:#1e3a5a;"><strong>重要：</strong>收到裁處書，先看救濟期限，再決定要不要繳錢。期限過了才後悔，才是真的沒有機會。</div>
+<div class="sec-lbl">五個必看欄位</div>
+<div style="display:flex;flex-direction:column;gap:3px;">
+<div style="display:grid;grid-template-columns:100px 1fr;border:1px solid var(--p-rule);"><div style="padding:14px;background:#eef2f8;border-right:1px solid var(--p-rule);"><div style="font-family:'DM Mono',monospace;font-size:8px;letter-spacing:1.5px;text-transform:uppercase;color:#5a88c8;margin-bottom:3px;">欄位一</div><div style="font-size:.85rem;font-weight:600;color:#1e3a5a;">違反法條</div></div><div style="padding:14px;font-size:.82rem;line-height:1.6;">例：「違反化粧品衛生安全管理法第5條第1項」。確認是哪一條，查閱法條原文，確認你的情況是否真的符合該條規定。</div></div>
+<div style="display:grid;grid-template-columns:100px 1fr;border:1px solid var(--p-rule);"><div style="padding:14px;background:#eef2f8;border-right:1px solid var(--p-rule);"><div style="font-family:'DM Mono',monospace;font-size:8px;letter-spacing:1.5px;text-transform:uppercase;color:#5a88c8;margin-bottom:3px;">欄位二</div><div style="font-size:.85rem;font-weight:600;color:#1e3a5a;">違規事實</div></div><div style="padding:14px;font-size:.82rem;line-height:1.6;">稽查人員認定你做了什麼。仔細核對——描述是否與實際情況一致？有無事實認定錯誤？這是申訴最常見的切入點。</div></div>
+<div style="display:grid;grid-template-columns:100px 1fr;border:1px solid var(--p-rule);"><div style="padding:14px;background:#eef2f8;border-right:1px solid var(--p-rule);"><div style="font-family:'DM Mono',monospace;font-size:8px;letter-spacing:1.5px;text-transform:uppercase;color:#5a88c8;margin-bottom:3px;">欄位三</div><div style="font-size:.85rem;font-weight:600;color:#1e3a5a;">罰鍰金額</div></div><div style="padding:14px;font-size:.82rem;line-height:1.6;">核對是否在法條規定的範圍內（化粧品衛生安全管理法第23條：1萬～100萬元）。超出範圍或計算有誤可提出異議。</div></div>
+<div style="display:grid;grid-template-columns:100px 1fr;border:1px solid var(--p-rule);"><div style="padding:14px;background:#eef2f8;border-right:1px solid var(--p-rule);"><div style="font-family:'DM Mono',monospace;font-size:8px;letter-spacing:1.5px;text-transform:uppercase;color:#5a88c8;margin-bottom:3px;">欄位四</div><div style="font-size:.85rem;font-weight:600;color:#1e3a5a;">救濟方式</div></div><div style="padding:14px;font-size:.82rem;line-height:1.6;">通常記載「如不服本處分，得依訴願法第14條規定，自收受本處分書之次日起30日內……提起訴願」。確認救濟途徑。</div></div>
+<div style="display:grid;grid-template-columns:100px 1fr;border:1.5px solid #e0a898;background:#fdf0ed;"><div style="padding:14px;background:#fdf0ed;border-right:1px solid #e0a898;"><div style="font-family:'DM Mono',monospace;font-size:8px;letter-spacing:1.5px;text-transform:uppercase;color:#8b2a1a;margin-bottom:3px;">欄位五</div><div style="font-size:.85rem;font-weight:600;color:#8b2a1a;">救濟期限 ⚠</div></div><div style="padding:14px;font-size:.82rem;color:#8b2a1a;line-height:1.6;"><strong>最重要的一欄。</strong>通常是收受裁處書次日起30天內（訴願）。過了這個期限，放棄了就沒有了。不論是否要申訴，先把這個日期標注出來。</div></div>
+</div>
+<div class="print-footer"><div class="pf-note">本工具為課程教育用途，不構成正式法律意見。具體案件請諮詢具行政法背景的專業律師。</div><div class="pf-mono">附件 09／22 · 2026.05</div></div>
+</div></div>
+<!-- T10 -->
+<div class="tool-panel" id="t10">
+<div class="tp-bar" style="border-color:var(--nav-d);"><div class="tpb-left"><span class="tpb-num">10</span><span class="tpb-title" style="color:var(--navy);">值得申訴 vs 直接改正判斷流程</span></div><div class="tpb-tags"><span class="tpb-tag" style="color:var(--navy);border-color:var(--nav-d);background:var(--nav-bg);">出事時備查</span></div></div>
+<div class="tp-content">
+<div class="tool-header" style="border-color:#4a80b0;"><div class="th-label">課程附件 10 of 22 · 申訴與救濟</div><div class="th-title" style="color:#1e3a5a;">值得申訴 vs 直接改正判斷流程</div><div class="th-sub">不是每個裁處都值得提訴願——這個流程幫你判斷</div></div>
+<div class="sec-lbl">判斷流程</div>
+<div style="display:flex;flex-direction:column;gap:3px;">
+<div style="background:#eef2f8;border:1px solid #90b0d0;padding:14px 18px;"><div style="font-family:'DM Mono',monospace;font-size:7.5px;letter-spacing:2px;text-transform:uppercase;color:#5a88c8;margin-bottom:6px;">Step 01</div><div style="font-size:.88rem;font-weight:500;color:#1e3a5a;margin-bottom:6px;">裁處書上的「違規事實」描述，和你實際的情況一樣嗎？</div><div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:8px;"><div style="background:#edf5ee;border:1px solid #90c4a0;padding:10px 12px;font-size:.78rem;color:#2a5a3a;"><strong>不一樣</strong> → 有事實認定錯誤，值得考慮申訴。保存所有相關證據。</div><div style="background:#fdf6e4;border:1px solid #d4b870;padding:10px 12px;font-size:.78rem;color:#7a5010;"><strong>一樣</strong> → 繼續看Step 02</div></div></div>
+<div style="background:#eef2f8;border:1px solid #90b0d0;padding:14px 18px;"><div style="font-family:'DM Mono',monospace;font-size:7.5px;letter-spacing:2px;text-transform:uppercase;color:#5a88c8;margin-bottom:6px;">Step 02</div><div style="font-size:.88rem;font-weight:500;color:#1e3a5a;margin-bottom:6px;">稽查過程中，稽查人員有沒有程序問題？</div><div style="font-size:.8rem;color:var(--p-muted);margin-bottom:8px;">□ 未出示稽查證件　□ 未讓你陳述意見　□ 稽查紀錄有明顯錯誤且你當場有提出異議</div><div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;"><div style="background:#edf5ee;border:1px solid #90c4a0;padding:10px 12px;font-size:.78rem;color:#2a5a3a;"><strong>有</strong> → 程序瑕疵，可作為申訴依據。諮詢行政法律師。</div><div style="background:#fdf6e4;border:1px solid #d4b870;padding:10px 12px;font-size:.78rem;color:#7a5010;"><strong>沒有</strong> → 繼續看Step 03</div></div></div>
+<div style="background:#eef2f8;border:1px solid #90b0d0;padding:14px 18px;"><div style="font-family:'DM Mono',monospace;font-size:7.5px;letter-spacing:2px;text-transform:uppercase;color:#5a88c8;margin-bottom:6px;">Step 03</div><div style="font-size:.88rem;font-weight:500;color:#1e3a5a;margin-bottom:6px;">你認為被引用的法條，有沒有適用錯誤的可能？</div><div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;"><div style="background:#edf5ee;border:1px solid #90c4a0;padding:10px 12px;font-size:.78rem;color:#2a5a3a;"><strong>不確定</strong> → 找行政法律師或法律扶助基金會確認，期限內決定。</div><div style="background:#fdf0ed;border:1px solid #e0a898;padding:10px 12px;font-size:.78rem;color:#8b2a1a;"><strong>沒有</strong> → 直接改正。停用違規產品、補件、建立採購機制，避免再犯。</div></div></div>
+</div>
+<div class="print-footer"><div class="pf-note">本工具為課程教育用途，不構成正式法律意見。</div><div class="pf-mono">附件 10／22 · 2026.05</div></div>
+</div></div>
+<!-- T11 -->
+<div class="tool-panel" id="t11">
+<div class="tp-bar" style="border-color:var(--nav-d);"><div class="tpb-left"><span class="tpb-num">11</span><span class="tpb-title" style="color:var(--navy);">訴願資源清單</span></div><div class="tpb-tags"><span class="tpb-tag" style="color:var(--navy);border-color:var(--nav-d);background:var(--nav-bg);">出事時備查</span></div></div>
+<div class="tp-content">
+<div class="tool-header" style="border-color:#4a80b0;"><div class="th-label">課程附件 11 of 22 · 申訴與救濟</div><div class="th-title" style="color:#1e3a5a;">訴願資源清單</div><div class="th-sub">30天救濟期限內要快——這裡是你需要找的人和地方</div></div>
+<div class="sec-lbl">優先諮詢管道</div>
+<table class="tool-table"><thead><tr><th>資源</th><th>適合情況</th><th>費用</th><th>備注</th></tr></thead><tbody>
+<tr><td style="font-weight:500;color:#1e3a5a;">法律扶助基金會</td><td>初步諮詢、了解是否值得申訴</td><td style="color:#2a5a3a;font-weight:500;">免費或低費</td><td style="font-size:.75rem;color:var(--p-muted);">各縣市皆有據點，網站可查詢最近服務處</td></tr>
+<tr><td style="font-weight:500;color:#1e3a5a;">行政法律師</td><td>有申訴依據，需要代理訴願</td><td style="color:var(--p-muted);">依律師收費</td><td style="font-size:.75rem;color:var(--p-muted);">重要：找有行政法背景，不是一般民事律師</td></tr>
+<tr><td style="font-weight:500;color:#1e3a5a;">各縣市衛生局</td><td>確認裁處書來源、了解改正要求</td><td style="color:#2a5a3a;font-weight:500;">免費</td><td style="font-size:.75rem;color:var(--p-muted);">直接聯繫開裁處書的機關，詢問改正程序</td></tr>
+<tr><td style="font-weight:500;color:#1e3a5a;">各縣市政府訴願審議委員會</td><td>提起正式訴願</td><td style="color:#2a5a3a;font-weight:500;">免費</td><td style="font-size:.75rem;color:var(--p-muted);">向裁處機關的上級機關提出</td></tr>
+</tbody></table>
+<div class="sec-lbl" style="margin-top:16px;">重要聯絡窗口</div>
+<table class="tool-table"><thead><tr><th>機關</th><th>用途</th><th>聯絡方式</th></tr></thead><tbody>
+<tr><td>法律扶助基金會</td><td>免費法律諮詢</td><td style="font-family:'DM Mono',monospace;font-size:.75rem;color:#2a4080;">laf.org.tw · 412-8518</td></tr>
+<tr><td>衛福部食藥署</td><td>化粧品法規查詢</td><td style="font-family:'DM Mono',monospace;font-size:.75rem;color:#2a4080;">fda.gov.tw · 1800-010-120</td></tr>
+<tr><td>行政院消費者保護會</td><td>消費爭議申訴</td><td style="font-family:'DM Mono',monospace;font-size:.75rem;color:#2a4080;">cpc.ey.gov.tw · 1950</td></tr>
+</tbody></table>
+<div style="background:#fdf0ed;border:1px solid #e0a898;border-left:3px solid #8b2a1a;padding:14px 18px;margin-top:12px;"><div style="font-family:'DM Mono',monospace;font-size:8px;letter-spacing:2px;text-transform:uppercase;color:#8b2a1a;margin-bottom:6px;">最重要的一件事</div><div style="font-size:.85rem;color:#8b2a1a;font-family:'Noto Serif TC',serif;line-height:1.7;">收到裁處書，<strong>先標注救濟期限日期</strong>，再去找人諮詢。不是找到人再看期限。期限過了，所有選項都消失了。</div></div>
+<div class="print-footer"><div class="pf-note">聯絡資訊依2026年現行資料整理，如有異動請以官方網站最新公告為準。</div><div class="pf-mono">附件 11／22 · 2026.05</div></div>
+</div></div>
+<!-- T12 -->
+<div class="tool-panel" id="t12">
+<div class="tp-bar" style="border-color:var(--amb-d);"><div class="tpb-left"><span class="tpb-num">12</span><span class="tpb-title" style="color:var(--amber);">五大迷思對照卡</span></div><div class="tpb-tags"><span class="tpb-tag" style="color:var(--amber);border-color:var(--amb-d);background:var(--amb-bg);">客人質疑時使用</span></div></div>
+<div class="tp-content">
+<div class="tool-header" style="border-color:#c08030;"><div class="th-label">課程附件 12 of 22 · 破解法規迷思</div><div class="th-title" style="color:#7a5010;">五大迷思對照卡</div><div class="th-sub">市場上流傳的說法，哪些是對的、哪些是錯的</div></div>
+<table class="tool-table"><thead><tr><th>#</th><th>市場流傳的說法</th><th>正確說明</th><th>為什麼這個說法會流傳</th></tr></thead><tbody>
+<tr><td style="font-family:'DM Mono',monospace;font-size:9px;color:#8b2a1a;font-weight:500;">迷思01</td><td style="color:#8b2a1a;font-weight:500;">「角蛋白美睫全面違法」</td><td>不正確。違法與否取決於<strong>產品成分</strong>，不是服務名稱。含燙髮還原劑成分用於睫毛才違規，角蛋白本身不是違禁物。</td><td style="font-size:.75rem;color:var(--p-muted);">部分媒體把「含燙髮還原劑的角蛋白療程違規」簡化成「角蛋白違法」，概念被過度壓縮。</td></tr>
+<tr><td style="font-family:'DM Mono',monospace;font-size:9px;color:#8b2a1a;font-weight:500;">迷思02</td><td style="color:#8b2a1a;font-weight:500;">「有民間協會證書就可以合法執業」</td><td>不正確。合法執業需要<strong>國家美容技術士丙/乙級證照</strong>。民間協會證書是技術進修證明，無法取代國家證照。</td><td style="font-size:.75rem;color:var(--p-muted);">民間協會發證時通常不主動說明這個限制，學員以為拿到證書就等於合法。</td></tr>
+<tr><td style="font-family:'DM Mono',monospace;font-size:9px;color:#8b2a1a;font-weight:500;">迷思03</td><td style="color:#8b2a1a;font-weight:500;">「產品有在台灣賣就算合規」</td><td>不完整。「有在賣」不等於「有完成PIF」，兩件事不是同一個概念。</td><td style="font-size:.75rem;color:var(--p-muted);">PIF是相對新的制度，很多在2024年前就開始銷售的產品，業者可能尚未更新合規狀態。</td></tr>
+<tr><td style="font-family:'DM Mono',monospace;font-size:9px;color:#8b2a1a;font-weight:500;">迷思04</td><td style="color:#8b2a1a;font-weight:500;">「代購產品送去檢驗就算合規」</td><td>不正確。送去化驗得到成分報告≠建立合法PIF。PIF需要具資格的<strong>安全資料簽署人（SA）</strong>正式簽署才有法定效力。</td><td style="font-size:.75rem;color:var(--p-muted);">「有檢驗報告」聽起來像有做了什麼，但PIF的法定要件不只是檢驗，還包括SA簽署。</td></tr>
+<tr><td style="font-family:'DM Mono',monospace;font-size:9px;color:#8b2a1a;font-weight:500;">迷思05</td><td style="color:#8b2a1a;font-weight:500;">「小工作室不會被稽查」</td><td>錯誤的安全感。衛生局稽查依法執行，不是依規模選擇。PIF上路後執法力度提升，小工作室一樣會被查。</td><td style="font-size:.75rem;color:var(--p-muted);">過去稽查資源有限，小工作室被查機率確實較低，但這個「默契」在PIF上路後已改變。</td></tr>
+</tbody></table>
+<div class="print-footer"><div class="pf-note">依《化粧品衛生安全管理法》現行規定製作。</div><div class="pf-mono">附件 12／22 · 2026.05</div></div>
+</div></div>
+<!-- T13 -->
+<div class="tool-panel" id="t13">
+<div class="tp-bar" style="border-color:var(--amb-d);"><div class="tpb-left"><span class="tpb-num">13</span><span class="tpb-title" style="color:var(--amber);">法規資訊可信度清單</span></div><div class="tpb-tags"><span class="tpb-tag" style="color:var(--amber);border-color:var(--amb-d);background:var(--amb-bg);">看到資訊時使用</span></div></div>
+<div class="tp-content">
+<div class="tool-header" style="border-color:#c08030;"><div class="th-label">課程附件 13 of 22 · 破解法規迷思</div><div class="th-title" style="color:#7a5010;">如何判斷網路法規資訊可不可信</div><div class="th-sub">三步驟 · 看到任何法規說法都可以用這個清單快速判斷</div></div>
+<div class="sec-lbl">三步驟檢核</div>
+<div style="display:flex;flex-direction:column;gap:3px;">
+<div style="display:grid;grid-template-columns:56px 1fr;border:1px solid var(--p-rule);"><div style="background:#fdf6e4;border-right:1px solid #d4b870;padding:14px;display:flex;align-items:center;justify-content:center;"><div style="font-family:'DM Mono',monospace;font-size:18px;color:#d4b870;font-weight:500;line-height:1;">01</div></div><div style="padding:14px 18px;"><div style="font-size:.88rem;font-weight:500;color:#7a5010;margin-bottom:6px;">看來源</div><div style="font-size:.8rem;line-height:1.65;margin-bottom:8px;">這個資訊是從哪裡來的？官方機關發布的，還是同業轉發的？</div><div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:6px;"><div style="padding:8px;background:#edf5ee;border:1px solid #90c4a0;text-align:center;font-size:.72rem;color:#2a5a3a;">衛福部食藥署官網<br><strong>可信度高</strong></div><div style="padding:8px;background:#fdf6e4;border:1px solid #d4b870;text-align:center;font-size:.72rem;color:#7a5010;">法律事務所文章<br><strong>需確認法條引用</strong></div><div style="padding:8px;background:#fdf0ed;border:1px solid #e0a898;text-align:center;font-size:.72rem;color:#8b2a1a;">同業IG貼文<br><strong>謹慎查證</strong></div></div></div></div>
+<div style="display:grid;grid-template-columns:56px 1fr;border:1px solid var(--p-rule);"><div style="background:#fdf6e4;border-right:1px solid #d4b870;padding:14px;display:flex;align-items:center;justify-content:center;"><div style="font-family:'DM Mono',monospace;font-size:18px;color:#d4b870;font-weight:500;line-height:1;">02</div></div><div style="padding:14px 18px;"><div style="font-size:.88rem;font-weight:500;color:#7a5010;margin-bottom:6px;">看日期</div><div style="font-size:.8rem;line-height:1.65;">法規有沒有在這個資訊發布後更新過？PIF制度2024-2026年分三階段上路，2023年以前的文章可能已過時。</div></div></div>
+<div style="display:grid;grid-template-columns:56px 1fr;border:1px solid var(--p-rule);"><div style="background:#fdf6e4;border-right:1px solid #d4b870;padding:14px;display:flex;align-items:center;justify-content:center;"><div style="font-family:'DM Mono',monospace;font-size:18px;color:#d4b870;font-weight:500;line-height:1;">03</div></div><div style="padding:14px 18px;"><div style="font-size:.88rem;font-weight:500;color:#7a5010;margin-bottom:6px;">看有沒有法條依據</div><div style="font-size:.8rem;line-height:1.65;">「角蛋白美睫違法」是結論，不是法條。可信的法規說明應該要能告訴你：<strong>是哪一條法律的哪一項規定</strong>。說不出法條的，就是推論，不是法律。</div></div></div>
+</div>
+<div style="display:grid;grid-template-columns:1fr 1fr;gap:3px;margin-top:12px;">
+<div style="padding:14px;background:#fdf0ed;border:1px solid #e0a898;"><div style="font-family:'DM Mono',monospace;font-size:7.5px;letter-spacing:1.5px;text-transform:uppercase;color:#8b2a1a;margin-bottom:8px;">看到這些 → 謹慎</div><ul class="cb-list"><li style="color:var(--p-muted);"><span class="cb-mark" style="color:#8b2a1a;">✕</span>沒有法條引用，只有結論</li><li style="color:var(--p-muted);"><span class="cb-mark" style="color:#8b2a1a;">✕</span>發布日期超過兩年</li><li style="color:var(--p-muted);"><span class="cb-mark" style="color:#8b2a1a;">✕</span>來源是同業轉發，找不到原始出處</li></ul></div>
+<div style="padding:14px;background:#edf5ee;border:1px solid #90c4a0;"><div style="font-family:'DM Mono',monospace;font-size:7.5px;letter-spacing:1.5px;text-transform:uppercase;color:#2a5a3a;margin-bottom:8px;">看到這些 → 可參考</div><ul class="cb-list"><li style="color:var(--p-muted);"><span class="cb-mark" style="color:#2a5a3a;">✓</span>明確引用法條（例：化粧品衛生安全管理法第5條）</li><li style="color:var(--p-muted);"><span class="cb-mark" style="color:#2a5a3a;">✓</span>可追溯到衛福部食藥署官方公告</li><li style="color:var(--p-muted);"><span class="cb-mark" style="color:#2a5a3a;">✓</span>發布日期在2024年後且有更新紀錄</li></ul></div>
+</div>
+<div class="print-footer"><div class="pf-note">衛福部食藥署官網：fda.gov.tw</div><div class="pf-mono">附件 13／22 · 2026.05</div></div>
+</div></div>
+<!-- T14 -->
+<div class="tool-panel" id="t14">
+<div class="tp-bar" style="border-color:var(--red-d);"><div class="tpb-left"><span class="tpb-num">14</span><span class="tpb-title" style="color:var(--red);">可以說 vs 不能說對照卡</span></div><div class="tpb-tags"><span class="tpb-tag" style="color:var(--red);border-color:var(--red-d);background:var(--red-bg);">發文前確認</span></div></div>
+<div class="tp-content">
+<div class="tool-header" style="border-color:#c05040;"><div class="th-label">課程附件 14 of 22 · 社群宣傳法律邊界</div><div class="th-title" style="color:#8b2a1a;">可以說 vs 不能說對照卡</div><div class="th-sub">IG貼文、限時動態——發布前30秒對照這張卡</div></div>
+<div class="instr" style="border-color:#c05040;background:#fdf0ed;color:#8b2a1a;"><strong>法律基礎：</strong>你的商業貼文在法律上屬於廣告，不得宣稱醫療效能、不得誇大效果。</div>
+<div class="two-col">
+<div class="col-box" style="border-color:#e0a898;background:#fdf0ed;"><div class="cb-label" style="color:#8b2a1a;">❌ 不能說的（醫療效能宣稱）</div><ul class="cb-list"><li style="color:#8b2a1a;"><span class="cb-mark">✕</span>促進睫毛生長</li><li style="color:#8b2a1a;"><span class="cb-mark">✕</span>改善睫毛稀疏</li><li style="color:#8b2a1a;"><span class="cb-mark">✕</span>修復毛囊</li><li style="color:#8b2a1a;"><span class="cb-mark">✕</span>活化毛囊細胞</li><li style="color:#8b2a1a;"><span class="cb-mark">✕</span>治療禿睫</li><li style="color:#8b2a1a;"><span class="cb-mark">✕</span>深層修復角質（宣稱治療功效時）</li><li style="color:#8b2a1a;"><span class="cb-mark">✕</span>消除眼周細紋（美睫服務宣傳）</li><li style="color:#8b2a1a;"><span class="cb-mark">✕</span>重建睫毛結構</li></ul></div>
+<div class="col-box" style="border-color:#90c4a0;background:#edf5ee;"><div class="cb-label" style="color:#2a5a3a;">✓ 可以說的（外觀效果描述）</div><ul class="cb-list"><li style="color:var(--p-ink);"><span class="cb-mark" style="color:#2a5a3a;">✓</span>讓睫毛看起來更濃密</li><li style="color:var(--p-ink);"><span class="cb-mark" style="color:#2a5a3a;">✓</span>提升睫毛捲翹度</li><li style="color:var(--p-ink);"><span class="cb-mark" style="color:#2a5a3a;">✓</span>打造自然弧度</li><li style="color:var(--p-ink);"><span class="cb-mark" style="color:#2a5a3a;">✓</span>補充角蛋白護理</li><li style="color:var(--p-ink);"><span class="cb-mark" style="color:#2a5a3a;">✓</span>維持睫毛光澤感</li><li style="color:var(--p-ink);"><span class="cb-mark" style="color:#2a5a3a;">✓</span>讓眼神看起來更有神</li><li style="color:var(--p-ink);"><span class="cb-mark" style="color:#2a5a3a;">✓</span>視覺上讓眼睫更顯豐盈</li><li style="color:var(--p-ink);"><span class="cb-mark" style="color:#2a5a3a;">✓</span>嫁接後更顯眼睛輪廓</li></ul></div>
+</div>
+<div style="background:#fdf6e4;border:1px solid #d4b870;border-left:3px solid #7a5010;padding:14px 18px;margin-top:12px;"><div style="font-family:'DM Mono',monospace;font-size:8px;letter-spacing:2px;text-transform:uppercase;color:#7a5010;margin-bottom:6px;">灰色地帶判斷原則</div><div style="font-size:.83rem;color:#7a5010;line-height:1.7;font-family:'Noto Serif TC',serif;">不確定一句話能不能說時：「這句話，如果<strong>醫師說</strong>，是不是也說得通？」如果是 → 很可能已進入醫療效能宣稱範圍，重新換句話說。</div></div>
+<div class="print-footer"><div class="pf-note">依《化粧品衛生安全管理法》廣告相關規定製作。</div><div class="pf-mono">附件 14／22 · 2026.05</div></div>
+</div></div>
+<!-- T15 -->
+<div class="tool-panel" id="t15">
+<div class="tp-bar" style="border-color:var(--red-d);"><div class="tpb-left"><span class="tpb-num">15</span><span class="tpb-title" style="color:var(--red);">社群貼文自我審查兩問題卡</span></div><div class="tpb-tags"><span class="tpb-tag" style="color:var(--red);border-color:var(--red-d);background:var(--red-bg);">貼在電腦旁</span></div></div>
+<div class="tp-content">
+<div class="tool-header" style="border-color:#c05040;"><div class="th-label">課程附件 15 of 22 · 社群宣傳法律邊界</div><div class="th-title" style="color:#8b2a1a;">社群貼文自我審查兩問題卡</div><div class="th-sub">發文前30秒 · 問自己這兩個問題</div></div>
+<div style="display:flex;flex-direction:column;gap:4px;margin-bottom:24px;">
+<div style="background:#fdf0ed;border:1.5px solid #e08878;padding:28px;"><div style="font-family:'DM Mono',monospace;font-size:9px;letter-spacing:2px;text-transform:uppercase;color:#8b2a1a;margin-bottom:12px;">問題一</div><div style="font-family:'Noto Serif TC',serif;font-size:1.2rem;font-weight:900;color:#8b2a1a;line-height:1.4;margin-bottom:12px;">「這句話，如果醫師說，<br>是不是也說得通？」</div><div style="font-size:.8rem;color:#c08070;line-height:1.65;">如果你的廣告文字，醫師在診間也能用同樣的話說——那就是醫療效能宣稱，你不應該說。外觀描述（「看起來更濃密」）和醫療宣稱（「促進生長」）之間的界線在這裡。</div></div>
+<div style="background:#fdf0ed;border:1.5px solid #e08878;padding:28px;"><div style="font-family:'DM Mono',monospace;font-size:9px;letter-spacing:2px;text-transform:uppercase;color:#8b2a1a;margin-bottom:12px;">問題二</div><div style="font-family:'Noto Serif TC',serif;font-size:1.2rem;font-weight:900;color:#8b2a1a;line-height:1.4;margin-bottom:12px;">「衛生局的人看到這句話，<br>有沒有辦法說我在宣稱醫療效果？」</div><div style="font-size:.8rem;color:#c08070;line-height:1.65;">只要答案是「有可能」，就要重新換句話說。這個標準比法律更謹慎，但這謹慎保護的是你的商譽和執業安全。</div></div>
+</div>
+<div class="print-footer"><div class="pf-note">依《化粧品衛生安全管理法》廣告相關規定製作。</div><div class="pf-mono">附件 15／22 · 2026.05</div></div>
+</div></div>
+<!-- T16 -->
+<div class="tool-panel" id="t16">
+<div class="tp-bar" style="border-color:var(--red-d);"><div class="tpb-left"><span class="tpb-num">16</span><span class="tpb-title" style="color:var(--red);">10個違規詞彙合規替換建議</span></div><div class="tpb-tags"><span class="tpb-tag" style="color:var(--red);border-color:var(--red-d);background:var(--red-bg);">發文時直接替換</span></div></div>
+<div class="tp-content">
+<div class="tool-header" style="border-color:#c05040;"><div class="th-label">課程附件 16 of 22 · 社群宣傳法律邊界</div><div class="th-title" style="color:#8b2a1a;">10個常見違規詞彙合規替換建議</div><div class="th-sub">每個都附上可以直接使用的合規替換版本</div></div>
+<table class="tool-table"><thead><tr><th>#</th><th>❌ 違規說法</th><th>✓ 合規替換</th><th>替換邏輯</th></tr></thead><tbody>
+<tr><td style="font-family:'DM Mono',monospace;font-size:9px;color:#8b2a1a;">01</td><td style="color:#8b2a1a;">促進睫毛生長</td><td style="color:#2a5a3a;">讓睫毛看起來更豐盈茂密</td><td style="font-size:.72rem;color:var(--p-muted);">「看起來」是外觀描述，「促進生長」是醫療宣稱</td></tr>
+<tr><td style="font-family:'DM Mono',monospace;font-size:9px;color:#8b2a1a;">02</td><td style="color:#8b2a1a;">修復毛囊</td><td style="color:#2a5a3a;">補充睫毛所需的角蛋白養分</td><td style="font-size:.72rem;color:var(--p-muted);">毛囊是醫療用語，角蛋白補充是化粧品可描述的功效</td></tr>
+<tr><td style="font-family:'DM Mono',monospace;font-size:9px;color:#8b2a1a;">03</td><td style="color:#8b2a1a;">改善睫毛稀疏</td><td style="color:#2a5a3a;">視覺上讓眼睫更顯濃密</td><td style="font-size:.72rem;color:var(--p-muted);">「改善稀疏」暗示治療效果，視覺效果是合規描述</td></tr>
+<tr><td style="font-family:'DM Mono',monospace;font-size:9px;color:#8b2a1a;">04</td><td style="color:#8b2a1a;">活化毛囊細胞</td><td style="color:#2a5a3a;">護理睫毛，維持健康光澤感</td><td style="font-size:.72rem;color:var(--p-muted);">細胞活化是醫療行為描述，護理維持是化粧品範疇</td></tr>
+<tr><td style="font-family:'DM Mono',monospace;font-size:9px;color:#8b2a1a;">05</td><td style="color:#8b2a1a;">深層修復受損睫毛</td><td style="color:#2a5a3a;">為睫毛補充角蛋白，改善乾燥感</td><td style="font-size:.72rem;color:var(--p-muted);">「深層修復」偏向醫療，「改善乾燥感」是外觀敘述</td></tr>
+<tr><td style="font-family:'DM Mono',monospace;font-size:9px;color:#8b2a1a;">06</td><td style="color:#8b2a1a;">重建睫毛結構</td><td style="color:#2a5a3a;">讓睫毛弧度更整齊自然</td><td style="font-size:.72rem;color:var(--p-muted);">「重建結構」涉及組織改變，屬醫療宣稱</td></tr>
+<tr><td style="font-family:'DM Mono',monospace;font-size:9px;color:#8b2a1a;">07</td><td style="color:#8b2a1a;">治療睫毛掉落</td><td style="color:#2a5a3a;">讓睫毛在操作後維持更好的狀態</td><td style="font-size:.72rem;color:var(--p-muted);">「治療」是醫療行為，任何形式的治療宣稱都違規</td></tr>
+<tr><td style="font-family:'DM Mono',monospace;font-size:9px;color:#8b2a1a;">08</td><td style="color:#8b2a1a;">改變眼型（作為治療效果）</td><td style="color:#2a5a3a;">透過睫毛弧度讓眼睛輪廓更顯立體</td><td style="font-size:.72rem;color:var(--p-muted);">「改變眼型」若以治療為出發點即違規，視覺效果描述合規</td></tr>
+<tr><td style="font-family:'DM Mono',monospace;font-size:9px;color:#8b2a1a;">09</td><td style="color:#8b2a1a;">消除細紋（美睫服務宣傳）</td><td style="color:#2a5a3a;">讓整體眼神更年輕有神</td><td style="font-size:.72rem;color:var(--p-muted);">消除細紋是醫療宣稱，「看起來更年輕」是外觀描述</td></tr>
+<tr><td style="font-family:'DM Mono',monospace;font-size:9px;color:#8b2a1a;">10</td><td style="color:#8b2a1a;">角蛋白重建療程（暗示醫療）</td><td style="color:#2a5a3a;">角蛋白護理療程</td><td style="font-size:.72rem;color:var(--p-muted);">「重建」涉及組織改變，「護理」是化粧品合規描述</td></tr>
+</tbody></table>
+<div class="print-footer"><div class="pf-note">替換建議僅供參考，實際廣告文案建議諮詢法律顧問。</div><div class="pf-mono">附件 16／22 · 2026.05</div></div>
+</div></div>
+<!-- T17 -->
+<div class="tool-panel" id="t17">
+<div class="tp-bar" style="border-color:var(--pur-d);"><div class="tpb-left"><span class="tpb-num">17</span><span class="tpb-title" style="color:var(--purple);">四市場法規架構對照表</span></div><div class="tpb-tags"><span class="tpb-tag" style="color:var(--purple);border-color:var(--pur-d);background:var(--pur-bg);">跨市場活動前備查</span></div></div>
+<div class="tp-content">
+<div class="tool-header" style="border-color:#8060c0;"><div class="th-label">課程附件 17 of 22 · 國際市場工具</div><div class="th-title" style="color:#4a3080;">四市場法規架構對照表</div><div class="th-sub">台灣 · 香港 · 新加坡 · 馬來西亞 · 跨市場活動前確認</div></div>
+<div class="instr" style="border-color:#8060c0;background:#f0eef8;color:#4a3080;"><strong>重要提醒：</strong>台灣合規，不等於所有市場合規。但做好台灣的合規，是進入其他市場最好的起點。</div>
+<table class="tool-table"><thead><tr><th>市場</th><th>主管機關</th><th>制度特點</th><th>對台灣業者的實務影響</th></tr></thead><tbody>
+<tr><td style="font-weight:600;color:#8a6e2a;">台灣</td><td>衛福部食藥署</td><td>PIF制度，分三階段上路（2024-2026）。特定用途化粧品需SA簽署。</td><td style="font-size:.78rem;">你已經在這個框架裡。這堂課就是在幫你搞清楚這個框架。</td></tr>
+<tr><td style="font-weight:600;color:#4a3080;">香港</td><td>衛生署</td><td>目前以自願性規範為主，無強制PIF制度。禁用成分有明確清單。</td><td style="font-size:.78rem;">台灣合規不等於香港合規，禁用成分清單有差異。</td></tr>
+<tr><td style="font-weight:600;color:#4a3080;">新加坡</td><td>衛生科學局（HSA）</td><td>採通報制度，上市前需通報。禁用成分清單嚴格，違規懲處重。</td><td style="font-size:.78rem;">進口產品需確認已完成通報，建議尋找當地代理商協助合規程序。</td></tr>
+<tr><td style="font-weight:600;color:#4a3080;">馬來西亞</td><td>國家藥品管制局（NPRA）</td><td>強制通知制度，東協化粧品指令（ASEAN Cosmetic Directive）框架下運作。</td><td style="font-size:.78rem;">和台灣PIF有結構相似性，但格式不同，不能直接沿用台灣PIF。</td></tr>
+</tbody></table>
+<div class="sec-lbl" style="margin-top:16px;">自創品牌進其他市場的建議路徑</div>
+<div style="display:grid;grid-template-columns:repeat(4,1fr);gap:3px;">
+<div style="padding:12px;background:var(--p-s1);border:1px solid var(--p-rule);border-top:3px solid #8a6e2a;text-align:center;"><div style="font-family:'DM Mono',monospace;font-size:18px;color:var(--p-rule);line-height:1;margin-bottom:6px;">01</div><div style="font-size:.75rem;line-height:1.5;">台灣PIF<br>作為底稿</div></div>
+<div style="padding:12px;background:var(--p-s1);border:1px solid var(--p-rule);border-top:3px solid #4a3080;text-align:center;"><div style="font-family:'DM Mono',monospace;font-size:18px;color:var(--p-rule);line-height:1;margin-bottom:6px;">02</div><div style="font-size:.75rem;line-height:1.5;">找當地<br>法規顧問</div></div>
+<div style="padding:12px;background:var(--p-s1);border:1px solid var(--p-rule);border-top:3px solid #4a3080;text-align:center;"><div style="font-family:'DM Mono',monospace;font-size:18px;color:var(--p-rule);line-height:1;margin-bottom:6px;">03</div><div style="font-size:.75rem;line-height:1.5;">確認當地<br>禁用成分</div></div>
+<div style="padding:12px;background:var(--p-s1);border:1px solid var(--p-rule);border-top:3px solid #4a3080;text-align:center;"><div style="font-family:'DM Mono',monospace;font-size:18px;color:var(--p-rule);line-height:1;margin-bottom:6px;">04</div><div style="font-size:.75rem;line-height:1.5;">完成當地<br>通報程序</div></div>
+</div>
+<div class="print-footer"><div class="pf-note">各市場法規資訊依2026年現行資料整理，如有異動以各地主管機關最新公告為準。</div><div class="pf-mono">附件 17／22 · 2026.05</div></div>
+</div></div>
+<!-- T18 -->
+<div class="tool-panel" id="t18">
+<div class="tp-bar" style="border-color:var(--pur-d);"><div class="tpb-left"><span class="tpb-num">18</span><span class="tpb-title" style="color:var(--purple);">跨市場推薦產品免責聲明範本</span></div><div class="tpb-tags"><span class="tpb-tag" style="color:var(--purple);border-color:var(--pur-d);background:var(--pur-bg);">教學者適用</span></div></div>
+<div class="tp-content">
+<div class="tool-header" style="border-color:#8060c0;"><div class="th-label">課程附件 18 of 22 · 國際市場工具 · 教學者專用</div><div class="th-title" style="color:#4a3080;">教學者跨市場推薦產品免責聲明範本</div><div class="th-sub">保護你的商譽 · 對學員誠實說明</div></div>
+<div class="sec-lbl">課程講義版（書面）</div>
+<div style="background:#f0eef8;border:1px solid #b0a0d8;border-left:3px solid #4a3080;padding:20px 22px;margin-bottom:12px;"><div style="font-family:'DM Mono',monospace;font-size:7.5px;letter-spacing:2px;text-transform:uppercase;color:#8060c0;margin-bottom:10px;">範本文字（可直接複製）</div><div style="font-family:'Noto Serif TC',serif;font-size:.9rem;line-height:1.85;">「本課程推薦或示範使用的產品，均已確認符合<strong>台灣現行化粧品衛生安全管理法</strong>之合規要求，包含PIF登錄、成分合規及中文標示。<br><br>如您在台灣以外的市場執業，請自行向當地主管機關確認相關產品的合規狀態，各市場法規要求不同，台灣合規不代表其他市場合規。」</div></div>
+<div class="sec-lbl">口頭說明版（課堂使用）</div>
+<div style="background:#f0eef8;border:1px solid #b0a0d8;border-left:3px solid #4a3080;padding:20px 22px;margin-bottom:12px;"><div style="font-family:'Noto Serif TC',serif;font-size:.9rem;line-height:1.85;">「這些產品我都在台灣確認過合規。如果你回去的是香港、新加坡、或其他市場——台灣合規不等於那邊合規，記得自己查一下當地的規定。」</div></div>
+<div class="sec-lbl">社群貼文版</div>
+<div style="background:#f0eef8;border:1px solid #b0a0d8;border-left:3px solid #4a3080;padding:20px 22px;"><div style="font-family:'Noto Serif TC',serif;font-size:.9rem;line-height:1.85;">「＊本推薦產品已確認符合台灣現行法規要求。在其他市場執業的朋友，請自行確認當地合規狀態。」</div></div>
+<div class="print-footer"><div class="pf-note">本範本為參考用途，請依實際情況調整。</div><div class="pf-mono">附件 18／22 · 2026.05</div></div>
+</div></div>
+<!-- T19 -->
+<div class="tool-panel" id="t19">
+<div class="tp-bar" style="border-color:var(--pur-d);"><div class="tpb-left"><span class="tpb-num">19</span><span class="tpb-title" style="color:var(--purple);">各市場主管機關官網與查詢入口</span></div><div class="tpb-tags"><span class="tpb-tag" style="color:var(--purple);border-color:var(--pur-d);background:var(--pur-bg);">數位版</span></div></div>
+<div class="tp-content">
+<div class="tool-header" style="border-color:#8060c0;"><div class="th-label">課程附件 19 of 22 · 國際市場工具</div><div class="th-title" style="color:#4a3080;">各市場主管機關官網與查詢入口</div></div>
+<div class="sec-lbl">台灣</div>
+<table class="tool-table"><thead><tr><th>機關</th><th>用途</th><th>網址</th></tr></thead><tbody>
+<tr><td style="font-weight:500;">衛福部食藥署</td><td>化粧品法規查詢、PIF登錄確認</td><td style="font-family:'DM Mono',monospace;font-size:.75rem;color:#2a4080;">fda.gov.tw</td></tr>
+<tr><td style="font-weight:500;">食藥署消費者服務</td><td>法規諮詢專線</td><td style="font-family:'DM Mono',monospace;font-size:.75rem;color:#2a4080;">1800-010-120（免費）</td></tr>
+</tbody></table>
+<div class="sec-lbl" style="margin-top:14px;">香港</div>
+<table class="tool-table"><thead><tr><th>機關</th><th>用途</th><th>網址</th></tr></thead><tbody>
+<tr><td style="font-weight:500;">香港衛生署</td><td>化妝品安全、禁用成分清單</td><td style="font-family:'DM Mono',monospace;font-size:.75rem;color:#2a4080;">dh.gov.hk</td></tr>
+</tbody></table>
+<div class="sec-lbl" style="margin-top:14px;">新加坡</div>
+<table class="tool-table"><thead><tr><th>機關</th><th>用途</th><th>網址</th></tr></thead><tbody>
+<tr><td style="font-weight:500;">衛生科學局（HSA）</td><td>化粧品通報查詢、禁用成分清單</td><td style="font-family:'DM Mono',monospace;font-size:.75rem;color:#2a4080;">hsa.gov.sg</td></tr>
+</tbody></table>
+<div class="sec-lbl" style="margin-top:14px;">馬來西亞</div>
+<table class="tool-table"><thead><tr><th>機關</th><th>用途</th><th>網址</th></tr></thead><tbody>
+<tr><td style="font-weight:500;">國家藥品管制局（NPRA）</td><td>化粧品通報查詢、合規確認</td><td style="font-family:'DM Mono',monospace;font-size:.75rem;color:#2a4080;">npra.gov.my</td></tr>
+</tbody></table>
+<div class="print-footer"><div class="pf-note">網址資訊依2026年現行資料整理，如有異動請以各機關官網為準。</div><div class="pf-mono">附件 19／22 · 2026.05</div></div>
+</div></div>
+<!-- T20 -->
+<div class="tool-panel" id="t20">
+<div class="tp-bar" style="border-color:var(--grn-d);"><div class="tpb-left"><span class="tpb-num">20</span><span class="tpb-title" style="color:var(--green);">個人化合規聲明</span></div><div class="tpb-tags"><span class="tpb-tag" style="color:var(--green);border-color:var(--grn-d);background:var(--grn-bg);">課堂當場完成</span></div></div>
+<div class="tp-content">
+<div class="tool-header" style="border-color:#50a060;"><div class="th-label">課程附件 20 of 22 · 合規品牌差異化</div><div class="th-title" style="color:#2a5a3a;">個人化合規聲明</div><div class="th-sub">課堂當場填入個人資訊 · 離開時帶走你自己的版本 · 可直接貼在IG個人頁</div></div>
+<div class="sec-lbl">標準版（IG個人頁或工作室說明用）</div>
+<div style="background:#edf5ee;border:1px solid #90c4a0;border-left:3px solid #2a5a3a;padding:22px 24px;margin-bottom:14px;"><div style="font-family:'DM Mono',monospace;font-size:7.5px;letter-spacing:2px;text-transform:uppercase;color:#2a6040;margin-bottom:12px;">填寫後可直接使用</div><div style="font-family:'Noto Serif TC',serif;font-size:.92rem;line-height:2;">本工作室使用的所有服務產品，均已確認：<br>✦ 成分不含已知燙髮還原劑<br>✦ 具備台灣合法進口管道或PIF登錄紀錄<br>✦ 具有完整中文標示<br><br>我持有國家美容技術士證照<br>（證號：<span style="border-bottom:1px solid #90c4a0;display:inline-block;min-width:100px;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>）<br><br>每季定期重新確認產品合規狀態。</div></div>
+<div class="sec-lbl">簡短版（限時動態或報價單用）</div>
+<div style="background:#edf5ee;border:1px solid #90c4a0;border-left:3px solid #2a5a3a;padding:16px 20px;margin-bottom:14px;"><div style="font-family:'Noto Serif TC',serif;font-size:.88rem;line-height:1.85;">✦ 使用產品已確認台灣PIF合規<br>✦ 成分每次入庫前核查<br>✦ 國家美容技術士證照執業</div></div>
+<div class="sec-lbl">四個可以放這段話的地方</div>
+<div style="display:grid;grid-template-columns:1fr 1fr;gap:3px;">
+<div style="padding:12px 14px;background:var(--p-s1);border:1px solid var(--p-rule);border-left:3px solid #2a5a3a;"><div style="font-size:.8rem;font-weight:500;color:#2a5a3a;margin-bottom:4px;">IG 個人頁說明</div><div style="font-size:.72rem;color:var(--p-muted);">放在bio欄位，讓每個點進來的潛在客人都看到</div></div>
+<div style="padding:12px 14px;background:var(--p-s1);border:1px solid var(--p-rule);border-left:3px solid #2a5a3a;"><div style="font-size:.8rem;font-weight:500;color:#2a5a3a;margin-bottom:4px;">工作室實體牆面</div><div style="font-size:.72rem;color:var(--p-muted);">A4列印貼在客人等待區</div></div>
+<div style="padding:12px 14px;background:var(--p-s1);border:1px solid var(--p-rule);border-left:3px solid #2a5a3a;"><div style="font-size:.8rem;font-weight:500;color:#2a5a3a;margin-bottom:4px;">報價單頁尾</div><div style="font-size:.72rem;color:var(--p-muted);">每次報價都帶著這段說明，強化你的專業形象</div></div>
+<div style="padding:12px 14px;background:var(--p-s1);border:1px solid var(--p-rule);border-left:3px solid #2a5a3a;"><div style="font-size:.8rem;font-weight:500;color:#2a5a3a;margin-bottom:4px;">教學課程說明</div><div style="font-size:.72rem;color:var(--p-muted);">讓學員知道你的課程使用產品都經過合規確認</div></div>
+</div>
+<div class="print-footer"><div class="pf-note">合規聲明為參考框架，請依實際情況確認後填入。</div><div class="pf-mono">附件 20／22 · 2026.05</div></div>
+</div></div>
+<!-- T21 -->
+<div class="tool-panel" id="t21">
+<div class="tp-bar" style="border-color:var(--grn-d);"><div class="tpb-left"><span class="tpb-num">21</span><span class="tpb-title" style="color:var(--green);">合規工作室社群文案範本三則</span></div><div class="tpb-tags"><span class="tpb-tag" style="color:var(--green);border-color:var(--grn-d);background:var(--grn-bg);">可直接發布</span></div></div>
+<div class="tp-content">
+<div class="tool-header" style="border-color:#50a060;"><div class="th-label">課程附件 21 of 22 · 合規品牌差異化</div><div class="th-title" style="color:#2a5a3a;">合規工作室社群文案範本三則</div><div class="th-sub">三種使用場景的現成文案 · 可直接發布</div></div>
+<div class="sec-lbl">文案一 · 客人詢問時的回應</div>
+<div style="background:#edf5ee;border:1px solid #90c4a0;border-left:3px solid #2a5a3a;padding:18px 20px;margin-bottom:14px;"><div style="font-family:'Noto Serif TC',serif;font-size:.88rem;line-height:1.9;">謝謝你的詢問 🌿<br><br>我使用的產品在採購前都會完成三個確認——成分核查（確認無燙髮還原劑成分）、台灣PIF登錄確認、以及中文標示確認。<br><br>如果你想知道某個特定產品的更多資訊，歡迎私訊我。</div></div>
+<div class="sec-lbl">文案二 · IG 定期更新貼文（每季發布）</div>
+<div style="background:#edf5ee;border:1px solid #90c4a0;border-left:3px solid #2a5a3a;padding:18px 20px;margin-bottom:14px;"><div style="font-family:'Noto Serif TC',serif;font-size:.88rem;line-height:1.9;">本季產品合規確認完成 ✦<br><br>每季我都會重新審查工作室使用的所有產品，確認：<br>✦ 成分無高風險燙髮還原劑<br>✦ 具備台灣合法PIF登錄<br>✦ 包裝有完整中文標示<br><br>這不只是為了合規，是為了你每次來，我都能清楚說明我用的是什麼。</div></div>
+<div class="sec-lbl">文案三 · 教學者課程宣傳附加說明</div>
+<div style="background:#edf5ee;border:1px solid #90c4a0;border-left:3px solid #2a5a3a;padding:18px 20px;"><div style="font-family:'Noto Serif TC',serif;font-size:.88rem;line-height:1.9;">本課程示範使用的所有產品，均已完成台灣PIF合規確認 ✦<br><br>你學到的技術，搭配的是真正站得住腳的產品。這是我對每一位學員的承諾。</div></div>
+<div class="print-footer"><div class="pf-note">文案為範本，請依個人風格自然調整。</div><div class="pf-mono">附件 21／22 · 2026.05</div></div>
+</div></div>
+<!-- T22 -->
+<div class="tool-panel" id="t22">
+<div class="tp-bar" style="border-color:var(--grn-d);"><div class="tpb-left"><span class="tpb-num">22</span><span class="tpb-title" style="color:var(--green);">合規差異化四場景行動清單</span></div><div class="tpb-tags"><span class="tpb-tag" style="color:var(--green);border-color:var(--grn-d);background:var(--grn-bg);">勾選即執行</span></div></div>
+<div class="tp-content">
+<div class="tool-header" style="border-color:#50a060;"><div class="th-label">課程附件 22 of 22 · 合規品牌差異化</div><div class="th-title" style="color:#2a5a3a;">合規差異化四場景行動清單</div><div class="th-sub">合規不只是讓你少賠——做對了，它讓你多賺。這份清單告訴你怎麼做。</div></div>
+<div class="sec-lbl">場景一 · 客人詢問時</div>
+<div class="check-rows">
+<div class="cr-row" style="grid-template-columns:32px 1fr;"><div class="cr-cell" style="border-right:1px solid var(--p-rule);display:flex;align-items:center;justify-content:center;"><div class="cr-check"></div></div><div class="cr-cell">主動展示合規聲明（附件20），不等客人問</div></div>
+<div class="cr-row" style="grid-template-columns:32px 1fr;"><div class="cr-cell" style="border-right:1px solid var(--p-rule);display:flex;align-items:center;justify-content:center;"><div class="cr-check"></div></div><div class="cr-cell">拿出成分核查清單（附件01），說明這瓶產品在哪個區</div></div>
+<div class="cr-row" style="grid-template-columns:32px 1fr;"><div class="cr-cell" style="border-right:1px solid var(--p-rule);display:flex;align-items:center;justify-content:center;"><div class="cr-check"></div></div><div class="cr-cell">用話術卡（附件02）的結構回答：是什麼→風險在哪→我確認過</div></div>
+</div>
+<div class="sec-lbl" style="margin-top:14px;">場景二 · 社群定位</div>
+<div class="check-rows">
+<div class="cr-row" style="grid-template-columns:32px 1fr;"><div class="cr-cell" style="border-right:1px solid var(--p-rule);display:flex;align-items:center;justify-content:center;"><div class="cr-check"></div></div><div class="cr-cell">IG個人頁放入合規聲明（附件20標準版）</div></div>
+<div class="cr-row" style="grid-template-columns:32px 1fr;"><div class="cr-cell" style="border-right:1px solid var(--p-rule);display:flex;align-items:center;justify-content:center;"><div class="cr-check"></div></div><div class="cr-cell">每季發布一次合規更新貼文（附件21文案二）</div></div>
+<div class="cr-row" style="grid-template-columns:32px 1fr;"><div class="cr-cell" style="border-right:1px solid var(--p-rule);display:flex;align-items:center;justify-content:center;"><div class="cr-check"></div></div><div class="cr-cell">發文前用附件15的兩個問題自我審查</div></div>
+<div class="cr-row" style="grid-template-columns:32px 1fr;"><div class="cr-cell" style="border-right:1px solid var(--p-rule);display:flex;align-items:center;justify-content:center;"><div class="cr-check"></div></div><div class="cr-cell">違規詞彙替換：對照附件16，把現有貼文的違規詞改掉</div></div>
+</div>
+<div class="sec-lbl" style="margin-top:14px;">場景三 · 教學者宣傳</div>
+<div class="check-rows">
+<div class="cr-row" style="grid-template-columns:32px 1fr;"><div class="cr-cell" style="border-right:1px solid var(--p-rule);display:flex;align-items:center;justify-content:center;"><div class="cr-check"></div></div><div class="cr-cell">課程說明中標注「本課程使用產品全部通過合規審查」（附件21文案三）</div></div>
+<div class="cr-row" style="grid-template-columns:32px 1fr;"><div class="cr-cell" style="border-right:1px solid var(--p-rule);display:flex;align-items:center;justify-content:center;"><div class="cr-check"></div></div><div class="cr-cell">發給學員的講義包含產品合規文件清單（附件03產品審查記錄表）</div></div>
+<div class="cr-row" style="grid-template-columns:32px 1fr;"><div class="cr-cell" style="border-right:1px solid var(--p-rule);display:flex;align-items:center;justify-content:center;"><div class="cr-check"></div></div><div class="cr-cell">有海外學員時加入跨市場免責聲明（附件18）</div></div>
+</div>
+<div class="sec-lbl" style="margin-top:14px;">場景四 · 定價策略</div>
+<div class="check-rows">
+<div class="cr-row" style="grid-template-columns:32px 1fr;"><div class="cr-cell" style="border-right:1px solid var(--p-rule);display:flex;align-items:center;justify-content:center;"><div class="cr-check"></div></div><div class="cr-cell">報價單加入合規聲明簡短版（附件20簡短版），讓合規成為定價的說明</div></div>
+<div class="cr-row" style="grid-template-columns:32px 1fr;"><div class="cr-cell" style="border-right:1px solid var(--p-rule);display:flex;align-items:center;justify-content:center;"><div class="cr-check"></div></div><div class="cr-cell">客人問為什麼比別家貴時，用話術卡（附件02情境03）回答</div></div>
+<div class="cr-row" style="grid-template-columns:32px 1fr;"><div class="cr-cell" style="border-right:1px solid var(--p-rule);display:flex;align-items:center;justify-content:center;"><div class="cr-check"></div></div><div class="cr-cell">下次調價時，把「合規成本」列為定價理由之一</div></div>
+</div>
+<div style="background:#edf5ee;border:1px solid #90c4a0;border-left:3px solid #2a5a3a;padding:16px 18px;margin-top:16px;"><div style="font-family:'Noto Serif TC',serif;font-size:.92rem;color:#2a5a3a;line-height:1.75;"><strong>合規不只是讓你少賠。做對了，它讓你多賺——因為你有別人說不出來的理由，值得客人付更多錢給你。</strong></div></div>
+<div class="print-footer"><div class="pf-note">本清單為全日研討會最終工具，整合22份附件的行動建議。課後建議每季重新勾選確認。</div><div class="pf-mono">附件 22／22 · 2026.05 · 睫毛管理法規層面透析</div></div>
+</div></div>
+</main>
+</div>
+<script>
+function showTool(toolId) {
+  document.querySelectorAll('.tool-panel').forEach(function(p){ p.style.display='none'; });
+  document.querySelectorAll('.sb-btn').forEach(function(b){ b.classList.remove('active'); });
+  var el = document.getElementById(toolId);
+  if(el){ el.style.display='block'; }
+  var btn = document.querySelector('[data-tool="'+toolId+'"]');
+  if(btn){ btn.classList.add('active'); }
+  var sel = document.getElementById('mobileSelect');
+  if(sel){ sel.value = toolId; }
+  document.body.scrollTop=0;
+  document.documentElement.scrollTop=0;
+  var main = document.getElementById('main');
+  if(main){ main.scrollTop=0; }
+  if(window.innerWidth<=760){
+    var sb = document.getElementById('sidebar');
+    if(sb){ sb.classList.remove('open'); }
+  }
+}
+
+document.addEventListener('DOMContentLoaded', function(){
+  // hide all panels first, then show t01
+  document.querySelectorAll('.tool-panel').forEach(function(p){ p.style.display='none'; });
+  var first = document.getElementById('t01');
+  if(first){ first.style.display='block'; }
+
+  // wire sidebar buttons
+  document.querySelectorAll('.sb-btn').forEach(function(btn){
+    btn.addEventListener('click', function(){
+      showTool(this.getAttribute('data-tool'));
+    });
+  });
+
+  // mobile menu button
+  var menuBtn = document.getElementById('menuBtn');
+  if(menuBtn){
+    menuBtn.addEventListener('click', function(){
+      var sb = document.getElementById('sidebar');
+      if(sb){ sb.classList.toggle('open'); }
+    });
+  }
+
+  // mobile select
+  var sel = document.getElementById('mobileSelect');
+  if(sel){
+    sel.addEventListener('change', function(){
+      showTool(this.value);
+    });
+  }
+});
+
+function markQ(el,val){
+  var row=el.closest('.qr-row');
+  row.querySelectorAll('.qr-opt .radio-circle').forEach(function(c){c.style.background='';c.style.borderColor='';});
+  var circle=el.querySelector('.radio-circle');
+  if(!circle)return;
+  if(val==='g'){circle.style.background='#2a5a3a';circle.style.borderColor='#2a6040';}
+  if(val==='a'){circle.style.background='#7a5010';circle.style.borderColor='#7a5010';}
+  if(val==='r'){circle.style.background='#8b2a1a';circle.style.borderColor='#8b2a1a';}
+}
+</script>
+</body>
+</html>

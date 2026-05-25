@@ -1,0 +1,1311 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>五個新方向 · 完整講課內容</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Noto+Serif+TC:wght@300;400;600;900&family=Noto+Sans+TC:wght@300;400;500&family=DM+Mono:wght@300;400;500&display=swap');
+
+  :root {
+    --bg:      #0d0c0a;
+    --s1:      #161412;
+    --s2:      #1e1c18;
+    --s3:      #242018;
+    --bd:      #2a2722;
+    --bd2:     #3a3630;
+    --text:    #ede8de;
+    --muted:   #7a7468;
+    --dim:     #484440;
+    --gold:    #c9a84c; --gold-d: #6a5828; --gold-bg: #1a1508;
+    --red:     #e08878; --red-d:  #8b2a1a; --red-bg:  #180a08;
+    --amber:   #d4a040; --amb-d:  #7a5010; --amb-bg:  #1a1005;
+    --green:   #70c888; --grn-d:  #2a6040; --grn-bg:  #0a1810;
+    --blue:    #6a90d8; --blu-d:  #2a4080; --blu-bg:  #0a0f20;
+    --purple:  #a080d8; --pur-d:  #4a3080; --pur-bg:  #100a20;
+  }
+
+  *, *::before, *::after { margin:0; padding:0; box-sizing:border-box; }
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'Noto Sans TC', sans-serif;
+    font-weight: 300;
+    line-height: 1.7;
+  }
+
+  /* ── NAV ── */
+  .nav {
+    position: sticky;
+    top: 0;
+    z-index: 200;
+    background: rgba(13,12,10,0.97);
+    backdrop-filter: blur(16px);
+    border-bottom: 1px solid var(--bd2);
+    padding: 0 28px;
+    display: flex;
+    gap: 0;
+    overflow-x: auto;
+  }
+
+  .nav-btn {
+    font-family: 'DM Mono', monospace;
+    font-size: 8.5px;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    padding: 14px 16px;
+    background: transparent;
+    color: var(--muted);
+    border: none;
+    border-bottom: 2px solid transparent;
+    cursor: pointer;
+    white-space: nowrap;
+    transition: all 0.2s;
+    flex-shrink: 0;
+  }
+
+  .nav-btn:hover { color: var(--text); }
+
+  .nb-1.active  { color: var(--blue);   border-color: var(--blue); }
+  .nb-2.active  { color: var(--amber);  border-color: var(--amber); }
+  .nb-3.active  { color: var(--red);    border-color: var(--red); }
+  .nb-4.active  { color: var(--purple); border-color: var(--purple); }
+  .nb-5.active  { color: var(--green);  border-color: var(--green); }
+  .nb-ov.active { color: var(--gold);   border-color: var(--gold); }
+
+  /* ── PANELS ── */
+  .panel { display: none; padding: 44px 44px 80px; max-width: 960px; margin: 0 auto; }
+  .panel.active { display: block; }
+
+  /* ── SHARED COMPONENTS ── */
+
+  /* Section header */
+  .mod-header {
+    margin-bottom: 32px;
+    padding-bottom: 22px;
+    border-bottom: 1px solid var(--bd2);
+    display: grid;
+    grid-template-columns: auto 1fr;
+    gap: 20px;
+    align-items: start;
+  }
+
+  .mh-num {
+    font-family: 'Noto Serif TC', serif;
+    font-size: 3.5rem;
+    font-weight: 900;
+    line-height: 1;
+    opacity: 0.12;
+  }
+
+  .mh-right {}
+  .mh-label {
+    font-family: 'DM Mono', monospace;
+    font-size: 8px;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-bottom: 8px;
+  }
+  .mh-title {
+    font-family: 'Noto Serif TC', serif;
+    font-size: 1.6rem;
+    font-weight: 900;
+    line-height: 1.25;
+    margin-bottom: 5px;
+  }
+  .mh-sub {
+    font-size: 0.82rem;
+    color: var(--muted);
+    line-height: 1.6;
+  }
+
+  /* Premise */
+  .premise {
+    padding: 16px 20px;
+    margin-bottom: 28px;
+    border-left: 3px solid;
+    font-family: 'Noto Serif TC', serif;
+    font-size: 0.95rem;
+    line-height: 1.75;
+  }
+  .premise strong { font-weight: 600; }
+
+  /* Layer */
+  .layer {
+    display: grid;
+    grid-template-columns: 56px 1fr;
+    margin-bottom: 4px;
+  }
+
+  .layer-left {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding-top: 16px;
+  }
+
+  .layer-dot {
+    width: 13px; height: 13px;
+    border-radius: 50%;
+    border: 2px solid var(--bd2);
+    background: var(--bg);
+    flex-shrink: 0;
+    z-index: 1;
+  }
+
+  .layer-line {
+    width: 1px;
+    flex: 1;
+    background: var(--bd);
+    min-height: 10px;
+  }
+
+  .layer-right {
+    background: var(--s1);
+    border: 1px solid var(--bd);
+    padding: 15px 18px;
+    margin-bottom: 4px;
+  }
+
+  .lr-num {
+    font-family: 'DM Mono', monospace;
+    font-size: 7.5px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--dim);
+    margin-bottom: 5px;
+  }
+
+  .lr-title {
+    font-size: 0.9rem;
+    font-weight: 500;
+    line-height: 1.4;
+    margin-bottom: 8px;
+  }
+
+  .lr-desc {
+    font-size: 0.8rem;
+    color: var(--muted);
+    line-height: 1.65;
+  }
+
+  .lr-sub {
+    margin-top: 10px;
+    padding-top: 10px;
+    border-top: 1px solid var(--bd);
+  }
+
+  .lrs-label {
+    font-family: 'DM Mono', monospace;
+    font-size: 7px;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    color: var(--dim);
+    margin-bottom: 6px;
+  }
+
+  .lrs-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 5px;
+  }
+
+  .tag {
+    font-family: 'DM Mono', monospace;
+    font-size: 7.5px;
+    letter-spacing: 0.5px;
+    padding: 2px 8px;
+    border-radius: 1px;
+    border: 1px solid;
+  }
+
+  /* Summary */
+  .summary {
+    padding: 18px 22px;
+    border: 1px solid;
+    margin: 20px 0;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .summary::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 2px;
+  }
+
+  .sum-label {
+    font-family: 'DM Mono', monospace;
+    font-size: 7.5px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--dim);
+    margin-bottom: 8px;
+  }
+
+  .sum-text {
+    font-family: 'Noto Serif TC', serif;
+    font-size: 0.92rem;
+    line-height: 1.75;
+    color: var(--text);
+  }
+
+  .sum-text strong { font-weight: 600; }
+
+  /* Table */
+  .data-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 0.8rem;
+    margin: 12px 0;
+  }
+
+  .data-table th {
+    font-family: 'DM Mono', monospace;
+    font-size: 7.5px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--muted);
+    font-weight: 400;
+    text-align: left;
+    padding: 8px 12px;
+    border-bottom: 1px solid var(--bd2);
+    background: var(--s2);
+  }
+
+  .data-table td {
+    padding: 10px 12px;
+    border-bottom: 1px solid var(--bd);
+    vertical-align: top;
+    line-height: 1.55;
+    color: var(--text);
+  }
+
+  .data-table tr:last-child td { border-bottom: none; }
+  .data-table tr:hover td { background: rgba(255,255,255,0.02); }
+
+  /* Two-col grid */
+  .two-col {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 4px;
+    margin: 12px 0;
+  }
+
+  .col-card {
+    padding: 16px 16px;
+    border: 1px solid var(--bd);
+    background: var(--s1);
+  }
+
+  .cc-label {
+    font-family: 'DM Mono', monospace;
+    font-size: 7.5px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    margin-bottom: 8px;
+  }
+
+  .cc-list {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+  }
+
+  .cc-list li {
+    font-size: 0.8rem;
+    color: var(--muted);
+    display: flex;
+    gap: 8px;
+    align-items: flex-start;
+    line-height: 1.5;
+  }
+
+  .cc-mark {
+    font-family: 'DM Mono', monospace;
+    font-size: 9px;
+    flex-shrink: 0;
+    margin-top: 1px;
+  }
+
+  /* Takeaway box */
+  .takeaway-box {
+    padding: 20px 22px;
+    border: 1px solid;
+    margin-top: 20px;
+  }
+
+  .tb-label {
+    font-family: 'DM Mono', monospace;
+    font-size: 8px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    margin-bottom: 12px;
+  }
+
+  .tb-items {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+
+  .tb-item {
+    display: flex;
+    gap: 12px;
+    align-items: flex-start;
+    font-size: 0.82rem;
+    line-height: 1.6;
+  }
+
+  .tb-icon {
+    font-family: 'DM Mono', monospace;
+    font-size: 9px;
+    flex-shrink: 0;
+    margin-top: 2px;
+  }
+
+  /* Footer */
+  .pf {
+    margin-top: 36px;
+    border-top: 1px solid var(--bd);
+    padding-top: 14px;
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 10px;
+  }
+
+  .pf-note {
+    font-family: 'DM Mono', monospace;
+    font-size: 7px;
+    color: var(--dim);
+    line-height: 1.6;
+  }
+
+  .pf-mono {
+    font-family: 'DM Mono', monospace;
+    font-size: 7px;
+    letter-spacing: 1.5px;
+    color: var(--dim);
+    text-align: right;
+    text-transform: uppercase;
+    line-height: 2;
+  }
+
+  /* ══ COLOR THEMES ══ */
+
+  /* Module 1 — Blue */
+  .m1 .mh-num    { color: var(--blue); }
+  .m1 .mh-title  { color: var(--blue); }
+  .m1 .premise   { border-color: var(--blu-d); background: var(--blu-bg); color: #90a8d0; }
+  .m1 .premise strong { color: var(--blue); }
+  .m1 .layer-dot { border-color: var(--blu-d); }
+  .m1 .lr-num    { color: var(--blu-d); }
+  .m1 .lr-title  { color: var(--blue); }
+  .m1 .tag       { color: var(--blue); border-color: var(--blu-d); background: var(--blu-bg); }
+  .m1 .summary   { border-color: var(--blu-d); background: var(--blu-bg); }
+  .m1 .summary::before { background: var(--blue); }
+  .m1 .takeaway-box { border-color: var(--blu-d); background: var(--blu-bg); }
+  .m1 .tb-label  { color: var(--blu-d); }
+  .m1 .tb-icon   { color: var(--blue); }
+
+  /* Module 2 — Amber */
+  .m2 .mh-num    { color: var(--amber); }
+  .m2 .mh-title  { color: var(--amber); }
+  .m2 .premise   { border-color: var(--amb-d); background: var(--amb-bg); color: #c09060; }
+  .m2 .premise strong { color: var(--amber); }
+  .m2 .layer-dot { border-color: var(--amb-d); }
+  .m2 .lr-num    { color: var(--amb-d); }
+  .m2 .lr-title  { color: var(--amber); }
+  .m2 .tag       { color: var(--amber); border-color: var(--amb-d); background: var(--amb-bg); }
+  .m2 .summary   { border-color: var(--amb-d); background: var(--amb-bg); }
+  .m2 .summary::before { background: var(--amber); }
+  .m2 .takeaway-box { border-color: var(--amb-d); background: var(--amb-bg); }
+  .m2 .tb-label  { color: var(--amb-d); }
+  .m2 .tb-icon   { color: var(--amber); }
+
+  /* Module 3 — Red */
+  .m3 .mh-num    { color: var(--red); }
+  .m3 .mh-title  { color: var(--red); }
+  .m3 .premise   { border-color: var(--red-d); background: var(--red-bg); color: #c09090; }
+  .m3 .premise strong { color: var(--red); }
+  .m3 .layer-dot { border-color: var(--red-d); }
+  .m3 .lr-num    { color: var(--red-d); }
+  .m3 .lr-title  { color: var(--red); }
+  .m3 .tag       { color: var(--red); border-color: var(--red-d); background: var(--red-bg); }
+  .m3 .summary   { border-color: var(--red-d); background: var(--red-bg); }
+  .m3 .summary::before { background: var(--red); }
+  .m3 .takeaway-box { border-color: var(--red-d); background: var(--red-bg); }
+  .m3 .tb-label  { color: var(--red-d); }
+  .m3 .tb-icon   { color: var(--red); }
+
+  /* Module 4 — Purple */
+  .m4 .mh-num    { color: var(--purple); }
+  .m4 .mh-title  { color: var(--purple); }
+  .m4 .premise   { border-color: var(--pur-d); background: var(--pur-bg); color: #9080c0; }
+  .m4 .premise strong { color: var(--purple); }
+  .m4 .layer-dot { border-color: var(--pur-d); }
+  .m4 .lr-num    { color: var(--pur-d); }
+  .m4 .lr-title  { color: var(--purple); }
+  .m4 .tag       { color: var(--purple); border-color: var(--pur-d); background: var(--pur-bg); }
+  .m4 .summary   { border-color: var(--pur-d); background: var(--pur-bg); }
+  .m4 .summary::before { background: var(--purple); }
+  .m4 .takeaway-box { border-color: var(--pur-d); background: var(--pur-bg); }
+  .m4 .tb-label  { color: var(--pur-d); }
+  .m4 .tb-icon   { color: var(--purple); }
+
+  /* Module 5 — Green */
+  .m5 .mh-num    { color: var(--green); }
+  .m5 .mh-title  { color: var(--green); }
+  .m5 .premise   { border-color: var(--grn-d); background: var(--grn-bg); color: #70a880; }
+  .m5 .premise strong { color: var(--green); }
+  .m5 .layer-dot { border-color: var(--grn-d); }
+  .m5 .lr-num    { color: var(--grn-d); }
+  .m5 .lr-title  { color: var(--green); }
+  .m5 .tag       { color: var(--green); border-color: var(--grn-d); background: var(--grn-bg); }
+  .m5 .summary   { border-color: var(--grn-d); background: var(--grn-bg); }
+  .m5 .summary::before { background: var(--green); }
+  .m5 .takeaway-box { border-color: var(--grn-d); background: var(--grn-bg); }
+  .m5 .tb-label  { color: var(--grn-d); }
+  .m5 .tb-icon   { color: var(--green); }
+
+  /* Overview panel */
+  .ov-grid {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 3px;
+    margin-bottom: 32px;
+  }
+
+  .ov-card {
+    padding: 18px 14px;
+    border: 1px solid var(--bd);
+    background: var(--s1);
+    position: relative;
+    overflow: hidden;
+  }
+
+  .ov-card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 2px;
+  }
+
+  .ov-card:nth-child(1)::before { background: var(--blue); }
+  .ov-card:nth-child(2)::before { background: var(--amber); }
+  .ov-card:nth-child(3)::before { background: var(--red); }
+  .ov-card:nth-child(4)::before { background: var(--purple); }
+  .ov-card:nth-child(5)::before { background: var(--green); }
+
+  .ov-num {
+    font-family: 'DM Mono', monospace;
+    font-size: 20px;
+    font-weight: 500;
+    line-height: 1;
+    margin-bottom: 8px;
+    opacity: 0.25;
+  }
+
+  .ov-card:nth-child(1) .ov-num { color: var(--blue); }
+  .ov-card:nth-child(2) .ov-num { color: var(--amber); }
+  .ov-card:nth-child(3) .ov-num { color: var(--red); }
+  .ov-card:nth-child(4) .ov-num { color: var(--purple); }
+  .ov-card:nth-child(5) .ov-num { color: var(--green); }
+
+  .ov-title {
+    font-family: 'Noto Serif TC', serif;
+    font-size: 0.82rem;
+    font-weight: 600;
+    margin-bottom: 6px;
+    line-height: 1.4;
+  }
+
+  .ov-card:nth-child(1) .ov-title { color: var(--blue); }
+  .ov-card:nth-child(2) .ov-title { color: var(--amber); }
+  .ov-card:nth-child(3) .ov-title { color: var(--red); }
+  .ov-card:nth-child(4) .ov-title { color: var(--purple); }
+  .ov-card:nth-child(5) .ov-title { color: var(--green); }
+
+  .ov-time {
+    font-family: 'DM Mono', monospace;
+    font-size: 7px;
+    letter-spacing: 1px;
+    color: var(--dim);
+    margin-bottom: 6px;
+    text-transform: uppercase;
+  }
+
+  .ov-desc {
+    font-size: 0.72rem;
+    color: var(--muted);
+    line-height: 1.55;
+  }
+
+  .ov-audience {
+    margin-top: 10px;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 3px;
+  }
+
+  .aud-tag {
+    font-family: 'DM Mono', monospace;
+    font-size: 6.5px;
+    padding: 1px 5px;
+    border-radius: 1px;
+    border: 1px solid var(--bd2);
+    color: var(--dim);
+  }
+
+  /* Full schedule */
+  .schedule {
+    border: 1px solid var(--bd2);
+    overflow: hidden;
+    margin-bottom: 28px;
+  }
+
+  .sch-row {
+    display: grid;
+    grid-template-columns: 100px 80px 1fr;
+    border-bottom: 1px solid var(--bd);
+  }
+
+  .sch-row:last-child { border-bottom: none; }
+  .sch-row.break { background: var(--s3); }
+  .sch-row.new { background: var(--grn-bg); border-left: 2px solid var(--grn-d); }
+
+  .sch-cell {
+    padding: 10px 14px;
+    border-right: 1px solid var(--bd);
+    font-size: 0.78rem;
+    display: flex;
+    align-items: center;
+  }
+
+  .sch-cell:last-child { border-right: none; }
+
+  .sch-time {
+    font-family: 'DM Mono', monospace;
+    font-size: 8px;
+    color: var(--muted);
+    letter-spacing: 0.5px;
+  }
+
+  .sch-dur {
+    font-family: 'DM Mono', monospace;
+    font-size: 8px;
+    color: var(--dim);
+  }
+
+  .sch-title { color: var(--text); line-height: 1.4; }
+  .sch-row.new .sch-title { color: var(--green); }
+  .sch-row.break .sch-title { color: var(--muted); }
+
+  .new-badge {
+    font-family: 'DM Mono', monospace;
+    font-size: 6.5px;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    padding: 1px 5px;
+    background: var(--grn-bg);
+    border: 1px solid var(--grn-d);
+    color: var(--green);
+    border-radius: 1px;
+    margin-left: 8px;
+  }
+
+  @media (max-width: 700px) {
+    .panel { padding: 28px 18px 60px; }
+    .mod-header { grid-template-columns: 1fr; gap: 8px; }
+    .mh-num { font-size: 2rem; }
+    .two-col { grid-template-columns: 1fr; }
+    .ov-grid { grid-template-columns: 1fr 1fr; }
+    .sch-row { grid-template-columns: 80px 1fr; }
+    .sch-dur { display: none; }
+  }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav class="nav">
+  <button class="nav-btn nb-ov active" data-tab="ov">全日課程架構</button>
+  <button class="nav-btn nb-1" data-tab="1">新增 01 · 申訴救濟</button>
+  <button class="nav-btn nb-2" data-tab="2">新增 02 · 法規迷思</button>
+  <button class="nav-btn nb-3" data-tab="3">新增 03 · 社群邊界</button>
+  <button class="nav-btn nb-4" data-tab="4">新增 04 · 國際視野</button>
+  <button class="nav-btn nb-5" data-tab="5">新增 05 · 品牌差異化</button>
+</nav>
+
+
+<!-- ══════════ OVERVIEW ══════════ -->
+<div class="panel active" id="tab-ov">
+  <div style="max-width:960px; margin:0 auto;">
+
+    <div style="text-align:center; margin-bottom:36px; padding-bottom:22px; border-bottom:1px solid var(--bd2);">
+      <div style="font-family:'DM Mono',monospace; font-size:9px; letter-spacing:4px; text-transform:uppercase; color:var(--muted); margin-bottom:10px;">全日研討會 · 升級版課程架構</div>
+      <div style="font-family:'Noto Serif TC',serif; font-size:1.6rem; font-weight:900; line-height:1.25; margin-bottom:6px; color:var(--gold);">睫毛管理法規層面透析<br>全日研討會</div>
+      <div style="font-size:0.82rem; color:var(--muted);">原有7模組 + 新增5方向 · 總時長約7小時（含午休）</div>
+    </div>
+
+    <!-- 5 new modules overview -->
+    <div style="font-family:'DM Mono',monospace; font-size:8px; letter-spacing:3px; text-transform:uppercase; color:var(--dim); margin-bottom:14px;">新增五個方向</div>
+    <div class="ov-grid">
+      <div class="ov-card">
+        <div class="ov-num">01</div>
+        <div class="ov-title">稽查後申訴與救濟實務</div>
+        <div class="ov-time">20 min</div>
+        <div class="ov-desc">收到裁處書之後的完整路徑——什麼情況可以申訴、怎麼提訴願、找誰最有效</div>
+        <div class="ov-audience">
+          <span class="aud-tag">技術者</span>
+          <span class="aud-tag">店家</span>
+        </div>
+      </div>
+      <div class="ov-card">
+        <div class="ov-num">02</div>
+        <div class="ov-title">破解五個市場法規迷思</div>
+        <div class="ov-time">20 min</div>
+        <div class="ov-desc">市場上流傳的錯誤認知逐一拆解——讓學員學會辨別資訊，不只是背答案</div>
+        <div class="ov-audience">
+          <span class="aud-tag">全員適用</span>
+        </div>
+      </div>
+      <div class="ov-card">
+        <div class="ov-num">03</div>
+        <div class="ov-title">社群宣傳的法律邊界</div>
+        <div class="ov-time">20 min</div>
+        <div class="ov-desc">IG貼文、限時動態裡的違法詞彙——「可以說的話 vs 不能說的話」完整對照表</div>
+        <div class="ov-audience">
+          <span class="aud-tag">技術者</span>
+          <span class="aud-tag">教學者</span>
+        </div>
+      </div>
+      <div class="ov-card">
+        <div class="ov-num">04</div>
+        <div class="ov-title">台灣以外的市場比較</div>
+        <div class="ov-time">15 min</div>
+        <div class="ov-desc">香港、新加坡、馬來西亞的化粧品法規比較——跨市場視野與實務提醒</div>
+        <div class="ov-audience">
+          <span class="aud-tag">教學者</span>
+          <span class="aud-tag">OEM創業</span>
+        </div>
+      </div>
+      <div class="ov-card">
+        <div class="ov-num">05</div>
+        <div class="ov-title">合規作為品牌差異化</div>
+        <div class="ov-time">15 min</div>
+        <div class="ov-desc">把合規轉化成行銷工具——設計屬於自己的合規聲明，貼在個人頁就能用</div>
+        <div class="ov-audience">
+          <span class="aud-tag">全員適用</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Full schedule -->
+    <div style="font-family:'DM Mono',monospace; font-size:8px; letter-spacing:3px; text-transform:uppercase; color:var(--dim); margin-bottom:14px; margin-top:32px;">全日時程表</div>
+    <div class="schedule">
+      <div class="sch-row" style="background:var(--s2);">
+        <div class="sch-cell sch-time">時間</div>
+        <div class="sch-cell sch-dur">時長</div>
+        <div class="sch-cell" style="font-family:'DM Mono',monospace; font-size:7.5px; letter-spacing:2px; text-transform:uppercase; color:var(--dim);">內容</div>
+      </div>
+      <div class="sch-row">
+        <div class="sch-cell sch-time">09:00</div>
+        <div class="sch-cell sch-dur">30min</div>
+        <div class="sch-cell sch-title">開場 · 風險精準判斷工具課前填寫 · 課程架構說明</div>
+      </div>
+      <div class="sch-row">
+        <div class="sch-cell sch-time">09:30</div>
+        <div class="sch-cell sch-dur">30min</div>
+        <div class="sch-cell sch-title">Module 01–02：為什麼要懂法規 · 成分核查清單</div>
+      </div>
+      <div class="sch-row">
+        <div class="sch-cell sch-time">10:00</div>
+        <div class="sch-cell sch-dur">30min</div>
+        <div class="sch-cell sch-title">Module 03–04：客人話術卡 · 教學者產品審查框架</div>
+      </div>
+      <div class="sch-row">
+        <div class="sch-cell sch-time">10:30</div>
+        <div class="sch-cell sch-dur">30min</div>
+        <div class="sch-cell sch-title">Module 05–06：罰則歸屬地圖 · PIF連帶風險說明</div>
+      </div>
+      <div class="sch-row">
+        <div class="sch-cell sch-time">11:00</div>
+        <div class="sch-cell sch-dur">30min</div>
+        <div class="sch-cell sch-title">Module 07：稽查危機處理流程</div>
+      </div>
+      <div class="sch-row break">
+        <div class="sch-cell sch-time">11:30</div>
+        <div class="sch-cell sch-dur">90min</div>
+        <div class="sch-cell sch-title">午休</div>
+      </div>
+      <div class="sch-row new">
+        <div class="sch-cell sch-time">13:00</div>
+        <div class="sch-cell sch-dur">20min</div>
+        <div class="sch-cell sch-title">新增 01：稽查後申訴與救濟實務 <span class="new-badge">新</span></div>
+      </div>
+      <div class="sch-row new">
+        <div class="sch-cell sch-time">13:20</div>
+        <div class="sch-cell sch-dur">20min</div>
+        <div class="sch-cell sch-title">新增 02：破解五個市場法規迷思 <span class="new-badge">新</span></div>
+      </div>
+      <div class="sch-row new">
+        <div class="sch-cell sch-time">13:40</div>
+        <div class="sch-cell sch-dur">20min</div>
+        <div class="sch-cell sch-title">新增 03：社群宣傳的法律邊界 <span class="new-badge">新</span></div>
+      </div>
+      <div class="sch-row new">
+        <div class="sch-cell sch-time">14:00</div>
+        <div class="sch-cell sch-dur">15min</div>
+        <div class="sch-cell sch-title">新增 04：台灣以外市場比較 <span class="new-badge">新</span></div>
+      </div>
+      <div class="sch-row new">
+        <div class="sch-cell sch-time">14:15</div>
+        <div class="sch-cell sch-dur">15min</div>
+        <div class="sch-cell sch-title">新增 05：合規作為品牌差異化 <span class="new-badge">新</span></div>
+      </div>
+      <div class="sch-row">
+        <div class="sch-cell sch-time">14:30</div>
+        <div class="sch-cell sch-dur">60min</div>
+        <div class="sch-cell sch-title">NUNU 合法新品完整介紹</div>
+      </div>
+      <div class="sch-row">
+        <div class="sch-cell sch-time">15:30</div>
+        <div class="sch-cell sch-dur">30min</div>
+        <div class="sch-cell sch-title">風險精準判斷工具課後填寫 · 對比前後差異</div>
+      </div>
+      <div class="sch-row">
+        <div class="sch-cell sch-time">16:00</div>
+        <div class="sch-cell sch-dur">60min</div>
+        <div class="sch-cell sch-title">開放 Q&A · 個別諮詢 · 結業</div>
+      </div>
+    </div>
+
+    <div class="pf">
+      <div class="pf-note">全日研討會架構 · 總時長含午休約8小時 · 可依實際狀況調整各模組時長</div>
+      <div class="pf-mono">課程架構總覽<br>睫毛管理法規層面透析<br>2026.05</div>
+    </div>
+  </div>
+</div>
+
+
+<!-- ══════════ MODULE 1: 申訴救濟 ══════════ -->
+<div class="panel m1" id="tab-1">
+
+  <div class="mod-header">
+    <div class="mh-num">01</div>
+    <div class="mh-right">
+      <div class="mh-label">新增方向 · 下午場 13:00</div>
+      <div class="mh-title">稽查後申訴<br>與救濟實務</div>
+      <div class="mh-sub">收到裁處書不等於沒有機會——你有權利，但要在期限內行使</div>
+    </div>
+  </div>
+
+  <div class="premise">
+    很多人看到裁處書就慌了直接繳錢。<br>
+    但<strong>繳錢不是唯一的選項。</strong><br>
+    這段教你看懂裁處書、知道什麼情況值得申訴、以及找誰幫你最有效率。
+  </div>
+
+  <div class="layer">
+    <div class="layer-left"><div class="layer-dot"></div><div class="layer-line"></div></div>
+    <div class="layer-right">
+      <div class="lr-num">第一層 · 看懂裁處書</div>
+      <div class="lr-title">裁處書上有五樣東西，你必須全部看懂</div>
+      <div class="lr-desc">違反法條（是第幾條第幾項）、違規事實（他們認定你做了什麼）、罰鍰金額、救濟方式（通常是訴願）、救濟期限（通常14天或30天）。這五樣看不懂，後面所有動作都做錯。</div>
+      <div class="lr-sub">
+        <div class="lrs-label">五個必看欄位</div>
+        <div class="lrs-tags">
+          <span class="tag">違反法條</span>
+          <span class="tag">違規事實</span>
+          <span class="tag">罰鍰金額</span>
+          <span class="tag">救濟方式</span>
+          <span class="tag">救濟期限</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="layer">
+    <div class="layer-left"><div class="layer-dot"></div><div class="layer-line"></div></div>
+    <div class="layer-right">
+      <div class="lr-num">第二層 · 什麼情況值得申訴</div>
+      <div class="lr-title">不是每個裁處都值得提訴願——但這三種情況應該考慮</div>
+      <div class="lr-desc">第一：事實認定有誤——稽查紀錄上的描述與實際情況不符，例如被記載使用的產品成分並非如此。第二：程序有瑕疵——稽查人員未出示稽查證件、未依規定填寫稽查紀錄、未給你陳述意見的機會。第三：法條適用有疑義——被引用的法條是否真的對應你的情況，需要逐字確認。</div>
+      <div class="lr-sub">
+        <div class="lrs-label">三種值得申訴的情況</div>
+        <div class="lrs-tags">
+          <span class="tag">事實認定有誤</span>
+          <span class="tag">程序有瑕疵</span>
+          <span class="tag">法條適用疑義</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="layer">
+    <div class="layer-left"><div class="layer-dot"></div><div class="layer-line"></div></div>
+    <div class="layer-right">
+      <div class="lr-num">第三層 · 訴願流程與找誰幫你</div>
+      <div class="lr-title">14天內提訴願，找對人比自己摸索更重要</div>
+      <div class="lr-desc">訴願是向裁處機關的上級機關提出，例如地方衛生局裁處→向縣市政府提訴願。自己寫訴願書不違法，但成功率低。最有效的方式是：找有行政法經驗的律師，或向法律扶助基金會諮詢。不要找沒有行政法背景的人代寫——民事律師不等於行政法律師。</div>
+      <div class="lr-sub">
+        <div class="lrs-label">救濟路徑</div>
+        <div class="lrs-tags">
+          <span class="tag">14天提訴願</span>
+          <span class="tag">行政法律師</span>
+          <span class="tag">法律扶助基金會</span>
+          <span class="tag">訴願→行政訴訟</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="summary">
+    <div class="sum-label">這項的核心句</div>
+    <div class="sum-text">「收到裁處書，<strong>先看救濟期限，再決定要不要繳錢。</strong>期限過了才後悔，才是真的沒有機會。」</div>
+  </div>
+
+  <div class="takeaway-box">
+    <div class="tb-label">帶走的工具</div>
+    <div class="tb-items">
+      <div class="tb-item"><span class="tb-icon">→</span><span>裁處書五欄位對照說明卡（課後可對照實際裁處書使用）</span></div>
+      <div class="tb-item"><span class="tb-icon">→</span><span>訴願資源清單：法律扶助基金會聯絡方式、各縣市衛生局訴願窗口</span></div>
+      <div class="tb-item"><span class="tb-icon">→</span><span>「值得申訴 vs 直接改正」判斷流程圖</span></div>
+    </div>
+  </div>
+
+  <div class="pf">
+    <div class="pf-note">本內容為課程教育用途，不構成正式法律意見。具體案件請諮詢具行政法背景的專業律師。</div>
+    <div class="pf-mono">新增 01 · 申訴救濟<br>2026.05</div>
+  </div>
+</div>
+
+
+<!-- ══════════ MODULE 2: 法規迷思 ══════════ -->
+<div class="panel m2" id="tab-2">
+
+  <div class="mod-header">
+    <div class="mh-num">02</div>
+    <div class="mh-right">
+      <div class="mh-label">新增方向 · 下午場 13:20</div>
+      <div class="mh-title">破解五個<br>市場法規迷思</div>
+      <div class="mh-sub">市場上流傳的說法，哪些是對的、哪些是斷章取義、哪些是社群謠言</div>
+    </div>
+  </div>
+
+  <div class="premise">
+    你的客人在網路上查到的資訊，<strong>品質參差不齊。</strong><br>
+    你需要的不只是知道正確答案，而是<strong>知道為什麼錯的說法聽起來很像真的。</strong>
+  </div>
+
+  <div class="data-table" style="margin-bottom:0;">
+    <table class="data-table">
+      <thead>
+        <tr>
+          <th>#</th>
+          <th>市場流傳的說法</th>
+          <th>真實狀況</th>
+          <th>為什麼會有這個誤解</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td style="font-family:'DM Mono',monospace; font-size:9px; color:var(--red);">迷思01</td>
+          <td style="color:var(--red);">「角蛋白美睫全面違法」</td>
+          <td>不正確。違法與否取決於產品成分，不是服務名稱。含燙髮還原劑成分用於睫毛才違規，角蛋白本身不是違禁物。</td>
+          <td style="color:var(--muted); font-size:0.75rem;">部分媒體或社群帳號把「使用燙髮還原劑的角蛋白療程」簡化成「角蛋白違法」，概念被過度壓縮。</td>
+        </tr>
+        <tr>
+          <td style="font-family:'DM Mono',monospace; font-size:9px; color:var(--red);">迷思02</td>
+          <td style="color:var(--red);">「有民間協會證書就可以合法執業」</td>
+          <td>不正確。合法執業需要國家美容技術士丙/乙級證照。民間協會證書是技術進修證明，無法取代國家證照，被稽查時不被認可。</td>
+          <td style="color:var(--muted); font-size:0.75rem;">民間協會發證時通常不會主動說明這個限制，學員以為拿到證書就等於合法。</td>
+        </tr>
+        <tr>
+          <td style="font-family:'DM Mono',monospace; font-size:9px; color:var(--red);">迷思03</td>
+          <td style="color:var(--red);">「產品有進台灣、有在賣就算合規」</td>
+          <td>不完整。產品在台灣販售，製造商或進口商仍須建立PIF。「有在賣」不等於「有完成PIF」，兩件事不是同一個概念。</td>
+          <td style="color:var(--muted); font-size:0.75rem;">PIF是相對新的制度，很多在2024年前就開始銷售的產品，業者可能尚未更新合規狀態。</td>
+        </tr>
+        <tr>
+          <td style="font-family:'DM Mono',monospace; font-size:9px; color:var(--red);">迷思04</td>
+          <td style="color:var(--red);">「代購產品送去檢驗就算合規」</td>
+          <td>不正確。送去化驗得到成分報告≠建立合法PIF。PIF需要具資格的安全資料簽署人（SA）正式簽署才有法定效力，單純的成分檢驗報告不能取代。</td>
+          <td style="color:var(--muted); font-size:0.75rem;">「有檢驗報告」聽起來像是有做了什麼，但PIF的法定要件不只是檢驗，還包括SA簽署這個關鍵步驟。</td>
+        </tr>
+        <tr>
+          <td style="font-family:'DM Mono',monospace; font-size:9px; color:var(--red);">迷思05</td>
+          <td style="color:var(--red);">「稽查是針對大品牌，小工作室不會被查」</td>
+          <td>錯誤的安全感。衛生局稽查是依法執行，不是依規模選擇對象。小工作室若被檢舉或納入稽查名單，一樣會被查、一樣會被罰。</td>
+          <td style="color:var(--muted); font-size:0.75rem;">過去稽查資源有限，小工作室確實被查機率較低，但PIF上路後執法力度提升，這個「默契」已經改變。</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="summary" style="margin-top:16px;">
+    <div class="sum-label">這項的核心句</div>
+    <div class="sum-text">「知道正確答案只是開始。<strong>知道為什麼錯的說法聽起來像真的，才能在客人質疑你的時候，真正說服她。</strong>」</div>
+  </div>
+
+  <div class="takeaway-box">
+    <div class="tb-label">帶走的工具</div>
+    <div class="tb-items">
+      <div class="tb-item"><span class="tb-icon">→</span><span>五大迷思對照卡（正反兩面設計：正面是迷思說法，反面是正確說明）</span></div>
+      <div class="tb-item"><span class="tb-icon">→</span><span>「如何判斷網路法規資訊可不可信」三步驟檢核清單</span></div>
+    </div>
+  </div>
+
+  <div class="pf">
+    <div class="pf-note">本內容依《化粧品衛生安全管理法》現行規定製作。法規如有修訂以衛福部食藥署最新公告為準。</div>
+    <div class="pf-mono">新增 02 · 法規迷思<br>2026.05</div>
+  </div>
+</div>
+
+
+<!-- ══════════ MODULE 3: 社群邊界 ══════════ -->
+<div class="panel m3" id="tab-3">
+
+  <div class="mod-header">
+    <div class="mh-num">03</div>
+    <div class="mh-right">
+      <div class="mh-label">新增方向 · 下午場 13:40</div>
+      <div class="mh-title">社群宣傳的<br>法律邊界</div>
+      <div class="mh-sub">你的IG貼文裡，可能有你不知道的違法文字</div>
+    </div>
+  </div>
+
+  <div class="premise">
+    很多美業從業者的貼文、限時動態、小紅書內容裡，充滿了可能觸法的文字——<strong>不是故意的，是不知道。</strong><br>
+    這段給你一份可以帶走、馬上用的對照表。
+  </div>
+
+  <div class="layer">
+    <div class="layer-left"><div class="layer-dot"></div><div class="layer-line"></div></div>
+    <div class="layer-right">
+      <div class="lr-num">第一層 · 為什麼社群貼文有法律風險</div>
+      <div class="lr-title">商業宣傳 = 廣告，廣告 = 受化粧品廣告規範約束</div>
+      <div class="lr-desc">你在IG上發的服務介紹、限時動態的產品推薦、小紅書上的使用心得——只要有商業目的，法律上都被視為廣告。化粧品廣告不得宣稱醫療效能、不得誇大效果、不得使用虛偽不實文字。違反者依化粧品衛生安全管理法可處罰鍰，情節重大可命停止刊播。</div>
+    </div>
+  </div>
+
+  <div class="layer">
+    <div class="layer-left"><div class="layer-dot"></div><div class="layer-line"></div></div>
+    <div class="layer-right">
+      <div class="lr-num">第二層 · 完整對照表</div>
+      <div class="lr-title">這些詞出現在商業貼文裡就是風險</div>
+
+      <div class="two-col" style="margin-top:12px;">
+        <div class="col-card" style="border-color:var(--red-d); background:var(--red-bg);">
+          <div class="cc-label" style="color:var(--red-d);">❌ 不能說的（醫療效能宣稱）</div>
+          <ul class="cc-list">
+            <li><span class="cc-mark" style="color:var(--red-d);">✕</span>促進睫毛生長</li>
+            <li><span class="cc-mark" style="color:var(--red-d);">✕</span>改善睫毛稀疏</li>
+            <li><span class="cc-mark" style="color:var(--red-d);">✕</span>修復毛囊</li>
+            <li><span class="cc-mark" style="color:var(--red-d);">✕</span>活化毛囊細胞</li>
+            <li><span class="cc-mark" style="color:var(--red-d);">✕</span>改善下垂眼型</li>
+            <li><span class="cc-mark" style="color:var(--red-d);">✕</span>治療禿睫</li>
+            <li><span class="cc-mark" style="color:var(--red-d);">✕</span>消除眼周細紋（用於美睫服務宣傳時）</li>
+            <li><span class="cc-mark" style="color:var(--red-d);">✕</span>深層修復角質</li>
+          </ul>
+        </div>
+        <div class="col-card" style="border-color:var(--grn-d); background:var(--grn-bg);">
+          <div class="cc-label" style="color:var(--grn-d);">✓ 可以說的（外觀效果描述）</div>
+          <ul class="cc-list">
+            <li><span class="cc-mark" style="color:var(--grn-d);">✓</span>讓睫毛看起來更濃密</li>
+            <li><span class="cc-mark" style="color:var(--grn-d);">✓</span>提升睫毛捲翹度</li>
+            <li><span class="cc-mark" style="color:var(--grn-d);">✓</span>打造自然弧度</li>
+            <li><span class="cc-mark" style="color:var(--grn-d);">✓</span>補充角蛋白護理</li>
+            <li><span class="cc-mark" style="color:var(--grn-d);">✓</span>維持睫毛光澤感</li>
+            <li><span class="cc-mark" style="color:var(--grn-d);">✓</span>減少因操作造成的睫毛乾燥</li>
+            <li><span class="cc-mark" style="color:var(--grn-d);">✓</span>讓眼神看起來更有神</li>
+            <li><span class="cc-mark" style="color:var(--grn-d);">✓</span>嫁接後更顯眼睛輪廓</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="layer">
+    <div class="layer-left"><div class="layer-dot"></div></div>
+    <div class="layer-right">
+      <div class="lr-num">第三層 · 灰色地帶的判斷原則</div>
+      <div class="lr-title">不確定的時候，用這個問題測試</div>
+      <div class="lr-desc">「這句話，如果醫師說，是不是也說得通？」如果答案是「是」，那這句話就很可能已經進入醫療效能宣稱的範圍，不應該出現在美業的商業貼文裡。另一個測試：「如果衛生局的人看到這句話，他有沒有辦法說我在宣稱醫療效果？」只要答案有可能是「有辦法」，就要重新換句話說。</div>
+      <div class="lr-sub">
+        <div class="lrs-label">兩個自我測試問題</div>
+        <div class="lrs-tags">
+          <span class="tag">醫師說得通嗎？</span>
+          <span class="tag">衛生局能認定嗎？</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="summary">
+    <div class="sum-label">這項的核心句</div>
+    <div class="sum-text">「說錯一句話的代價，遠比你想像的高。<strong>但說對的話，也可以建立別人沒有的信任感——『我的貼文每一句都有根據』，這本身就是差異化。</strong>」</div>
+  </div>
+
+  <div class="takeaway-box">
+    <div class="tb-label">帶走的工具</div>
+    <div class="tb-items">
+      <div class="tb-item"><span class="tb-icon">→</span><span>「可以說 vs 不能說」雙面對照卡（可貼在工作室或拍照前確認）</span></div>
+      <div class="tb-item"><span class="tb-icon">→</span><span>社群貼文自我審查兩問題卡</span></div>
+      <div class="tb-item"><span class="tb-icon">→</span><span>10個常見違規詞彙的合規替換建議</span></div>
+    </div>
+  </div>
+
+  <div class="pf">
+    <div class="pf-note">本內容依《化粧品衛生安全管理法》廣告相關規定製作。實際廣告文案建議諮詢具相關經驗的法律顧問。</div>
+    <div class="pf-mono">新增 03 · 社群邊界<br>2026.05</div>
+  </div>
+</div>
+
+
+<!-- ══════════ MODULE 4: 國際視野 ══════════ -->
+<div class="panel m4" id="tab-4">
+
+  <div class="mod-header">
+    <div class="mh-num">04</div>
+    <div class="mh-right">
+      <div class="mh-label">新增方向 · 下午場 14:00</div>
+      <div class="mh-title">台灣以外的<br>市場比較</div>
+      <div class="mh-sub">香港、新加坡、馬來西亞——你的學生、你的產品、你的品牌可能去的地方</div>
+    </div>
+  </div>
+
+  <div class="premise">
+    你的教學者學員，她的學生可能在香港、新加坡、馬來西亞。<br>
+    你想把產品賣出去，或引進別的市場的產品——<strong>那些地方的規則，和台灣不一樣。</strong>
+  </div>
+
+  <div class="layer">
+    <div class="layer-left"><div class="layer-dot"></div><div class="layer-line"></div></div>
+    <div class="layer-right">
+      <div class="lr-num">第一層 · 四個市場的化粧品法規架構</div>
+      <div class="lr-title">管制框架的差異，決定你進出市場的門檻</div>
+
+      <table class="data-table" style="margin-top:10px;">
+        <thead>
+          <tr>
+            <th>市場</th>
+            <th>主管機關</th>
+            <th>制度特點</th>
+            <th>對台灣業者的實務影響</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td style="font-weight:500; color:var(--gold);">台灣</td>
+            <td>衛福部食藥署</td>
+            <td>PIF制度，分三階段上路。特定用途化粧品需SA簽署。</td>
+            <td>你已經在這個框架裡。</td>
+          </tr>
+          <tr>
+            <td style="font-weight:500; color:var(--purple);">香港</td>
+            <td>衛生署</td>
+            <td>目前以自願性規範為主，無強制PIF制度。化妝品無需上市前審批，但禁用成分有明確清單。</td>
+            <td>進入門檻相對低，但成分管制清單需要確認，台灣合規不等於香港合規。</td>
+          </tr>
+          <tr>
+            <td style="font-weight:500; color:var(--purple);">新加坡</td>
+            <td>衛生科學局（HSA）</td>
+            <td>採通報制度（Cosmetic Products Notification），上市前需通報，不需逐一審批。有嚴格的禁用成分清單，違規懲處重。</td>
+            <td>通報制度對品牌方要求高，進口產品需確認已完成通報，建議尋找當地代理商協助。</td>
+          </tr>
+          <tr>
+            <td style="font-weight:500; color:var(--purple);">馬來西亞</td>
+            <td>國家藥品管制局（NPRA）</td>
+            <td>強制通知制度，化粧品上市前需完成通報（Notification）。東協化粧品指令（ASEAN Cosmetic Directive）框架下運作。</td>
+            <td>和台灣PIF類似的文件要求，但框架不同，不能直接沿用台灣PIF，需要另行準備符合當地格式的文件。</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <div class="layer">
+    <div class="layer-left"><div class="layer-dot"></div><div class="layer-line"></div></div>
+    <div class="layer-right">
+      <div class="lr-num">第二層 · 教學者的跨市場責任</div>
+      <div class="lr-title">你的學生在哪個市場執業，你推薦的產品合規嗎？</div>
+      <div class="lr-desc">如果你在台灣授課，但學員回到香港或馬來西亞執業——你推薦的產品，在那個市場是否合規？這不是你的法律責任，但是你的商譽責任。一個認真的教學者，會在推薦產品時說清楚：「這個產品我確認在台灣合規，如果你在其他市場執業，請自行確認當地法規。」這句話說出來，保護的是你的口碑，也是對學員的尊重。</div>
+    </div>
+  </div>
+
+  <div class="layer">
+    <div class="layer-left"><div class="layer-dot"></div></div>
+    <div class="layer-right">
+      <div class="lr-num">第三層 · 自創品牌要進其他市場怎麼做</div>
+      <div class="lr-title">台灣PIF不能直接套用，但可以作為基礎文件</div>
+      <div class="lr-desc">好消息是：台灣PIF制度和東協框架有一定的結構相似性，你在台灣建立的PIF文件（成分清單、安全評估、製程文件）可以作為進入其他市場的基礎材料。壞消息是：每個市場的格式要求、禁用成分清單、通報流程都不同，不能直接複製貼上。建議路徑：在當地找有資格的代理商或法規顧問，以台灣PIF為底稿，轉換成當地需要的格式。</div>
+      <div class="lr-sub">
+        <div class="lrs-label">跨市場建議路徑</div>
+        <div class="lrs-tags">
+          <span class="tag">台灣PIF為底稿</span>
+          <span class="tag">找當地法規顧問</span>
+          <span class="tag">確認當地禁用成分</span>
+          <span class="tag">完成當地通報程序</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="summary">
+    <div class="sum-label">這項的核心句</div>
+    <div class="sum-text">「台灣合規，不等於所有市場合規。<strong>但做好台灣的合規，是進入其他市場最好的起點。</strong>」</div>
+  </div>
+
+  <div class="takeaway-box">
+    <div class="tb-label">帶走的工具</div>
+    <div class="tb-items">
+      <div class="tb-item"><span class="tb-icon">→</span><span>四市場法規架構對照表（台灣、香港、新加坡、馬來西亞）</span></div>
+      <div class="tb-item"><span class="tb-icon">→</span><span>教學者跨市場推薦產品的免責聲明範本</span></div>
+      <div class="tb-item"><span class="tb-icon">→</span><span>各市場主管機關官網連結與查詢入口</span></div>
+    </div>
+  </div>
+
+  <div class="pf">
+    <div class="pf-note">各市場法規資訊依據2026年現行資料整理，如有異動以各地主管機關最新公告為準。</div>
+    <div class="pf-mono">新增 04 · 國際視野<br>2026.05</div>
+  </div>
+</div>
+
+
+<!-- ══════════ MODULE 5: 品牌差異化 ══════════ -->
+<div class="panel m5" id="tab-5">
+
+  <div class="mod-header">
+    <div class="mh-num">05</div>
+    <div class="mh-right">
+      <div class="mh-label">新增方向 · 下午場 14:15</div>
+      <div class="mh-title">合規作為<br>品牌差異化</div>
+      <div class="mh-sub">從「怎麼避免被罰」到「怎麼讓合規替你賺錢」</div>
+    </div>
+  </div>
+
+  <div class="premise">
+    所有的法規教育都在說「怎麼避免被罰」。<br>
+    這段說一個完全不同的角度：<strong>合規是一種行銷工具。</strong><br>
+    懂它的人，比不懂的人多了一個武器。
+  </div>
+
+  <div class="layer">
+    <div class="layer-left"><div class="layer-dot"></div><div class="layer-line"></div></div>
+    <div class="layer-right">
+      <div class="lr-num">第一層 · 市場正在分化</div>
+      <div class="lr-title">客人的眼睛越來越挑，合規變成可以說出口的理由</div>
+      <div class="lr-desc">PIF上路後，市場正在發生一件事：消費者開始有能力查。她能在食藥署網站上查一個產品有沒有合法登錄。她能把成分貼到網路上問。她能把你的IG貼文截圖去問「這個合法嗎」。在這個背景下，一個能說清楚「我用的產品為什麼是安全合規的」技術者，和一個只能說「我用了很多年，應該沒問題」的技術者——在客人眼裡不是同一個等級的。</div>
+    </div>
+  </div>
+
+  <div class="layer">
+    <div class="layer-left"><div class="layer-dot"></div><div class="layer-line"></div></div>
+    <div class="layer-right">
+      <div class="lr-num">第二層 · 設計你的合規聲明</div>
+      <div class="lr-title">一段話，讓你的專業形象和別人不一樣</div>
+      <div class="lr-desc">合規聲明不是法律文件，是一段讓客人看到就安心的文字。它應該出現在你的IG個人頁、工作室說明、報價單，甚至貼在工作桌旁邊。下面是範本框架，帶學員當場寫出自己版本的合規聲明。</div>
+
+      <div style="background:var(--s2); border:1px solid var(--grn-d); padding:16px 18px; margin-top:10px;">
+        <div style="font-family:'DM Mono',monospace; font-size:7.5px; letter-spacing:2px; text-transform:uppercase; color:var(--grn-d); margin-bottom:10px;">合規聲明範本框架</div>
+        <div style="font-family:'Noto Serif TC',serif; font-size:0.88rem; color:var(--text); line-height:1.8;">
+          「本工作室使用的所有服務產品，均已確認：<br>
+          ✦ 成分不含已知燙髮還原劑<br>
+          ✦ 具備台灣合法進口管道或PIF登錄紀錄<br>
+          ✦ 具有完整中文標示<br>
+          我持有國家美容技術士證照（證號：___），<br>
+          每季定期重新確認產品合規狀態。」
+        </div>
+        <div style="font-family:'DM Mono',monospace; font-size:7px; letter-spacing:1px; color:var(--dim); margin-top:10px;">→ 帶學員當場填入自己的證照號碼，完成個人化版本</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="layer">
+    <div class="layer-left"><div class="layer-dot"></div></div>
+    <div class="layer-right">
+      <div class="lr-num">第三層 · 合規的四個使用場景</div>
+      <div class="lr-title">不只是一張貼紙，是可以主動說出口的話</div>
+
+      <div class="two-col" style="margin-top:10px;">
+        <div class="col-card">
+          <div class="cc-label" style="color:var(--grn-d);">場景一 · 客人詢問時</div>
+          <ul class="cc-list">
+            <li><span class="cc-mark" style="color:var(--green);">→</span>主動展示合規聲明，不等客人問</li>
+            <li><span class="cc-mark" style="color:var(--green);">→</span>拿出成分核查清單說明這瓶產品在哪個區</li>
+            <li><span class="cc-mark" style="color:var(--green);">→</span>讓客人感受到「這個技術者真的懂她用的東西」</li>
+          </ul>
+        </div>
+        <div class="col-card">
+          <div class="cc-label" style="color:var(--grn-d);">場景二 · 社群定位</div>
+          <ul class="cc-list">
+            <li><span class="cc-mark" style="color:var(--green);">→</span>個人頁固定標注「合規認證工作室」</li>
+            <li><span class="cc-mark" style="color:var(--green);">→</span>限時動態定期分享「這季我確認了哪些產品」</li>
+            <li><span class="cc-mark" style="color:var(--green);">→</span>讓合規成為你品牌故事的一部分</li>
+          </ul>
+        </div>
+        <div class="col-card">
+          <div class="cc-label" style="color:var(--grn-d);">場景三 · 教學者宣傳</div>
+          <ul class="cc-list">
+            <li><span class="cc-mark" style="color:var(--green);">→</span>課程說明中標注「本課程使用產品全部通過合規審查」</li>
+            <li><span class="cc-mark" style="color:var(--green);">→</span>發給學員的附件包含產品合規文件清單</li>
+            <li><span class="cc-mark" style="color:var(--green);">→</span>讓學員知道：跟你學，有保護</li>
+          </ul>
+        </div>
+        <div class="col-card">
+          <div class="cc-label" style="color:var(--grn-d);">場景四 · 定價策略</div>
+          <ul class="cc-list">
+            <li><span class="cc-mark" style="color:var(--green);">→</span>合規是漲價的合理理由：「我使用的產品都有台灣合法PIF，這是我的服務成本的一部分」</li>
+            <li><span class="cc-mark" style="color:var(--green);">→</span>比市場便宜的不一定是好事，比市場貴的需要說出理由——合規就是你的理由</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="summary">
+    <div class="sum-label">這項的核心句</div>
+    <div class="sum-text">「合規不只是讓你少賠。<strong>做對了，它讓你多賺——因為你有別人說不出來的理由，值得客人付更多錢給你。</strong>」</div>
+  </div>
+
+  <div class="takeaway-box">
+    <div class="tb-label">帶走的工具</div>
+    <div class="tb-items">
+      <div class="tb-item"><span class="tb-icon">→</span><span>個人化合規聲明模板（當場填寫，離開時帶走自己的版本）</span></div>
+      <div class="tb-item"><span class="tb-icon">→</span><span>「合規工作室」社群文案範本三則（可直接發布）</span></div>
+      <div class="tb-item"><span class="tb-icon">→</span><span>四個使用場景的行動清單</span></div>
+    </div>
+  </div>
+
+  <div class="pf">
+    <div class="pf-note">本內容為課程教學素材。合規聲明為參考框架，學員應依實際情況確認後填入。</div>
+    <div class="pf-mono">新增 05 · 品牌差異化<br>2026.05</div>
+  </div>
+</div>
+
+
+<script>
+  const btns   = document.querySelectorAll('.nav-btn');
+  const panels = document.querySelectorAll('.panel');
+
+  btns.forEach(btn => {
+    btn.addEventListener('click', () => {
+      const t = btn.dataset.tab;
+      btns.forEach(b => b.classList.remove('active'));
+      panels.forEach(p => p.classList.remove('active'));
+      btn.classList.add('active');
+      document.getElementById('tab-' + t).classList.add('active');
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    });
+  });
+</script>
+</body>
+</html>
