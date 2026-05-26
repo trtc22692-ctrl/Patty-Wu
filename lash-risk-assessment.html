@@ -1,0 +1,427 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>睫毛管理沙龍｜7/1 法規職安綜合風險自測表</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+TC:wght@300;400;600;900&family=Noto+Sans+TC:wght@300;400;500&family=DM+Mono:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+:root{--ink:#1a1410;--paper:#f7f3ec;--paper2:#f0ebe0;--rule:#d8cfc0;--rule2:#c4b9a8;--muted:#8a7d6e;--red:#b8341c;--red-bg:#fdf1ee;--red-rule:#e8b0a0;--amber:#c07820;--amber-bg:#fdf6e8;--amber-rule:#e0c080;--blue:#1c4a78;--green:#1e5a32;--green-bg:#edf5ee;--green-rule:#90c4a0;--stamp-red:#c8352a;}
+*{margin:0;padding:0;box-sizing:border-box;}
+body{background:#e8e2d8;font-family:'Noto Sans TC',sans-serif;font-weight:300;color:var(--ink);min-height:100vh;padding:32px 16px 60px;background-image:repeating-linear-gradient(0deg,transparent,transparent 27px,rgba(0,0,0,0.04) 28px),repeating-linear-gradient(90deg,transparent,transparent 27px,rgba(0,0,0,0.02) 28px);}
+.page{max-width:780px;margin:0 auto;background:var(--paper);box-shadow:0 4px 40px rgba(0,0,0,0.18),0 1px 4px rgba(0,0,0,0.12);position:relative;overflow:hidden;}
+.page::before{content:'';display:block;height:6px;background:repeating-linear-gradient(90deg,var(--red) 0,var(--red) 40px,var(--amber) 40px,var(--amber) 80px,var(--ink) 80px,var(--ink) 120px);}
+.stamp{position:absolute;top:28px;right:28px;width:80px;height:80px;border:3px solid var(--stamp-red);border-radius:50%;display:flex;flex-direction:column;align-items:center;justify-content:center;transform:rotate(12deg);opacity:.85;}
+.stamp-inner{font-family:'DM Mono',monospace;font-size:7px;letter-spacing:2px;text-transform:uppercase;color:var(--stamp-red);text-align:center;line-height:1.6;}
+.stamp-date{font-family:'Noto Serif TC',serif;font-size:13px;font-weight:900;color:var(--stamp-red);line-height:1;}
+.header{padding:36px 44px 28px;border-bottom:2px solid var(--ink);position:relative;}
+.header-eyebrow{display:flex;align-items:center;gap:10px;margin-bottom:14px;}
+.eyebrow-badge{font-family:'DM Mono',monospace;font-size:8px;letter-spacing:3px;text-transform:uppercase;color:var(--paper);background:var(--ink);padding:3px 10px;}
+.eyebrow-line{flex:1;height:1px;background:var(--rule);}
+.eyebrow-date{font-family:'DM Mono',monospace;font-size:8px;letter-spacing:2px;color:var(--muted);}
+.header-title{font-family:'Noto Serif TC',serif;font-size:2rem;font-weight:900;line-height:1.2;color:var(--ink);margin-bottom:8px;max-width:480px;}
+.header-title em{color:var(--red);font-style:normal;}
+.header-sub{font-size:.82rem;color:var(--muted);line-height:1.7;max-width:500px;}
+.header-alert{margin-top:16px;background:var(--red-bg);border:1px solid var(--red-rule);border-left:3px solid var(--red);padding:10px 16px;font-size:.8rem;color:var(--red);line-height:1.65;display:flex;gap:10px;align-items:flex-start;}
+.score-bar{padding:18px 44px;background:var(--paper2);border-bottom:1px solid var(--rule);display:flex;align-items:center;gap:20px;flex-wrap:wrap;}
+.score-display{display:none;align-items:baseline;gap:4px;}
+.score-num{font-family:'DM Mono',monospace;font-size:2.8rem;font-weight:500;color:var(--ink);line-height:1;transition:color .3s;}
+.score-max{font-family:'DM Mono',monospace;font-size:1rem;color:var(--muted);}
+.score-label-wrap{flex:1;min-width:180px;}
+.score-label{font-family:'Noto Serif TC',serif;font-size:1rem;font-weight:600;margin-bottom:4px;}
+.score-desc{font-size:.75rem;color:var(--muted);line-height:1.55;}
+.progress-track{width:100%;height:6px;background:var(--rule);position:relative;overflow:hidden;margin-top:6px;}
+.progress-fill{height:100%;background:var(--rule2);width:0%;transition:width .4s ease,background-color .3s;}
+.score-reset{font-family:'DM Mono',monospace;font-size:8px;letter-spacing:2px;text-transform:uppercase;color:var(--muted);background:none;border:1px solid var(--rule);padding:5px 12px;cursor:pointer;transition:all .15s;flex-shrink:0;}
+.score-reset:hover{border-color:var(--ink);color:var(--ink);}
+.section{border-bottom:1px solid var(--rule);}
+.section-header{padding:18px 44px 16px;background:var(--paper2);border-bottom:1px solid var(--rule);display:flex;align-items:flex-start;gap:16px;}
+.section-num{font-family:'DM Mono',monospace;font-size:9px;letter-spacing:2px;text-transform:uppercase;color:var(--muted);margin-top:3px;flex-shrink:0;}
+.section-title{font-family:'Noto Serif TC',serif;font-size:1.05rem;font-weight:600;margin-bottom:3px;}
+.section-sub{font-size:.75rem;color:var(--muted);}
+.section-icon{width:36px;height:36px;border:1.5px solid var(--rule2);display:flex;align-items:center;justify-content:center;font-size:16px;flex-shrink:0;margin-left:auto;}
+.question{padding:16px 44px;border-bottom:1px solid var(--rule);transition:background .15s;}
+.question:last-of-type{border-bottom:none;}
+.question.ans-yes{background:#f5f9f5;}
+.question.ans-no{background:#fdf5f4;}
+.q-top{display:grid;grid-template-columns:1fr 70px;gap:14px;align-items:start;}
+.q-num{font-family:'DM Mono',monospace;font-size:8px;letter-spacing:2px;text-transform:uppercase;color:var(--muted);margin-bottom:5px;}
+.q-title{font-size:.88rem;font-weight:500;line-height:1.5;margin-bottom:6px;}
+.q-detail{font-size:.75rem;color:var(--muted);line-height:1.65;}
+.q-score{text-align:right;flex-shrink:0;}
+.q-pts{font-family:'DM Mono',monospace;font-size:18px;color:var(--rule2);line-height:1;transition:color .15s;}
+.q-pts-label{font-family:'DM Mono',monospace;font-size:7px;letter-spacing:1.5px;text-transform:uppercase;color:var(--rule2);display:block;}
+.question.ans-yes .q-pts{color:var(--green);}
+.question.ans-yes .q-pts-label{color:var(--green);}
+.question.ans-no .q-pts{color:var(--red);}
+.question.ans-no .q-pts-label{color:var(--red);}
+.q-options{display:flex;gap:8px;margin-top:12px;}
+.q-opt{font-family:'DM Mono',monospace;font-size:8px;letter-spacing:2px;text-transform:uppercase;padding:7px 18px;border:1.5px solid var(--rule2);background:white;cursor:pointer;color:var(--muted);transition:all .15s;-webkit-appearance:none;}
+.q-opt:hover{border-color:var(--ink);color:var(--ink);}
+.q-opt.yes-active{background:var(--green);border-color:var(--green);color:white;}
+.q-opt.no-active{background:var(--red);border-color:var(--red);color:white;}
+.submit-block{padding:28px 44px;border-bottom:1px solid var(--rule);background:var(--paper2);display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:14px;}
+.submit-hint{font-family:'Noto Serif TC',serif;font-size:.92rem;font-weight:600;margin-bottom:4px;}
+.submit-count{font-family:'DM Mono',monospace;font-size:7.5px;letter-spacing:2px;text-transform:uppercase;color:var(--muted);}
+.submit-btn{font-family:'DM Mono',monospace;font-size:9px;letter-spacing:2.5px;text-transform:uppercase;color:white;background:var(--ink);border:none;padding:14px 28px;cursor:not-allowed;opacity:.35;transition:all .25s;flex-shrink:0;-webkit-appearance:none;}
+.submit-btn.ready{opacity:1;cursor:pointer;}
+.diagnosis{display:none;padding:24px 44px 28px;border-bottom:1px solid var(--rule);}
+.diag-title{font-family:'DM Mono',monospace;font-size:8px;letter-spacing:3px;text-transform:uppercase;color:var(--muted);margin-bottom:14px;display:flex;align-items:center;gap:12px;}
+.diag-title::after{content:'';flex:1;height:1px;background:var(--rule);}
+.diag-bands{display:flex;flex-direction:column;gap:3px;}
+.diag-band{display:grid;grid-template-columns:8px 110px 1fr;border:1px solid var(--rule);overflow:hidden;transition:opacity .3s;}
+.diag-band.dim{opacity:.35;}
+.diag-color{display:block;}
+.diag-range{padding:12px 14px;border-right:1px solid var(--rule);background:var(--paper2);display:flex;flex-direction:column;justify-content:center;}
+.diag-range-num{font-family:'DM Mono',monospace;font-size:13px;font-weight:500;line-height:1;margin-bottom:3px;}
+.diag-range-label{font-family:'DM Mono',monospace;font-size:7px;letter-spacing:1.5px;text-transform:uppercase;color:var(--muted);}
+.diag-content{padding:12px 16px;}
+.diag-head{font-family:'Noto Serif TC',serif;font-size:.88rem;font-weight:600;margin-bottom:4px;}
+.diag-body{font-size:.75rem;color:var(--muted);line-height:1.6;}
+.footer{padding:18px 44px;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:10px;}
+.footer-note{font-size:.7rem;color:var(--muted);line-height:1.6;max-width:420px;}
+.footer-mono{font-family:'DM Mono',monospace;font-size:7px;letter-spacing:1.5px;text-transform:uppercase;color:var(--muted);text-align:right;line-height:2;}
+@media(max-width:600px){body{padding:0 0 40px;}.page::before{height:4px;}.header{padding:24px 20px 20px;}.header-title{font-size:1.5rem;}.score-bar{padding:14px 20px;}.section-header{padding:14px 20px;}.question{padding:14px 20px;}.q-top{grid-template-columns:1fr 54px;}.submit-block{padding:20px 20px;}.diagnosis{padding:20px 20px 24px;}.footer{padding:14px 20px;}.stamp{width:60px;height:60px;top:16px;right:16px;}.stamp-date{font-size:10px;}.stamp-inner{font-size:6px;}}
+</style>
+</head>
+<body>
+<div class="page">
+<div class="stamp"><div class="stamp-inner">新制上路</div><div class="stamp-date">7·1</div><div class="stamp-inner">2026</div></div>
+
+<div class="header">
+  <div class="header-eyebrow"><span class="eyebrow-badge">🛡️ 風險自測表</span><span class="eyebrow-line"></span><span class="eyebrow-date">2026 · 07 · 01 新制</span></div>
+  <div class="header-title">睫毛管理沙龍<br><em>法規 &amp; 職安</em>綜合風險自測</div>
+  <div class="header-sub">衛福部化妝品 PIF 新制已全面上路，不合規的產品與店務流程，隨時面臨衛生局、消保官與勞檢所的鉅額裁罰。請花 3 分鐘為您的工作室進行全面體檢。</div>
+  <div class="header-alert"><span style="flex-shrink:0;margin-top:1px;">⚠</span><span>2026 年 7 月 1 日起，所有化妝品製造商及輸入業者須完成 PIF 建置。不合規產品繼續使用，現場操作者即為連帶風險承擔人。</span></div>
+</div>
+
+<div class="score-bar">
+  <div>
+    <div class="score-display" id="scoreDisplay"><span class="score-num" id="scoreNum">0</span><span class="score-max">/ 100 分</span></div>
+    <div class="score-label-wrap" id="preLabelWrap">
+      <div class="score-label" id="scoreLabel" style="font-size:.85rem;font-weight:400;color:var(--muted);">每題選擇「是」或「否」，完成後查看結果</div>
+      <div class="score-desc" id="scoreDesc">共 10 題，每題 10 分</div>
+    </div>
+    <div class="progress-track" style="width:160px;"><div class="progress-fill" id="progressFill"></div></div>
+  </div>
+  <div id="postLabel" style="display:none;flex:1;min-width:180px;">
+    <div class="score-label" id="resultLabel"></div>
+    <div class="score-desc" id="resultDesc"></div>
+  </div>
+  <button class="score-reset" onclick="resetAll()">重新開始</button>
+</div>
+
+<div class="section">
+  <div class="section-header">
+    <div class="section-num">Section 01</div>
+    <div><div class="section-title">衛福部化妝品法規與 PIF 檢測</div><div class="section-sub">產品合法性 · PIF 建置 · 登錄查核 · 中文標籤</div></div>
+    <div class="section-icon">🏛️</div>
+  </div>
+
+  <div class="question" id="q1">
+    <div class="q-top">
+      <div><div class="q-num">Q 01 · 產品成分合法性</div><div class="q-title">店內使用的睫毛特殊定型劑、滋養液，是否<strong>絕對不含</strong>衛福部禁用藥物？</div><div class="q-detail">例如：前列腺素衍生物 Bimatoprost 等青光眼藥物成分，一旦混入化妝品即屬違法，裁罰從萬元起跳。</div></div>
+      <div class="q-score"><div class="q-pts" id="pts1">10</div><span class="q-pts-label">分</span></div>
+    </div>
+    <div class="q-options">
+      <button class="q-opt" id="q1-yes" onclick="pick(1,true)">✓ 是</button>
+      <button class="q-opt" id="q1-no" onclick="pick(1,false)">✗ 否</button>
+    </div>
+  </div>
+
+  <div class="question" id="q2">
+    <div class="q-top">
+      <div><div class="q-num">Q 02 · 2026 PIF 檔案建置</div><div class="q-title">店內使用的睫毛定型液與滋養液，製造商或進口商是否已建置好 <strong>PIF（產品資訊檔案）</strong>，並有 SA 簽名背書？</div><div class="q-detail">PIF 需由具資格的安全評估簽署人員（SA）正式簽署。有檢驗報告 ≠ 有 PIF，兩者不可混淆。</div></div>
+      <div class="q-score"><div class="q-pts" id="pts2">10</div><span class="q-pts-label">分</span></div>
+    </div>
+    <div class="q-options">
+      <button class="q-opt" id="q2-yes" onclick="pick(2,true)">✓ 是</button>
+      <button class="q-opt" id="q2-no" onclick="pick(2,false)">✗ 否</button>
+    </div>
+  </div>
+
+  <div class="question" id="q3">
+    <div class="q-top">
+      <div><div class="q-num">Q 03 · 系統登錄核對</div><div class="q-title">您是否親自上衛福部「化妝品產品登錄平台」，查核店內所有美容產品皆有<strong>完整的中文合法登錄字號</strong>？</div><div class="q-detail">「有在台灣賣」不代表「有完成登錄」，需親自核對：fda.gov.tw → 化妝品 → 化妝品登錄。</div></div>
+      <div class="q-score"><div class="q-pts" id="pts3">10</div><span class="q-pts-label">分</span></div>
+    </div>
+    <div class="q-options">
+      <button class="q-opt" id="q3-yes" onclick="pick(3,true)">✓ 是</button>
+      <button class="q-opt" id="q3-no" onclick="pick(3,false)">✗ 否</button>
+    </div>
+  </div>
+
+  <div class="question" id="q4">
+    <div class="q-top">
+      <div><div class="q-num">Q 04 · 中文標籤合規</div><div class="q-title">店內所有韓國、日本進口定型劑，瓶身是否貼有包含<strong>全成分 INCI、進口商名稱地址、批號、用途</strong>的繁體中文標籤？</div><div class="q-detail">進口產品須有完整中文標示，不接受「中文貼紙後補」。無中文標示即屬違規，稽查現場立即可開罰。</div></div>
+      <div class="q-score"><div class="q-pts" id="pts4">10</div><span class="q-pts-label">分</span></div>
+    </div>
+    <div class="q-options">
+      <button class="q-opt" id="q4-yes" onclick="pick(4,true)">✓ 是</button>
+      <button class="q-opt" id="q4-no" onclick="pick(4,false)">✗ 否</button>
+    </div>
+  </div>
+</div>
+
+<div class="section">
+  <div class="section-header">
+    <div class="section-num">Section 02</div>
+    <div><div class="section-title">勞動部職業安全衛生（職安法）檢測</div><div class="section-sub">化學品通識 · 通風排氣 · 人體工學職業病預防</div></div>
+    <div class="section-icon">⚗️</div>
+  </div>
+
+  <div class="question" id="q5">
+    <div class="q-top">
+      <div><div class="q-num">Q 05 · 化學品危害通識</div><div class="q-title">針對睫毛管理使用的定型藥劑與黑膠，店內是否備有原廠 <strong>MSDS（物質安全資料表）</strong>，且員工皆知道放在哪裡？</div><div class="q-detail">MSDS 是職安法要求的法定文件。勞檢所現場查核時，無法出示即可開罰，且員工有權知悉危害資訊。</div></div>
+      <div class="q-score"><div class="q-pts" id="pts5">10</div><span class="q-pts-label">分</span></div>
+    </div>
+    <div class="q-options">
+      <button class="q-opt" id="q5-yes" onclick="pick(5,true)">✓ 是</button>
+      <button class="q-opt" id="q5-no" onclick="pick(5,false)">✗ 否</button>
+    </div>
+  </div>
+
+  <div class="question" id="q6">
+    <div class="q-top">
+      <div><div class="q-num">Q 06 · 局部排氣與通風</div><div class="q-title">美睫操作位置是否有<strong>局部排氣系統或空氣循環設備</strong>，確保操作過程中美睫師與顧客不持續吸入化學揮發物？</div><div class="q-detail">黑膠、定型液含揮發性有機物（如甲醛），長期吸入為職業病風險。職安法要求雇主消除或控制化學性危害。</div></div>
+      <div class="q-score"><div class="q-pts" id="pts6">10</div><span class="q-pts-label">分</span></div>
+    </div>
+    <div class="q-options">
+      <button class="q-opt" id="q6-yes" onclick="pick(6,true)">✓ 是</button>
+      <button class="q-opt" id="q6-no" onclick="pick(6,false)">✗ 否</button>
+    </div>
+  </div>
+
+  <div class="question" id="q7">
+    <div class="q-top">
+      <div><div class="q-num">Q 07 · 人體工學危害預防</div><div class="q-title">美睫師是否常態出現手麻、腰痛、脖子酸？店內有無針對<strong>桌椅高度、定時伸展與光源</strong>進行職業病預防規劃？</div><div class="q-detail">反覆固定姿勢、精細眼部操作是美睫師職業傷害高風險因子。雇主有法定義務進行人體工學危害評估。</div></div>
+      <div class="q-score"><div class="q-pts" id="pts7">10</div><span class="q-pts-label">分</span></div>
+    </div>
+    <div class="q-options">
+      <button class="q-opt" id="q7-yes" onclick="pick(7,true)">✓ 是</button>
+      <button class="q-opt" id="q7-no" onclick="pick(7,false)">✗ 否</button>
+    </div>
+  </div>
+</div>
+
+<div class="section">
+  <div class="section-header">
+    <div class="section-num">Section 03</div>
+    <div><div class="section-title">消保法與勞基法（店務防禦）檢測</div><div class="section-sub">知情同意 · 定型化契約 · 假承攬真僱傭</div></div>
+    <div class="section-icon">⚖️</div>
+  </div>
+
+  <div class="question" id="q8">
+    <div class="q-top">
+      <div><div class="q-num">Q 08 · 顧客風險告知同意書</div><div class="q-title">顧客操作前，是否有簽署包含<strong>術前眼部手術史、特殊疾病告知、術後代謝與免責聲明</strong>的法律級同意書？</div><div class="q-detail">消費糾紛發生時，知情同意書是業者最重要的自我保護文件。口頭告知無書面紀錄，法律上視同未告知。</div></div>
+      <div class="q-score"><div class="q-pts" id="pts8">10</div><span class="q-pts-label">分</span></div>
+    </div>
+    <div class="q-options">
+      <button class="q-opt" id="q8-yes" onclick="pick(8,true)">✓ 是</button>
+      <button class="q-opt" id="q8-no" onclick="pick(8,false)">✗ 否</button>
+    </div>
+  </div>
+
+  <div class="question" id="q9">
+    <div class="q-top">
+      <div><div class="q-num">Q 09 · 定型化契約與退費</div><div class="q-title">若有販售儲值堂數或包套課程，退費機制是否完全符合消保官的<strong>《瘦身美容業定型化契約》</strong>範本？</div><div class="q-detail">合約含「一經售出概不退款」等字眼即屬無效條款。消保官接獲投訴即可介入，裁罰從警告到停業不等。</div></div>
+      <div class="q-score"><div class="q-pts" id="pts9">10</div><span class="q-pts-label">分</span></div>
+    </div>
+    <div class="q-options">
+      <button class="q-opt" id="q9-yes" onclick="pick(9,true)">✓ 是</button>
+      <button class="q-opt" id="q9-no" onclick="pick(9,false)">✗ 否</button>
+    </div>
+  </div>
+
+  <div class="question" id="q10">
+    <div class="q-top">
+      <div><div class="q-num">Q 10 · 假承攬真僱傭地雷</div><div class="q-title">若採「抽成/拆帳」合作，合約中是否<strong>避免</strong>出現遲到扣錢、強制制服、強制排班等被認定為僱傭關係的條款？</div><div class="q-detail">一旦被勞檢認定為「假承攬真僱傭」，業者須補繳所有勞健保費，並依人數與期間承擔數十萬至百萬追補風險。</div></div>
+      <div class="q-score"><div class="q-pts" id="pts10">10</div><span class="q-pts-label">分</span></div>
+    </div>
+    <div class="q-options">
+      <button class="q-opt" id="q10-yes" onclick="pick(10,true)">✓ 是</button>
+      <button class="q-opt" id="q10-no" onclick="pick(10,false)">✗ 否</button>
+    </div>
+  </div>
+</div>
+
+<!-- Submit -->
+<div class="submit-block" id="submitBlock">
+  <div>
+    <div class="submit-hint" id="submitHint">請先完成全部 10 題作答</div>
+    <div class="submit-count" id="submitCount">0 / 10 題已作答</div>
+  </div>
+  <button class="submit-btn" id="submitBtn" onclick="doSubmit()">✓ 查看我的分數</button>
+</div>
+
+<!-- Diagnosis -->
+<div class="diagnosis" id="diagnosisBlock">
+  <div class="diag-title">📊 分數診斷與解讀</div>
+  <div class="diag-bands">
+    <div class="diag-band dim" id="band-green">
+      <span class="diag-color" style="background:var(--green);"></span>
+      <div class="diag-range"><div class="diag-range-num" style="color:var(--green);">80–100</div><div class="diag-range-label">法規模範生</div></div>
+      <div class="diag-content"><div class="diag-head" style="color:var(--green);">🟢 做得太棒了！</div><div class="diag-body">您的沙龍具備極高的風險意識，在 7/1 新制上路後仍能穩健經營。請繼續保持，並定期複查法規動態。</div></div>
+    </div>
+    <div class="diag-band dim" id="band-amber">
+      <span class="diag-color" style="background:var(--amber);"></span>
+      <div class="diag-range"><div class="diag-range-num" style="color:var(--amber);">50–70</div><div class="diag-range-label">黃色警戒區</div></div>
+      <div class="diag-content"><div class="diag-head" style="color:var(--amber);">🟡 正在「法規裸奔」邊緣！</div><div class="diag-body">技術再好，只要遇到一次惡意客訴或離職員工檢舉假承攬，累積的努力可能一夕化為烏有。未選「是」的題目，就是您現在最緊急的風險缺口。</div></div>
+    </div>
+    <div class="diag-band dim" id="band-red">
+      <span class="diag-color" style="background:var(--red);"></span>
+      <div class="diag-range"><div class="diag-range-num" style="color:var(--red);">≤ 40</div><div class="diag-range-label">極度危險</div></div>
+      <div class="diag-content"><div class="diag-head" style="color:var(--red);">🔴 強烈建議立刻進行店務大體檢！</div><div class="diag-body">7/1 新制上路後，您隨時可能面臨衛生局與勞檢所的百萬裁罰風險。建議優先處理 PIF 文件確認與勞動契約審查。</div></div>
+    </div>
+  </div>
+</div>
+
+<div class="footer">
+  <div class="footer-note">本測驗依衛福部《化粧品衛生安全管理法》、勞動部《職業安全衛生法》及行政院消保會定型化契約範本製作，僅供自我評估參考使用，不構成正式法律意見。如有疑義，建議諮詢具相關背景之專業律師。</div>
+  <div class="footer-mono">睫毛管理沙龍<br>7/1 新制風險自測表<br>2026.07</div>
+</div>
+</div>
+
+<script>
+var ans = {};
+var done = false;
+var TOTAL = 10;
+
+function pick(num, isYes) {
+  if (done) return;
+  ans[num] = isYes;
+
+  // Update button styles
+  var yBtn = document.getElementById('q'+num+'-yes');
+  var nBtn = document.getElementById('q'+num+'-no');
+  yBtn.className = isYes ? 'q-opt yes-active' : 'q-opt';
+  nBtn.className = isYes ? 'q-opt' : 'q-opt no-active';
+
+  // Update row bg
+  var row = document.getElementById('q'+num);
+  row.className = isYes ? 'question ans-yes' : 'question ans-no';
+
+  updateProgress();
+}
+
+function updateProgress() {
+  var count = Object.keys(ans).length;
+  var hint = document.getElementById('submitHint');
+  var cnt = document.getElementById('submitCount');
+  var btn = document.getElementById('submitBtn');
+
+  cnt.textContent = count + ' / ' + TOTAL + ' 題已作答';
+
+  if (count >= TOTAL) {
+    hint.textContent = '✓ 全部作答完畢，點擊查看結果';
+    hint.style.color = '#1e5a32';
+    btn.className = 'submit-btn ready';
+  } else {
+    hint.textContent = '請先完成全部 ' + TOTAL + ' 題作答';
+    hint.style.color = '';
+    btn.className = 'submit-btn';
+  }
+
+  // Progress bar: answered ratio
+  if (!done) {
+    document.getElementById('progressFill').style.width = (count / TOTAL * 100) + '%';
+  }
+}
+
+function doSubmit() {
+  if (Object.keys(ans).length < TOTAL) return;
+  done = true;
+
+  var yes = 0;
+  for (var k in ans) { if (ans[k]) yes++; }
+  var score = yes * 10;
+
+  // Hide submit block
+  document.getElementById('submitBlock').style.display = 'none';
+
+  // Show score in bar
+  document.getElementById('preLabelWrap').style.display = 'none';
+  var sd = document.getElementById('scoreDisplay');
+  sd.style.display = 'flex';
+  document.getElementById('scoreNum').textContent = score;
+  document.getElementById('progressFill').style.width = score + '%';
+
+  var fill = document.getElementById('progressFill');
+  var postLabel = document.getElementById('postLabel');
+  var resultLabel = document.getElementById('resultLabel');
+  var resultDesc = document.getElementById('resultDesc');
+  postLabel.style.display = 'block';
+
+  var bg, lbl, desc;
+  if (score >= 80) {
+    bg = '#1e5a32';
+    lbl = '🟢 法規模範生';
+    desc = '您的沙龍具備極高的風險意識，請繼續保持。';
+    document.getElementById('band-green').className = 'diag-band';
+    document.getElementById('band-amber').className = 'diag-band dim';
+    document.getElementById('band-red').className = 'diag-band dim';
+  } else if (score >= 50) {
+    bg = '#c07820';
+    lbl = '🟡 黃色警戒區';
+    desc = '正在法規裸奔邊緣，建議立刻補強未選「是」的項目。';
+    document.getElementById('band-green').className = 'diag-band dim';
+    document.getElementById('band-amber').className = 'diag-band';
+    document.getElementById('band-red').className = 'diag-band dim';
+  } else {
+    bg = '#b8341c';
+    lbl = '🔴 極度危險重災區';
+    desc = '強烈建議立刻進行店務大體檢！';
+    document.getElementById('band-green').className = 'diag-band dim';
+    document.getElementById('band-amber').className = 'diag-band dim';
+    document.getElementById('band-red').className = 'diag-band';
+  }
+
+  fill.style.background = bg;
+  document.getElementById('scoreNum').style.color = bg;
+  resultLabel.textContent = lbl;
+  resultLabel.style.color = bg;
+  resultDesc.textContent = desc;
+
+  // Show diagnosis
+  var diag = document.getElementById('diagnosisBlock');
+  diag.style.display = 'block';
+
+  setTimeout(function() {
+    diag.scrollIntoView({behavior:'smooth', block:'start'});
+  }, 150);
+}
+
+function resetAll() {
+  ans = {};
+  done = false;
+
+  for (var i = 1; i <= TOTAL; i++) {
+    document.getElementById('q'+i).className = 'question';
+    var yb = document.getElementById('q'+i+'-yes');
+    var nb = document.getElementById('q'+i+'-no');
+    if (yb) yb.className = 'q-opt';
+    if (nb) nb.className = 'q-opt';
+  }
+
+  document.getElementById('scoreDisplay').style.display = 'none';
+  document.getElementById('scoreNum').style.color = '';
+  document.getElementById('preLabelWrap').style.display = '';
+  document.getElementById('postLabel').style.display = 'none';
+  document.getElementById('progressFill').style.width = '0%';
+  document.getElementById('progressFill').style.background = '#c4b9a8';
+
+  document.getElementById('submitBlock').style.display = '';
+  document.getElementById('submitHint').textContent = '請先完成全部 10 題作答';
+  document.getElementById('submitHint').style.color = '';
+  document.getElementById('submitCount').textContent = '0 / 10 題已作答';
+  document.getElementById('submitBtn').className = 'submit-btn';
+
+  document.getElementById('diagnosisBlock').style.display = 'none';
+  document.getElementById('band-green').className = 'diag-band dim';
+  document.getElementById('band-amber').className = 'diag-band dim';
+  document.getElementById('band-red').className = 'diag-band dim';
+}
+</script>
+</body>
+</html>
