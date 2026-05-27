@@ -454,11 +454,6 @@
     <div class="step-line"></div>
     <div class="step" id="step-ind-2">
       <div class="step-dot">2</div>
-      <div class="step-label">場次 / 身份</div>
-    </div>
-    <div class="step-line"></div>
-    <div class="step" id="step-ind-3">
-      <div class="step-dot">3</div>
       <div class="step-label">付款確認</div>
     </div>
   </div>
@@ -466,6 +461,45 @@
   <!-- STEP 1 -->
   <div class="form-section active" id="section-1">
     <div class="form-section-label">Step 01 — 基本資料</div>
+
+    <!-- 價目表（可選） -->
+    <div style="margin-bottom:28px; border:1px solid rgba(201,169,110,0.2); padding:20px;">
+      <div style="font-family:'Cormorant Garamond',serif; font-size:10px; letter-spacing:4px; color:var(--gold); margin-bottom:16px; text-transform:uppercase;">課程費用</div>
+      <div style="font-size:12px; color:rgba(250,247,242,0.6); margin-bottom:14px;">📍 台中場・7月7日（二）11:00–17:00</div>
+      <div style="display:flex; flex-direction:column; gap:10px;">
+        <div class="price-option" onclick="selectPrice(this,'earlybird','早鳥優惠','5000')" style="display:flex; justify-content:space-between; align-items:center; padding:12px 16px; background:rgba(201,169,110,0.08); border:1px solid rgba(201,169,110,0.2); cursor:pointer; transition:all 0.2s;">
+          <div>
+            <div style="font-size:13px; color:var(--cream);">早鳥優惠</div>
+            <div style="font-size:11px; color:rgba(250,247,242,0.4); margin-top:2px;">7/1 前報名</div>
+          </div>
+          <div style="display:flex; align-items:center; gap:10px;">
+            <div style="font-family:'Cormorant Garamond',serif; font-size:20px; color:var(--gold);">$5,000</div>
+            <div class="price-check" style="width:18px; height:18px; border:1px solid rgba(201,169,110,0.4); border-radius:50%; display:flex; align-items:center; justify-content:center; font-size:10px; color:var(--gold);"></div>
+          </div>
+        </div>
+        <div class="price-option" onclick="selectPrice(this,'nunu','NU 學員','5000')" style="display:flex; justify-content:space-between; align-items:center; padding:12px 16px; background:rgba(201,169,110,0.08); border:1px solid rgba(201,169,110,0.2); cursor:pointer; transition:all 0.2s;">
+          <div>
+            <div style="font-size:13px; color:var(--cream);">NU 學員</div>
+            <div style="font-size:11px; color:rgba(250,247,242,0.4); margin-top:2px;">NUNU 在籍學員</div>
+          </div>
+          <div style="display:flex; align-items:center; gap:10px;">
+            <div style="font-family:'Cormorant Garamond',serif; font-size:20px; color:var(--gold);">$5,000</div>
+            <div class="price-check" style="width:18px; height:18px; border:1px solid rgba(201,169,110,0.4); border-radius:50%; display:flex; align-items:center; justify-content:center; font-size:10px; color:var(--gold);"></div>
+          </div>
+        </div>
+        <div class="price-option" onclick="selectPrice(this,'other','非學員','6600')" style="display:flex; justify-content:space-between; align-items:center; padding:12px 16px; background:rgba(201,169,110,0.08); border:1px solid rgba(201,169,110,0.2); cursor:pointer; transition:all 0.2s;">
+          <div>
+            <div style="font-size:13px; color:var(--cream);">非學員</div>
+            <div style="font-size:11px; color:rgba(250,247,242,0.4); margin-top:2px;">早鳥後適用</div>
+          </div>
+          <div style="display:flex; align-items:center; gap:10px;">
+            <div style="font-family:'Cormorant Garamond',serif; font-size:20px; color:var(--gold);">$6,600</div>
+            <div class="price-check" style="width:18px; height:18px; border:1px solid rgba(201,169,110,0.4); border-radius:50%; display:flex; align-items:center; justify-content:center; font-size:10px; color:var(--gold);"></div>
+          </div>
+        </div>
+      </div>
+      <div class="error-msg" id="err-identity" style="display:none; margin-top:8px;">請選擇學員身份</div>
+    </div>
 
     <div class="field">
       <label>中文姓名 <span class="req">*</span></label>
@@ -498,59 +532,8 @@
     </div>
   </div>
 
-  <!-- STEP 2 -->
+  <!-- STEP 2 (付款) -->
   <div class="form-section" id="section-2">
-    <div class="form-section-label">Step 02 — 場次選擇 &amp; 學員身份</div>
-
-    <div class="field">
-      <label>上課場次 <span class="req">*</span></label>
-      <div class="venue-options">
-        <div class="venue-option" onclick="selectVenue(this)">
-          <input type="radio" name="venue" value="taichung">
-          <div class="venue-radio"><div class="venue-radio-inner"></div></div>
-          <div class="venue-info">
-            <div class="venue-name">台中場</div>
-            <div class="venue-sub">7月7日（二）· 11:00–17:00</div>
-          </div>
-          <span class="venue-badge">台中</span>
-        </div>
-
-      </div>
-      <div class="error-msg" id="err-venue">請選擇上課場次</div>
-    </div>
-
-    <div class="field">
-      <label>學員身份 <span class="req">*</span></label>
-      <div class="identity-options">
-        <div class="identity-option" onclick="selectIdentity(this, 'earlybird')">
-          <input type="radio" name="identity" value="earlybird">
-          <div class="identity-name">早鳥優惠</div>
-          <div class="identity-fee" style="font-size:12px;color:rgba(201,169,110,0.7);margin-bottom:2px;">7/1 前報名</div>
-          <div class="identity-fee">$5,000</div>
-        </div>
-        <div class="identity-option" onclick="selectIdentity(this, 'nunu')">
-          <input type="radio" name="identity" value="nunu">
-          <div class="identity-name">NU 學員</div>
-          <div class="identity-fee">$5,000</div>
-        </div>
-        <div class="identity-option" onclick="selectIdentity(this, 'other')">
-          <input type="radio" name="identity" value="other">
-          <div class="identity-name">非學員</div>
-          <div class="identity-fee" style="font-size:12px;color:rgba(201,169,110,0.7);margin-bottom:2px;">早鳥後</div>
-          <div class="identity-fee">$6,600</div>
-        </div>
-      </div>
-      <div class="error-msg" id="err-identity">請選擇學員身份</div>
-    </div>
-
-    <div class="btn-row">
-      <button class="btn-prev" onclick="goPrev(2)">← 上一步</button>
-      <button class="btn-next" onclick="goNext(2)">下一步 →</button>
-    </div>
-  </div>
-
-  <!-- STEP 3 -->
-  <div class="form-section" id="section-3">
     <div class="form-section-label">Step 03 — 付款方式</div>
 
     <div class="field">
@@ -592,7 +575,7 @@
     </div>
 
     <div class="btn-row">
-      <button class="btn-prev" onclick="goPrev(3)">← 上一步</button>
+      <button class="btn-prev" onclick="goPrev(2)">← 上一步</button>
       <button class="btn-next" onclick="submitForm()">確認送出 ✦</button>
     </div>
   </div>
@@ -650,8 +633,9 @@
   function showStep(step) {
     document.querySelectorAll('.form-section').forEach(s => s.classList.remove('active'));
     document.getElementById('section-' + step).classList.add('active');
-    for (let i = 1; i <= 3; i++) {
+    for (let i = 1; i <= 2; i++) {
       const ind = document.getElementById('step-ind-' + i);
+      if (!ind) continue;
       ind.classList.remove('active','done');
       if (i < step) ind.classList.add('done');
       if (i === step) ind.classList.add('active');
@@ -662,8 +646,27 @@
   function goNext(step) { if (validateStep(step)) showStep(step + 1); }
   function goPrev(step) { showStep(step - 1); }
 
+  let selectedIdentity = '';
+  let selectedIdentityName = '';
+
+  function selectPrice(el, val, name, fee) {
+    document.querySelectorAll('.price-option').forEach(v => {
+      v.style.border = '1px solid rgba(201,169,110,0.2)';
+      v.style.background = 'rgba(201,169,110,0.08)';
+      v.querySelector('.price-check').innerHTML = '';
+    });
+    el.style.border = '1px solid rgba(201,169,110,0.8)';
+    el.style.background = 'rgba(201,169,110,0.18)';
+    el.querySelector('.price-check').innerHTML = '✓';
+    selectedIdentity = val;
+    selectedIdentityName = name;
+    const errEl = document.getElementById('err-identity');
+    if (errEl) errEl.style.display = 'none';
+  }
+
   function toggleErr(id, show) {
     const el = document.getElementById(id);
+    if (!el) return;
     show ? el.classList.add('show') : el.classList.remove('show');
   }
 
@@ -680,18 +683,15 @@
       toggleErr('err-instructor', !ins);
       toggleErr('err-phone', !p);
       toggleErr('err-email', !e || !e.includes('@'));
+      if (!selectedIdentity) {
+        document.getElementById('err-identity').style.display = 'block';
+        valid = false;
+      }
       if (!n || !ne || !ins || !p || !e || !e.includes('@')) valid = false;
     }
     if (step === 2) {
-      const v = document.querySelector('.venue-option.selected');
-      const id = document.querySelector('.identity-option.selected');
-      toggleErr('err-venue', !v);
-      toggleErr('err-identity', !id);
-      if (!v || !id) valid = false;
-    }
-    if (step === 3) {
       const pay = document.querySelector('.payment-option.selected');
-      toggleErr('err-payment', !pay);
+      if (document.getElementById('err-payment')) toggleErr('err-payment', !pay);
       if (!pay) valid = false;
     }
     return valid;
@@ -700,21 +700,21 @@
   function selectVenue(el) {
     document.querySelectorAll('.venue-option').forEach(v => v.classList.remove('selected'));
     el.classList.add('selected');
-    toggleErr('err-venue', false);
+    if (document.getElementById('err-venue')) toggleErr('err-venue', false);
   }
 
   function selectIdentity(el, val) {
     document.querySelectorAll('.identity-option').forEach(v => v.classList.remove('selected'));
     el.classList.add('selected');
-    toggleErr('err-identity', false);
+    if (document.getElementById('err-identity')) toggleErr('err-identity', false);
   }
 
   function selectPayment(el, val) {
     document.querySelectorAll('.payment-option').forEach(v => v.classList.remove('selected'));
     el.classList.add('selected');
-    toggleErr('err-payment', false);
-    document.getElementById('bankBox').classList.toggle('show', val === 'transfer');
-    document.getElementById('linepayBox').classList.toggle('show', val === 'linepay');
+    if (document.getElementById('err-payment')) toggleErr('err-payment', false);
+    const bankBox = document.getElementById('bankBox');
+    if (bankBox) bankBox.classList.toggle('show', val === 'transfer');
   }
 
   function submitForm() {
@@ -724,14 +724,14 @@
     const phone = document.getElementById('phone').value.trim();
     const email = document.getElementById('email').value.trim();
     const acct5 = document.getElementById('acct5').value.trim();
+    const companyName = document.getElementById('companyName')?.value.trim() || '';
+    const taxId = document.getElementById('taxId')?.value.trim() || '';
     if (!acct5) { toggleErr('err-acct5', true); return; }
     toggleErr('err-acct5', false);
-    const venue = document.querySelector('.venue-option.selected .venue-name')?.textContent || '';
-    const venueDate = document.querySelector('.venue-option.selected .venue-sub')?.textContent || '';
-    const identityEl = document.querySelector('.identity-option.selected');
-    const identity = identityEl?.querySelector('.identity-name')?.textContent || '';
-    const feeEls = identityEl?.querySelectorAll('.identity-fee');
-    const fee = feeEls?.[feeEls.length - 1]?.textContent || '';
+
+    const venue = '台中場';
+    const venueDate = '7月7日（二）11:00–17:00';
+    const identity = selectedIdentityName;
 
     const summary = document.getElementById('summaryBox');
     summary.innerHTML = `
@@ -741,9 +741,11 @@
       <div class="summary-row"><span class="summary-label">電話</span><span class="summary-value">${phone}</span></div>
       <div class="summary-row"><span class="summary-label">Email</span><span class="summary-value">${email}</span></div>
       <div class="summary-row"><span class="summary-label">場次</span><span class="summary-value">${venue}・${venueDate}</span></div>
-      <div class="summary-row"><span class="summary-label">身份</span><span class="summary-value">${identity}・${fee}</span></div>
+      <div class="summary-row"><span class="summary-label">身份</span><span class="summary-value">${identity}</span></div>
       <div class="summary-row"><span class="summary-label">付款</span><span class="summary-value">銀行匯款</span></div>
       <div class="summary-row"><span class="summary-label">帳號後五碼</span><span class="summary-value" style="color:var(--gold);letter-spacing:3px;">${acct5}</span></div>
+      ${companyName ? `<div class="summary-row"><span class="summary-label">公司名稱</span><span class="summary-value">${companyName}</span></div>` : ''}
+      ${taxId ? `<div class="summary-row"><span class="summary-label">統一編號</span><span class="summary-value">${taxId}</span></div>` : ''}
     `;
     document.getElementById('formWrapper').style.display = 'none';
     document.getElementById('successScreen').classList.add('show');
@@ -756,9 +758,11 @@
         中文姓名: name, 英文姓名: name_en, 直屬講師: instructor,
         電話: phone, Email: email,
         場次: `${venue}・${venueDate}`,
-        學員身份: `${identity}・${fee}`,
+        學員身份: identity,
         付款方式: '銀行匯款',
         匯款帳號後五碼: acct5,
+        公司名稱: companyName,
+        統一編號: taxId,
         _subject: `【PIF課程報名】${name}・${venue}`
       })
     }).catch(() => {});
