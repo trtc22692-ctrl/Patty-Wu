@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>NUNU 課程簡報</title>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    background: #000;
+    width: 100vw;
+    height: 100vh;
+    overflow: hidden;
+    font-family: sans-serif;
+  }
+
+  .slide {
+    display: none;
+    width: 100vw;
+    height: 100vh;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .slide.active {
+    display: flex;
+  }
+
+  .slide img {
+    max-width: 100%;
+    max-height: 100%;
+    object-fit: contain;
+  }
+
+  /* 控制列 */
+  .controls {
+    position: fixed;
+    bottom: 24px;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    background: rgba(0,0,0,0.6);
+    padding: 10px 20px;
+    border-radius: 100px;
+    z-index: 100;
+  }
+
+  .btn {
+    background: rgba(255,255,255,0.15);
+    border: 1px solid rgba(255,255,255,0.3);
+    color: #fff;
+    padding: 8px 20px;
+    border-radius: 100px;
+    font-size: 14px;
+    cursor: pointer;
+    transition: background 0.2s;
+  }
+
+  .btn:hover { background: rgba(255,255,255,0.3); }
+  .btn:disabled { opacity: 0.3; cursor: default; }
+
+  .counter {
+    color: rgba(255,255,255,0.7);
+    font-size: 13px;
+    min-width: 48px;
+    text-align: center;
+  }
+
+  /* 點點指示 */
+  .dots {
+    position: fixed;
+    bottom: 72px;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    gap: 8px;
+    z-index: 100;
+  }
+
+  .dot {
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: rgba(255,255,255,0.3);
+    cursor: pointer;
+    transition: background 0.2s;
+  }
+
+  .dot.active { background: #fff; }
+
+  /* 鍵盤提示 */
+  .hint {
+    position: fixed;
+    top: 16px;
+    right: 16px;
+    color: rgba(255,255,255,0.3);
+    font-size: 11px;
+    z-index: 100;
+  }
+</style>
+</head>
+<body>
+
+<div class="slide active" id="slide-1">
+  <img src="slide1.png" alt="pH 正確使用時機">
+</div>
+
+<div class="slide" id="slide-2">
+  <img src="slide2.jpeg" alt="睫毛軟化階段判斷圖">
+</div>
+
+<div class="slide" id="slide-3">
+  <img src="slide3.jpeg" alt="NUNU 睫毛管理系統">
+</div>
+
+<div class="slide" id="slide-4">
+  <img src="slide4.jpeg" alt="NUNU 香黏臘成分解析">
+</div>
+
+<div class="slide" id="slide-5">
+  <img src="slide5.jpeg" alt="1% SWITCH 調節精華">
+</div>
+
+<div class="dots" id="dots"></div>
+
+<div class="controls">
+  <button class="btn" id="prevBtn" onclick="changeSlide(-1)">← 上一張</button>
+  <span class="counter" id="counter">1 / 5</span>
+  <button class="btn" id="nextBtn" onclick="changeSlide(1)">下一張 →</button>
+</div>
+
+<div class="hint">← → 鍵盤切換</div>
+
+<script>
+  const total = 5;
+  let current = 1;
+
+  // 建立點點
+  const dotsEl = document.getElementById('dots');
+  for (let i = 1; i <= total; i++) {
+    const d = document.createElement('div');
+    d.className = 'dot' + (i === 1 ? ' active' : '');
+    d.onclick = () => goTo(i);
+    dotsEl.appendChild(d);
+  }
+
+  function goTo(n) {
+    document.getElementById('slide-' + current).classList.remove('active');
+    document.querySelectorAll('.dot')[current - 1].classList.remove('active');
+    current = n;
+    document.getElementById('slide-' + current).classList.add('active');
+    document.querySelectorAll('.dot')[current - 1].classList.add('active');
+    document.getElementById('counter').textContent = current + ' / ' + total;
+    document.getElementById('prevBtn').disabled = current === 1;
+    document.getElementById('nextBtn').disabled = current === total;
+  }
+
+  function changeSlide(dir) {
+    const next = current + dir;
+    if (next >= 1 && next <= total) goTo(next);
+  }
+
+  document.addEventListener('keydown', e => {
+    if (e.key === 'ArrowRight' || e.key === 'ArrowDown') changeSlide(1);
+    if (e.key === 'ArrowLeft' || e.key === 'ArrowUp') changeSlide(-1);
+  });
+
+  goTo(1);
+</script>
+</body>
+</html>
