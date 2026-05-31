@@ -1,0 +1,1283 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>美業合規模擬稽查查檢表 v2</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+TC:wght@300;400;700;900&family=Bebas+Neue&family=Playfair+Display:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box;}
+:root{
+  --bg:#08060A;
+  --bg2:#111018;
+  --bg3:#161320;
+  --cream:#F2EAD3;
+  --border-base:0.18;
+
+  /* Gold theme - 美容院 */
+  --gold:#C9A84C;
+  --gold2:#E4C97E;
+  --gold3:#F5E4A8;
+  --gold-dim:#8B6914;
+  --gold-border:rgba(201,168,76,0.18);
+  --gold-border2:rgba(201,168,76,0.08);
+  --gold-glow:rgba(201,168,76,0.06);
+
+  /* Silver theme - 個人工作室 */
+  --silver:#A8B8C8;
+  --silver2:#C8D8E8;
+  --silver3:#E8F0F8;
+  --silver-dim:#6A7A8A;
+  --silver-border:rgba(168,184,200,0.18);
+  --silver-border2:rgba(168,184,200,0.08);
+  --silver-glow:rgba(168,184,200,0.05);
+
+  /* active theme vars (default gold) */
+  --accent:var(--gold);
+  --accent2:var(--gold2);
+  --accent3:var(--gold3);
+  --accent-dim:var(--gold-dim);
+  --t-border:var(--gold-border);
+  --t-border2:var(--gold-border2);
+  --t-glow:var(--gold-glow);
+
+  --pass:#2D6A4F;
+  --pass-bg:rgba(45,106,79,0.12);
+  --fail:#8B2535;
+  --fail-bg:rgba(139,37,53,0.12);
+  --warn-bg:rgba(168,184,200,0.08);
+}
+body.studio{
+  --accent:var(--silver);
+  --accent2:var(--silver2);
+  --accent3:var(--silver3);
+  --accent-dim:var(--silver-dim);
+  --t-border:var(--silver-border);
+  --t-border2:var(--silver-border2);
+  --t-glow:var(--silver-glow);
+}
+
+body{
+  background:var(--bg);
+  color:var(--cream);
+  font-family:'Noto Serif TC',serif;
+  min-height:100vh;
+  padding:0 0 80px;
+  transition:all .4s ease;
+}
+.wrap{max-width:740px;margin:0 auto;padding:0 16px;}
+
+/* ── MODE SWITCHER ── */
+.mode-bar{
+  position:sticky;top:0;z-index:100;
+  background:rgba(8,6,10,0.95);
+  backdrop-filter:blur(12px);
+  border-bottom:1px solid var(--t-border);
+  padding:0 16px;
+  transition:border-color .4s;
+}
+.mode-inner{
+  max-width:740px;margin:0 auto;
+  display:flex;align-items:center;
+  gap:0;
+}
+.mode-btn{
+  flex:1;padding:18px 12px;
+  background:none;border:none;
+  font-family:'Noto Serif TC',serif;
+  font-size:12px;letter-spacing:3px;
+  color:var(--cream);opacity:.35;
+  cursor:pointer;transition:all .3s;
+  border-bottom:2px solid transparent;
+  margin-bottom:-1px;
+  display:flex;align-items:center;justify-content:center;gap:8px;
+}
+.mode-btn .dot{
+  width:8px;height:8px;border-radius:50%;
+  flex-shrink:0;transition:all .3s;
+}
+.mode-btn.salon .dot{background:var(--gold);}
+.mode-btn.studio .dot{background:var(--silver);}
+.mode-btn.active{opacity:1;}
+.mode-btn.salon.active{
+  color:var(--gold2);
+  border-bottom-color:var(--gold);
+}
+.mode-btn.studio.active{
+  color:var(--silver2);
+  border-bottom-color:var(--silver);
+}
+.mode-divider{width:1px;height:40px;background:rgba(255,255,255,0.06);flex-shrink:0;}
+
+/* ── HEADER ── */
+.header{
+  text-align:center;
+  padding:40px 32px 32px;
+  border:1px solid var(--t-border);
+  background:var(--bg2);
+  position:relative;overflow:hidden;
+  margin:24px 0;
+  transition:border-color .4s;
+}
+.header::before{
+  content:'';position:absolute;top:0;left:0;right:0;height:1px;
+  background:linear-gradient(90deg,transparent,var(--accent),transparent);
+  transition:all .4s;
+}
+.header::after{
+  content:'';position:absolute;inset:0;
+  background:radial-gradient(ellipse at 50% 0%,var(--t-glow),transparent 60%);
+  pointer-events:none;transition:all .4s;
+}
+.corner{position:absolute;width:18px;height:18px;border-color:var(--accent);border-style:solid;opacity:.3;transition:border-color .4s;}
+.tl{top:10px;left:10px;border-width:1px 0 0 1px;}
+.tr{top:10px;right:10px;border-width:1px 1px 0 0;}
+.bl{bottom:10px;left:10px;border-width:0 0 1px 1px;}
+.br{bottom:10px;right:10px;border-width:0 1px 1px 0;}
+.h-eyebrow{
+  font-family:'Bebas Neue',sans-serif;
+  font-size:10px;letter-spacing:5px;
+  color:var(--accent);opacity:.7;margin-bottom:8px;
+  transition:color .4s;
+}
+.h-title{
+  font-family:'Playfair Display',serif;
+  font-size:22px;letter-spacing:2px;
+  color:var(--cream);margin-bottom:6px;
+}
+.h-mode-label{
+  display:inline-block;
+  font-family:'Bebas Neue',sans-serif;
+  font-size:11px;letter-spacing:4px;
+  color:var(--accent);
+  border:1px solid var(--t-border);
+  padding:4px 16px;margin-bottom:14px;
+  transition:all .4s;
+}
+.h-sub{font-size:11px;letter-spacing:2px;opacity:.5;margin-bottom:20px;}
+.h-meta{
+  display:flex;justify-content:center;gap:20px;flex-wrap:wrap;
+  font-size:10px;letter-spacing:1.5px;opacity:.45;
+}
+
+/* ── PROGRESS ── */
+.progress-wrap{
+  background:var(--bg2);border:1px solid var(--t-border);
+  padding:16px 24px;margin-bottom:24px;
+  transition:border-color .4s;
+}
+.progress-label{
+  display:flex;justify-content:space-between;
+  font-size:10px;letter-spacing:2px;opacity:.6;margin-bottom:10px;
+}
+.progress-track{height:3px;background:rgba(255,255,255,0.06);border-radius:2px;overflow:hidden;}
+.progress-fill{
+  height:100%;width:0%;
+  background:linear-gradient(90deg,var(--accent-dim),var(--accent));
+  transition:width .6s ease,background .4s;border-radius:2px;
+}
+.score-row{
+  display:grid;grid-template-columns:repeat(3,1fr);gap:1px;
+  background:var(--t-border);border:1px solid var(--t-border);
+  margin-top:12px;transition:all .4s;
+}
+.score-cell{background:var(--bg2);padding:12px;text-align:center;}
+.score-val{font-family:'Bebas Neue',sans-serif;font-size:28px;display:block;margin-bottom:2px;}
+.score-val.green{color:#52B788;}
+.score-val.red{color:#E07A85;}
+.score-val.accent{
+  background:linear-gradient(135deg,var(--accent3),var(--accent));
+  -webkit-background-clip:text;-webkit-text-fill-color:transparent;
+  background-clip:text;transition:all .4s;
+}
+.score-desc{font-size:9px;letter-spacing:1.5px;opacity:.45;}
+
+/* ── SECTION ── */
+.section{margin-bottom:16px;}
+.section-header{
+  display:flex;align-items:center;gap:12px;
+  padding:14px 20px;
+  background:var(--bg2);
+  border:1px solid var(--t-border);
+  border-bottom:none;
+  cursor:pointer;user-select:none;
+  transition:border-color .4s;
+}
+.section-num{
+  font-family:'Bebas Neue',sans-serif;
+  font-size:26px;color:var(--accent);opacity:.25;
+  line-height:1;flex-shrink:0;transition:color .4s;
+}
+.section-title{font-family:'Playfair Display',serif;font-size:14px;letter-spacing:1px;flex:1;}
+.section-tags{display:flex;gap:6px;flex-shrink:0;}
+.scope-tag{
+  font-family:'Bebas Neue',sans-serif;
+  font-size:8px;letter-spacing:2px;
+  padding:2px 8px;
+  border:1px solid;
+}
+.scope-tag.both{border-color:rgba(201,168,76,0.3);color:var(--gold);background:rgba(201,168,76,0.06);}
+.scope-tag.salon-only{border-color:rgba(201,168,76,0.5);color:var(--gold2);background:rgba(201,168,76,0.1);}
+.scope-tag.studio-only{border-color:rgba(168,184,200,0.5);color:var(--silver2);background:rgba(168,184,200,0.08);}
+.section-count{font-size:9px;letter-spacing:2px;color:var(--accent);opacity:.6;flex-shrink:0;transition:color .4s;}
+.section-arrow{font-size:10px;opacity:.4;flex-shrink:0;transition:transform .3s;}
+.section-arrow.open{transform:rotate(180deg);}
+.items{border:1px solid var(--t-border);transition:border-color .4s;}
+.items.hidden{display:none;}
+
+/* ── ITEM ── */
+.item{
+  border-bottom:1px solid var(--t-border2);
+  padding:16px 20px;
+  transition:background .2s,border-color .4s;
+}
+.item:last-child{border-bottom:none;}
+.item.checked-pass{background:var(--pass-bg);}
+.item.checked-fail{background:var(--fail-bg);}
+.item.checked-na{background:var(--warn-bg);}
+
+/* scope indicator */
+.item-scope{
+  display:flex;align-items:center;gap:8px;
+  margin-bottom:10px;
+}
+.scope-pill{
+  font-family:'Bebas Neue',sans-serif;
+  font-size:8px;letter-spacing:2px;
+  padding:3px 10px;border-radius:0;
+  border:1px solid;
+}
+.scope-pill.both{
+  border-color:rgba(201,168,76,0.25);
+  color:var(--gold);background:rgba(201,168,76,0.06);
+}
+.scope-pill.salon-only{
+  border-color:rgba(201,168,76,0.4);
+  color:var(--gold2);background:rgba(201,168,76,0.1);
+}
+.scope-pill.studio-only{
+  border-color:rgba(168,184,200,0.4);
+  color:var(--silver2);background:rgba(168,184,200,0.08);
+}
+
+.item-main{display:grid;grid-template-columns:1fr auto;gap:12px;align-items:start;}
+.item-text{font-size:13px;letter-spacing:.5px;line-height:1.8;margin-bottom:4px;}
+.item-note{font-size:10px;letter-spacing:1px;opacity:.5;line-height:1.8;}
+.item-note.important{color:var(--accent2);opacity:.85;font-size:11px;transition:color .4s;}
+
+.risk{
+  display:inline-block;font-family:'Bebas Neue',sans-serif;
+  font-size:9px;letter-spacing:2px;padding:2px 8px;margin-right:6px;margin-top:6px;
+}
+.risk.high{background:rgba(139,37,53,0.3);color:#E07A85;border:1px solid rgba(139,37,53,0.4);}
+.risk.mid{background:rgba(201,168,76,0.12);color:var(--gold2);border:1px solid rgba(201,168,76,0.25);}
+.risk.low{background:rgba(45,106,79,0.15);color:#74C69D;border:1px solid rgba(45,106,79,0.3);}
+.law{
+  display:inline-block;font-size:9px;letter-spacing:1px;
+  padding:2px 8px;margin-top:6px;
+  background:var(--t-glow);border:1px solid var(--t-border);
+  color:var(--accent);opacity:.8;transition:all .4s;
+}
+
+.btn-group{display:flex;gap:5px;flex-shrink:0;}
+.btn{
+  font-family:'Bebas Neue',sans-serif;font-size:11px;letter-spacing:2px;
+  padding:6px 12px;border:1px solid;background:none;
+  cursor:pointer;transition:all .2s;color:var(--cream);opacity:.45;
+}
+.btn:hover{opacity:.8;}
+.btn.pass{border-color:#52B788;color:#52B788;}
+.btn.fail{border-color:#E07A85;color:#E07A85;}
+.btn.na{border-color:rgba(255,255,255,0.15);font-size:10px;}
+.btn.active-pass{background:var(--pass);border-color:var(--pass);color:#fff;opacity:1;}
+.btn.active-fail{background:var(--fail);border-color:var(--fail);color:#fff;opacity:1;}
+.btn.active-na{background:rgba(255,255,255,0.08);border-color:rgba(255,255,255,0.2);color:#fff;opacity:1;}
+
+/* studio-only items hidden in salon mode and vice versa */
+body.salon .hide-in-salon{display:none;}
+body.studio .hide-in-studio{display:none;}
+
+/* ── PENALTY TOGGLE ── */
+.penalty-toggle{
+  display:inline-flex;align-items:center;gap:6px;
+  margin-top:10px;
+  font-family:'Bebas Neue',sans-serif;
+  font-size:9px;letter-spacing:2px;
+  color:#E07A85;opacity:.7;
+  cursor:pointer;
+  border:1px solid rgba(139,37,53,0.3);
+  padding:3px 10px;
+  background:rgba(139,37,53,0.08);
+  user-select:none;
+  transition:opacity .2s;
+}
+.penalty-toggle:hover{opacity:1;}
+.penalty-toggle .arrow{font-size:8px;transition:transform .3s;}
+.penalty-toggle.open .arrow{transform:rotate(180deg);}
+.penalty-box{
+  display:none;
+  margin-top:8px;
+  background:rgba(139,37,53,0.08);
+  border:1px solid rgba(139,37,53,0.25);
+  border-left:2px solid #E07A85;
+  padding:12px 16px;
+}
+.penalty-box.show{display:block;animation:fadeIn .3s ease;}
+.penalty-title{
+  font-family:'Bebas Neue',sans-serif;
+  font-size:9px;letter-spacing:3px;
+  color:#E07A85;opacity:.8;
+  margin-bottom:8px;
+}
+.penalty-text{
+  font-size:10px;letter-spacing:1px;line-height:2.2;
+  color:var(--cream);opacity:.75;
+}
+.penalty-text strong{color:#E07A85;opacity:1;}
+
+/* ── RESULT ── */
+.result-panel{
+  display:none;background:var(--bg2);
+  border:1px solid var(--t-border);
+  padding:32px;text-align:center;
+  margin-top:24px;position:relative;overflow:hidden;
+  transition:border-color .4s;
+}
+.result-panel::before{
+  content:'';position:absolute;top:0;left:0;right:0;height:1px;
+  background:linear-gradient(90deg,transparent,var(--accent),transparent);
+}
+.result-panel.show{display:block;animation:fadeIn .5s ease;}
+@keyframes fadeIn{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:translateY(0)}}
+.result-title{font-family:'Playfair Display',serif;font-size:16px;color:var(--accent2);margin-bottom:8px;transition:color .4s;}
+.result-grade{
+  font-family:'Bebas Neue',sans-serif;font-size:72px;
+  background:linear-gradient(135deg,var(--accent3),var(--accent));
+  -webkit-background-clip:text;-webkit-text-fill-color:transparent;
+  background-clip:text;line-height:1;margin-bottom:12px;transition:all .4s;
+}
+.result-msg{font-size:12px;letter-spacing:1.5px;line-height:2.2;opacity:.7;white-space:pre-line;}
+.reset-btn{
+  display:block;width:100%;margin-top:24px;padding:14px;
+  background:none;border:1px solid var(--t-border);
+  color:var(--accent);font-family:'Bebas Neue',sans-serif;
+  font-size:11px;letter-spacing:4px;cursor:pointer;transition:all .3s;
+}
+.reset-btn:hover{background:var(--t-glow);}
+
+@media(max-width:500px){
+  .item-main{grid-template-columns:1fr;}
+  .btn-group{flex-wrap:wrap;}
+  .h-title{font-size:17px;}
+  .mode-btn{font-size:10px;padding:16px 8px;}
+}
+</style>
+</head>
+<body class="salon">
+
+<!-- MODE BAR -->
+<div class="mode-bar">
+  <!-- DECLARATION BANNER -->
+  <div style="background:rgba(201,168,76,0.06);border-top:1px solid rgba(201,168,76,0.18);border-bottom:1px solid rgba(201,168,76,0.18);padding:14px 32px;text-align:center;">
+    <div style="font-family:'Bebas Neue',sans-serif;font-size:9px;letter-spacing:4px;color:#C9A84C;opacity:.7;margin-bottom:6px;">代理商聲明</div>
+    <div style="font-size:11px;letter-spacing:1.5px;line-height:2;color:#F2EAD3;opacity:.75;max-width:680px;margin:0 auto;">本公司化學品安全資料表（SDS）依機密管理規範辦理。下游客戶如有查閱需求，須事先簽署保密協議，並以來電查詢或預約到訪方式進行，恕不提供紙本或電子檔交付。</div>
+  </div>
+
+  <div class="mode-inner">
+    <button class="mode-btn salon active" onclick="setMode('salon')">
+      <div class="dot"></div>
+      小型美容院
+    </button>
+    <div class="mode-divider"></div>
+    <button class="mode-btn studio" onclick="setMode('studio')">
+      <div class="dot"></div>
+      個人工作室
+    </button>
+  </div>
+</div>
+
+<div class="wrap">
+
+<!-- HEADER -->
+<div class="header">
+  <div class="corner tl"></div><div class="corner tr"></div>
+  <div class="corner bl"></div><div class="corner br"></div>
+  <div class="h-eyebrow">BEAUTY INDUSTRY · COMPLIANCE SIMULATION</div>
+  <div class="h-title">美業合規模擬稽查查檢表</div>
+  <div class="h-mode-label" id="modeLabel">小型美容院</div>
+  <div class="h-sub">Patty Wu · 職安乙級技術士 · 課堂實境演練工具</div>
+  <div class="h-meta">
+    <span id="metaScope">📋 5 大類 · 適用小型美容院</span>
+    <span>⚖️ 依職安法 · 化粧品衛安法 · 勞基法</span>
+  </div>
+</div>
+
+<!-- PROGRESS -->
+<div class="progress-wrap">
+  <div class="progress-label">
+    <span>查核進度</span>
+    <span id="progressText">0 項</span>
+  </div>
+  <div class="progress-track"><div class="progress-fill" id="progressFill"></div></div>
+  <div class="score-row">
+    <div class="score-cell">
+      <span class="score-val green" id="passCount">0</span>
+      <div class="score-desc">符合</div>
+    </div>
+    <div class="score-cell">
+      <span class="score-val red" id="failCount">0</span>
+      <div class="score-desc">待改善</div>
+    </div>
+    <div class="score-cell">
+      <span class="score-val accent" id="scoreVal">—</span>
+      <div class="score-desc">合規評分</div>
+    </div>
+  </div>
+</div>
+
+<!-- ══ SECTION 1 產品合規 ══ -->
+<div class="section">
+  <div class="section-header" onclick="toggleSection(this)">
+    <div class="section-num">01</div>
+    <div class="section-title">產品合規查核</div>
+    <div class="section-tags"><span class="scope-tag both">共用</span></div>
+    <div class="section-count">6 項</div>
+    <div class="section-arrow open">▼</div>
+  </div>
+  <div class="items">
+
+    <div class="item" data-id="p1">
+      <div class="item-scope"><span class="scope-pill both">美容院 ＆ 工作室</span></div>
+      <div class="item-main">
+        <div>
+          <div class="item-text">產品是否有完整中文標示</div>
+          <div><span class="risk high">高風險</span><span class="law">化粧品衛安法 §7</span></div>
+          <div class="item-note">品名、成分、製造商、保存期限、批號缺一不可，未標示可直接開罰。</div>
+        </div>
+        <div class="btn-group">
+          <button class="btn pass" onclick="mark(this,'pass')">符合</button>
+          <button class="btn fail" onclick="mark(this,'fail')">不符</button>
+          <button class="btn na" onclick="mark(this,'na')">N/A</button>
+
+        <div class="penalty-toggle" onclick="togglePenalty(this)">
+          ⚠ 違規罰則 <span class="arrow">▼</span>
+        </div>
+        <div class="penalty-box">
+          <div class="penalty-title">條例依據：化粧品衛安法 §7、§31</div>
+          <div class="penalty-text">未依規定標示：處新臺幣<strong>一萬元以上五萬元以下</strong>罰鍰，並令限期改善；屆期未改善者得按次處罰。</div>
+        </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="item" data-id="p2">
+      <div class="item-scope"><span class="scope-pill both">美容院 ＆ 工作室</span></div>
+      <div class="item-main">
+        <div>
+          <div class="item-text">是否使用或販售未經核准的輸入產品</div>
+          <div><span class="risk high">高風險</span><span class="law">化粧品衛安法 §4</span></div>
+          <div class="item-note">來路不明產品、水貨、無中文標示進口品均屬違規，可處罰鍰並沒入。</div>
+        </div>
+        <div class="btn-group">
+          <button class="btn pass" onclick="mark(this,'pass')">符合</button>
+          <button class="btn fail" onclick="mark(this,'fail')">不符</button>
+          <button class="btn na" onclick="mark(this,'na')">N/A</button>
+
+        <div class="penalty-toggle" onclick="togglePenalty(this)">
+          ⚠ 違規罰則 <span class="arrow">▼</span>
+        </div>
+        <div class="penalty-box">
+          <div class="penalty-title">條例依據：化粧品衛安法 §4、§29</div>
+          <div class="penalty-text">輸入未經核准產品：處新臺幣<strong>一萬元以上五十萬元以下</strong>罰鍰；情節重大者可移送司法偵辦。</div>
+        </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="item" data-id="p3">
+      <div class="item-scope"><span class="scope-pill both">美容院 ＆ 工作室</span></div>
+      <div class="item-main">
+        <div>
+          <div class="item-text">是否使用含禁用成分之產品</div>
+          <div><span class="risk high">高風險</span><span class="law">化粧品衛安法 §8</span></div>
+          <div class="item-note">含汞美白、含類固醇、甲醛超標等屬最高罰則項目。</div>
+        </div>
+        <div class="btn-group">
+          <button class="btn pass" onclick="mark(this,'pass')">符合</button>
+          <button class="btn fail" onclick="mark(this,'fail')">不符</button>
+          <button class="btn na" onclick="mark(this,'na')">N/A</button>
+
+        <div class="penalty-toggle" onclick="togglePenalty(this)">
+          ⚠ 違規罰則 <span class="arrow">▼</span>
+        </div>
+        <div class="penalty-box">
+          <div class="penalty-title">條例依據：化粧品衛安法 §8、§30</div>
+          <div class="penalty-text">使用禁用成分：處新臺幣<strong>三萬元以上三百萬元以下</strong>罰鍰，並命回收銷毀；情節重大可廢止許可。</div>
+        </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="item" data-id="p4">
+      <div class="item-scope"><span class="scope-pill both">美容院 ＆ 工作室</span></div>
+      <div class="item-main">
+        <div>
+          <div class="item-text">是否向供應商索取並留存 SDS 危害物質安全資料表</div>
+          <div><span class="risk mid">中風險</span><span class="law">職安法 §10</span></div>
+          <div class="item-note important">⚠ 建立 SDS 是製造商／代理商義務；店家義務是「索取並留存」供員工查閱。無 SDS 不直接罰款，但發生糾紛時無法自保。</div>
+        </div>
+        <div class="btn-group">
+          <button class="btn pass" onclick="mark(this,'pass')">符合</button>
+          <button class="btn fail" onclick="mark(this,'fail')">不符</button>
+          <button class="btn na" onclick="mark(this,'na')">N/A</button>
+
+        <div class="penalty-toggle" onclick="togglePenalty(this)">
+          ⚠ 違規罰則 <span class="arrow">▼</span>
+        </div>
+        <div class="penalty-box">
+          <div class="penalty-title">條例依據：職安法 §10、§43</div>
+          <div class="penalty-text">未落實危害物質管理：可處雇主新臺幣<strong>三萬元以上三十萬元以下</strong>罰鍰。無 SDS 本身不直接罰款，但危害告知義務未履行則有罰則。</div>
+        </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="item" data-id="p5">
+      <div class="item-scope"><span class="scope-pill both">美容院 ＆ 工作室</span></div>
+      <div class="item-main">
+        <div>
+          <div class="item-text">產品宣稱是否涉及誇大療效</div>
+          <div><span class="risk high">高風險</span><span class="law">化粧品衛安法 §10</span></div>
+          <div class="item-note">「醫療級」「永久除毛」「殺菌消炎」等醫療效能宣稱均屬違規。</div>
+        </div>
+        <div class="btn-group">
+          <button class="btn pass" onclick="mark(this,'pass')">符合</button>
+          <button class="btn fail" onclick="mark(this,'fail')">不符</button>
+          <button class="btn na" onclick="mark(this,'na')">N/A</button>
+
+        <div class="penalty-toggle" onclick="togglePenalty(this)">
+          ⚠ 違規罰則 <span class="arrow">▼</span>
+        </div>
+        <div class="penalty-box">
+          <div class="penalty-title">條例依據：化粧品衛安法 §10、§30</div>
+          <div class="penalty-text">誇大療效宣稱：處新臺幣<strong>四萬元以上二十萬元以下</strong>罰鍰；涉及醫療效能宣稱情節嚴重者可移送衛生局裁處。</div>
+        </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="item" data-id="p6">
+      <div class="item-scope"><span class="scope-pill both">美容院 ＆ 工作室</span></div>
+      <div class="item-main">
+        <div>
+          <div class="item-text">是否建立店內化學品清單</div>
+          <div><span class="risk mid">中風險</span><span class="law">職安法 §10</span></div>
+          <div class="item-note">化學品清單需列品名、成分、用途、存放位置，不等於 SDS 但同樣重要。</div>
+        </div>
+        <div class="btn-group">
+          <button class="btn pass" onclick="mark(this,'pass')">符合</button>
+          <button class="btn fail" onclick="mark(this,'fail')">不符</button>
+          <button class="btn na" onclick="mark(this,'na')">N/A</button>
+
+        <div class="penalty-toggle" onclick="togglePenalty(this)">
+          ⚠ 違規罰則 <span class="arrow">▼</span>
+        </div>
+        <div class="penalty-box">
+          <div class="penalty-title">條例依據：職安法 §10、§43</div>
+          <div class="penalty-text">未建立化學品清單及危害告知：處新臺幣<strong>三萬元以上三十萬元以下</strong>罰鍰。</div>
+        </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<!-- ══ SECTION 2 環境設備 ══ -->
+<div class="section">
+  <div class="section-header" onclick="toggleSection(this)">
+    <div class="section-num">02</div>
+    <div class="section-title">環境與設備查核</div>
+    <div class="section-tags"><span class="scope-tag both">共用</span></div>
+    <div class="section-count">5 項</div>
+    <div class="section-arrow open">▼</div>
+  </div>
+  <div class="items">
+
+    <div class="item" data-id="e1">
+      <div class="item-scope"><span class="scope-pill both">美容院 ＆ 工作室</span></div>
+      <div class="item-main">
+        <div>
+          <div class="item-text">工作環境是否符合通風換氣標準</div>
+          <div><span class="risk mid">中風險</span><span class="law">職安法 §6</span></div>
+          <div class="item-note">密閉空間長期使用膠水、去除液，員工可構成職業病認定，工作室尤需注意。</div>
+        </div>
+        <div class="btn-group">
+          <button class="btn pass" onclick="mark(this,'pass')">符合</button>
+          <button class="btn fail" onclick="mark(this,'fail')">不符</button>
+          <button class="btn na" onclick="mark(this,'na')">N/A</button>
+
+        <div class="penalty-toggle" onclick="togglePenalty(this)">
+          ⚠ 違規罰則 <span class="arrow">▼</span>
+        </div>
+        <div class="penalty-box">
+          <div class="penalty-title">條例依據：職安法 §6、§43</div>
+          <div class="penalty-text">未提供符合規定之工作環境：處雇主新臺幣<strong>三萬元以上三十萬元以下</strong>罰鍰；若導致職業病可加重裁處。</div>
+        </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="item" data-id="e2">
+      <div class="item-scope"><span class="scope-pill both">美容院 ＆ 工作室</span></div>
+      <div class="item-main">
+        <div>
+          <div class="item-text">器具是否確實消毒（高溫／紫外線／化學消毒）</div>
+          <div><span class="risk high">高風險</span><span class="law">化粧品衛安法 §17</span></div>
+          <div class="item-note important">⚠ 有消毒但無記錄，衛生局「不直接開罰」，但發生感染客訴時，無記錄等於無自保證據。記錄是保護自己，不只是應付稽查。</div>
+        </div>
+        <div class="btn-group">
+          <button class="btn pass" onclick="mark(this,'pass')">符合</button>
+          <button class="btn fail" onclick="mark(this,'fail')">不符</button>
+          <button class="btn na" onclick="mark(this,'na')">N/A</button>
+
+        <div class="penalty-toggle" onclick="togglePenalty(this)">
+          ⚠ 違規罰則 <span class="arrow">▼</span>
+        </div>
+        <div class="penalty-box">
+          <div class="penalty-title">條例依據：化粧品衛安法 §17、§33</div>
+          <div class="penalty-text">器具未確實消毒：處新臺幣<strong>六千元以上三萬元以下</strong>罰鍰；若造成客戶感染並提出民事損害賠償，金額視情況遠高於罰鍰。</div>
+        </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="item" data-id="e3">
+      <div class="item-scope"><span class="scope-pill both">美容院 ＆ 工作室</span></div>
+      <div class="item-main">
+        <div>
+          <div class="item-text">是否留存消毒記錄本</div>
+          <div><span class="risk mid">中風險</span></div>
+          <div class="item-note">無記錄本不等於直接罰款，但客訴、員工感染發生時是最關鍵的自保文件。</div>
+        </div>
+        <div class="btn-group">
+          <button class="btn pass" onclick="mark(this,'pass')">符合</button>
+          <button class="btn fail" onclick="mark(this,'fail')">不符</button>
+          <button class="btn na" onclick="mark(this,'na')">N/A</button>
+
+        <div class="penalty-toggle" onclick="togglePenalty(this)">
+          ⚠ 違規罰則 <span class="arrow">▼</span>
+        </div>
+        <div class="penalty-box">
+          <div class="penalty-title">條例依據：化粧品衛安法 §17</div>
+          <div class="penalty-text">無消毒記錄本身不直接開罰，但客訴發生時<strong>無記錄等同無自保證據</strong>，法院判決業者民事賠償機率大幅提升。</div>
+        </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="item" data-id="e4">
+      <div class="item-scope"><span class="scope-pill both">美容院 ＆ 工作室</span></div>
+      <div class="item-main">
+        <div>
+          <div class="item-text">一次性耗材是否一客一換</div>
+          <div><span class="risk high">高風險</span><span class="law">化粧品衛安法 §17</span></div>
+          <div class="item-note">棉片、睫毛梳、墊紙等重複使用屬明顯違規，客訴成立率極高。</div>
+        </div>
+        <div class="btn-group">
+          <button class="btn pass" onclick="mark(this,'pass')">符合</button>
+          <button class="btn fail" onclick="mark(this,'fail')">不符</button>
+          <button class="btn na" onclick="mark(this,'na')">N/A</button>
+
+        <div class="penalty-toggle" onclick="togglePenalty(this)">
+          ⚠ 違規罰則 <span class="arrow">▼</span>
+        </div>
+        <div class="penalty-box">
+          <div class="penalty-title">條例依據：化粧品衛安法 §17、§33</div>
+          <div class="penalty-text">一次性耗材重複使用：處新臺幣<strong>六千元以上三萬元以下</strong>罰鍰；造成感染同時面臨民事求償。</div>
+        </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="item" data-id="e5">
+      <div class="item-scope"><span class="scope-pill both">美容院 ＆ 工作室</span></div>
+      <div class="item-main">
+        <div>
+          <div class="item-text">廢棄物是否依規分類處理</div>
+          <div><span class="risk low">低風險</span><span class="law">廢棄物清理法</span></div>
+          <div class="item-note">化學品空瓶、尖銳器具須依規分類，不可混入一般垃圾。</div>
+        </div>
+        <div class="btn-group">
+          <button class="btn pass" onclick="mark(this,'pass')">符合</button>
+          <button class="btn fail" onclick="mark(this,'fail')">不符</button>
+          <button class="btn na" onclick="mark(this,'na')">N/A</button>
+
+        <div class="penalty-toggle" onclick="togglePenalty(this)">
+          ⚠ 違規罰則 <span class="arrow">▼</span>
+        </div>
+        <div class="penalty-box">
+          <div class="penalty-title">條例依據：廢棄物清理法 §50</div>
+          <div class="penalty-text">未依規分類：處新臺幣<strong>一千二百元以上六千元以下</strong>罰鍰；化學廢棄物違規情節重大者最高可處<strong>三百萬元</strong>。</div>
+        </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<!-- ══ SECTION 3 人員資格 ══ -->
+<div class="section">
+  <div class="section-header" onclick="toggleSection(this)">
+    <div class="section-num">03</div>
+    <div class="section-title">人員資格查核</div>
+    <div class="section-tags">
+      <span class="scope-tag salon-only">美容院限定</span>
+      <span class="scope-tag both">部分共用</span>
+    </div>
+    <div class="section-count">5 項</div>
+    <div class="section-arrow open">▼</div>
+  </div>
+  <div class="items">
+
+    <div class="item" data-id="h1">
+      <div class="item-scope"><span class="scope-pill both">美容院 ＆ 工作室</span></div>
+      <div class="item-main">
+        <div>
+          <div class="item-text">從業人員是否具備合法執照或訓練證明</div>
+          <div><span class="risk high">高風險</span></div>
+          <div class="item-note">視服務項目而定，部分美容服務需具備乙級美容技術士或相關訓練證明。</div>
+        </div>
+        <div class="btn-group">
+          <button class="btn pass" onclick="mark(this,'pass')">符合</button>
+          <button class="btn fail" onclick="mark(this,'fail')">不符</button>
+          <button class="btn na" onclick="mark(this,'na')">N/A</button>
+
+        <div class="penalty-toggle" onclick="togglePenalty(this)">
+          ⚠ 違規罰則 <span class="arrow">▼</span>
+        </div>
+        <div class="penalty-box">
+          <div class="penalty-title">條例依據：化粧品衛安法 · 職業訓練法</div>
+          <div class="penalty-text">無合法執照從事須具證服務：依服務類別處<strong>六千元以上三萬元以下</strong>罰鍰；涉及醫療行為者依醫師法可處<strong>三年以下有期徒刑</strong>。</div>
+        </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="item" data-id="h2">
+      <div class="item-scope"><span class="scope-pill both">美容院 ＆ 工作室</span></div>
+      <div class="item-main">
+        <div>
+          <div class="item-text">是否執行超出執照範圍的服務項目</div>
+          <div><span class="risk high">高風險</span></div>
+          <div class="item-note">半永久紋繡、醫美項目（注射、雷射）需特定醫療資格，超範圍可移送衛生局或檢察署。</div>
+        </div>
+        <div class="btn-group">
+          <button class="btn pass" onclick="mark(this,'pass')">符合</button>
+          <button class="btn fail" onclick="mark(this,'fail')">不符</button>
+          <button class="btn na" onclick="mark(this,'na')">N/A</button>
+
+        <div class="penalty-toggle" onclick="togglePenalty(this)">
+          ⚠ 違規罰則 <span class="arrow">▼</span>
+        </div>
+        <div class="penalty-box">
+          <div class="penalty-title">條例依據：醫師法 §28、刑法</div>
+          <div class="penalty-text">非醫師執行醫療行為：依醫師法處<strong>三年以下有期徒刑</strong>，得併科<strong>十萬元以下</strong>罰金，情節嚴重者加重其刑。</div>
+        </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="item hide-in-studio" data-id="h3">
+      <div class="item-scope"><span class="scope-pill salon-only">美容院專屬</span></div>
+      <div class="item-main">
+        <div>
+          <div class="item-text">新進員工是否完成職安危害告知程序</div>
+          <div><span class="risk mid">中風險</span><span class="law">職安法 §32</span></div>
+          <div class="item-note">員工第一天報到即需完成，內容含化學品危害性與防護方式，需留存簽名記錄。</div>
+        </div>
+        <div class="btn-group">
+          <button class="btn pass" onclick="mark(this,'pass')">符合</button>
+          <button class="btn fail" onclick="mark(this,'fail')">不符</button>
+          <button class="btn na" onclick="mark(this,'na')">N/A</button>
+
+        <div class="penalty-toggle" onclick="togglePenalty(this)">
+          ⚠ 違規罰則 <span class="arrow">▼</span>
+        </div>
+        <div class="penalty-box">
+          <div class="penalty-title">條例依據：職安法 §32、§43</div>
+          <div class="penalty-text">未對新進員工進行危害告知：處雇主新臺幣<strong>三萬元以上三十萬元以下</strong>罰鍰。</div>
+        </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="item hide-in-studio" data-id="h4">
+      <div class="item-scope"><span class="scope-pill salon-only">美容院專屬</span></div>
+      <div class="item-main">
+        <div>
+          <div class="item-text">是否有員工在職安全教育訓練記錄</div>
+          <div><span class="risk mid">中風險</span><span class="law">職安法 §32</span></div>
+          <div class="item-note">每年需對員工進行安全衛生教育訓練並留存記錄。</div>
+        </div>
+        <div class="btn-group">
+          <button class="btn pass" onclick="mark(this,'pass')">符合</button>
+          <button class="btn fail" onclick="mark(this,'fail')">不符</button>
+          <button class="btn na" onclick="mark(this,'na')">N/A</button>
+
+        <div class="penalty-toggle" onclick="togglePenalty(this)">
+          ⚠ 違規罰則 <span class="arrow">▼</span>
+        </div>
+        <div class="penalty-box">
+          <div class="penalty-title">條例依據：職安法 §32、§43</div>
+          <div class="penalty-text">未辦理安全衛生教育訓練：處雇主新臺幣<strong>三萬元以上三十萬元以下</strong>罰鍰。</div>
+        </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="item hide-in-studio" data-id="h5">
+      <div class="item-scope"><span class="scope-pill salon-only">美容院專屬</span></div>
+      <div class="item-main">
+        <div>
+          <div class="item-text">是否依法為員工投保勞健保</div>
+          <div><span class="risk high">高風險</span><span class="law">勞基法 · 勞保條例</span></div>
+          <div class="item-note">到職第一天即需加保，未加保發生職業傷害，雇主須負擔全部賠償責任。</div>
+        </div>
+        <div class="btn-group">
+          <button class="btn pass" onclick="mark(this,'pass')">符合</button>
+          <button class="btn fail" onclick="mark(this,'fail')">不符</button>
+          <button class="btn na" onclick="mark(this,'na')">N/A</button>
+
+        <div class="penalty-toggle" onclick="togglePenalty(this)">
+          ⚠ 違規罰則 <span class="arrow">▼</span>
+        </div>
+        <div class="penalty-box">
+          <div class="penalty-title">條例依據：勞保條例 §72、勞基法</div>
+          <div class="penalty-text">未依法投保：處應負擔保費金額<strong>四倍至十倍</strong>罰鍰；發生職業傷害雇主須負擔<strong>全額賠償</strong>責任。</div>
+        </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="item hide-in-salon" data-id="h6">
+      <div class="item-scope"><span class="scope-pill studio-only">工作室專屬</span></div>
+      <div class="item-main">
+        <div>
+          <div class="item-text">以個人名義營業是否已完成商業登記或稅籍登記</div>
+          <div><span class="risk mid">中風險</span><span class="law">商業登記法</span></div>
+          <div class="item-note">個人工作室達課稅門檻須辦理稅籍，未登記被查獲可處罰鍰。</div>
+        </div>
+        <div class="btn-group">
+          <button class="btn pass" onclick="mark(this,'pass')">符合</button>
+          <button class="btn fail" onclick="mark(this,'fail')">不符</button>
+          <button class="btn na" onclick="mark(this,'na')">N/A</button>
+
+        <div class="penalty-toggle" onclick="togglePenalty(this)">
+          ⚠ 違規罰則 <span class="arrow">▼</span>
+        </div>
+        <div class="penalty-box">
+          <div class="penalty-title">條例依據：商業登記法 §32</div>
+          <div class="penalty-text">未辦理商業登記擅自營業：處新臺幣<strong>一萬元以上五萬元以下</strong>罰鍰，並令限期補辦。</div>
+        </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="item hide-in-salon" data-id="h7">
+      <div class="item-scope"><span class="scope-pill studio-only">工作室專屬</span></div>
+      <div class="item-main">
+        <div>
+          <div class="item-text">若有聘用助理，是否依法投保勞健保</div>
+          <div><span class="risk high">高風險</span><span class="law">勞基法 · 勞保條例</span></div>
+          <div class="item-note">即使只有一名助理，雇主義務同樣適用，未加保發生意外責任自負。</div>
+        </div>
+        <div class="btn-group">
+          <button class="btn pass" onclick="mark(this,'pass')">符合</button>
+          <button class="btn fail" onclick="mark(this,'fail')">不符</button>
+          <button class="btn na" onclick="mark(this,'na')">N/A</button>
+
+        <div class="penalty-toggle" onclick="togglePenalty(this)">
+          ⚠ 違規罰則 <span class="arrow">▼</span>
+        </div>
+        <div class="penalty-box">
+          <div class="penalty-title">條例依據：勞保條例 §72</div>
+          <div class="penalty-text">聘用助理未投保：處應負擔保費金額<strong>四倍至十倍</strong>罰鍰；發生事故雇主須負擔全額賠償。</div>
+        </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<!-- ══ SECTION 4 客戶安全 ══ -->
+<div class="section">
+  <div class="section-header" onclick="toggleSection(this)">
+    <div class="section-num">04</div>
+    <div class="section-title">客戶安全與紀錄查核</div>
+    <div class="section-tags"><span class="scope-tag both">共用</span></div>
+    <div class="section-count">5 項</div>
+    <div class="section-arrow open">▼</div>
+  </div>
+  <div class="items">
+
+    <div class="item" data-id="c1">
+      <div class="item-scope"><span class="scope-pill both">美容院 ＆ 工作室</span></div>
+      <div class="item-main">
+        <div>
+          <div class="item-text">是否有客戶過敏史詢問記錄</div>
+          <div><span class="risk high">高風險</span></div>
+          <div class="item-note">施作前須詢問並記錄過敏史，發生過敏糾紛時為最重要的免責依據。</div>
+        </div>
+        <div class="btn-group">
+          <button class="btn pass" onclick="mark(this,'pass')">符合</button>
+          <button class="btn fail" onclick="mark(this,'fail')">不符</button>
+          <button class="btn na" onclick="mark(this,'na')">N/A</button>
+
+        <div class="penalty-toggle" onclick="togglePenalty(this)">
+          ⚠ 違規罰則 <span class="arrow">▼</span>
+        </div>
+        <div class="penalty-box">
+          <div class="penalty-title">條例依據：消費者保護法 §7</div>
+          <div class="penalty-text">未盡告知義務：消費者得依消保法請求<strong>損害賠償</strong>，舉證責任在業者，敗訴機率高。</div>
+        </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="item" data-id="c2">
+      <div class="item-scope"><span class="scope-pill both">美容院 ＆ 工作室</span></div>
+      <div class="item-main">
+        <div>
+          <div class="item-text">是否有客戶施作同意書</div>
+          <div><span class="risk high">高風險</span></div>
+          <div class="item-note">尤其睫毛嫁接、半永久等敏感項目，同意書是糾紛發生時的核心自保文件。</div>
+        </div>
+        <div class="btn-group">
+          <button class="btn pass" onclick="mark(this,'pass')">符合</button>
+          <button class="btn fail" onclick="mark(this,'fail')">不符</button>
+          <button class="btn na" onclick="mark(this,'na')">N/A</button>
+
+        <div class="penalty-toggle" onclick="togglePenalty(this)">
+          ⚠ 違規罰則 <span class="arrow">▼</span>
+        </div>
+        <div class="penalty-box">
+          <div class="penalty-title">條例依據：消費者保護法 §7、民法</div>
+          <div class="penalty-text">無同意書：消費者得主張未盡告知義務，依民法請求<strong>損害賠償</strong>；無同意書時業者舉證極度困難。</div>
+        </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="item" data-id="c3">
+      <div class="item-scope"><span class="scope-pill both">美容院 ＆ 工作室</span></div>
+      <div class="item-main">
+        <div>
+          <div class="item-text">是否有客訴或不良反應通報記錄</div>
+          <div><span class="risk mid">中風險</span><span class="law">化粧品衛安法 §15</span></div>
+          <div class="item-note">發生不良反應需留存處理記錄，無記錄在衛生局調查時極為不利。</div>
+        </div>
+        <div class="btn-group">
+          <button class="btn pass" onclick="mark(this,'pass')">符合</button>
+          <button class="btn fail" onclick="mark(this,'fail')">不符</button>
+          <button class="btn na" onclick="mark(this,'na')">N/A</button>
+
+        <div class="penalty-toggle" onclick="togglePenalty(this)">
+          ⚠ 違規罰則 <span class="arrow">▼</span>
+        </div>
+        <div class="penalty-box">
+          <div class="penalty-title">條例依據：化粧品衛安法 §15</div>
+          <div class="penalty-text">未留存不良反應記錄：可認定業者未盡管理義務，加重<strong>行政裁處</strong>或<strong>民事賠償</strong>責任。</div>
+        </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="item" data-id="c4">
+      <div class="item-scope"><span class="scope-pill both">美容院 ＆ 工作室</span></div>
+      <div class="item-main">
+        <div>
+          <div class="item-text">客戶個人資料是否依個資法妥善保管</div>
+          <div><span class="risk mid">中風險</span><span class="law">個人資料保護法</span></div>
+          <div class="item-note">紙本記錄需上鎖，電子檔需設存取權限，不得任意外洩。</div>
+        </div>
+        <div class="btn-group">
+          <button class="btn pass" onclick="mark(this,'pass')">符合</button>
+          <button class="btn fail" onclick="mark(this,'fail')">不符</button>
+          <button class="btn na" onclick="mark(this,'na')">N/A</button>
+
+        <div class="penalty-toggle" onclick="togglePenalty(this)">
+          ⚠ 違規罰則 <span class="arrow">▼</span>
+        </div>
+        <div class="penalty-box">
+          <div class="penalty-title">條例依據：個人資料保護法 §48、§51</div>
+          <div class="penalty-text">個資外洩：處新臺幣<strong>二萬元以上二十萬元以下</strong>罰鍰；情節重大者處<strong>十五萬元以上一百五十萬元以下</strong>。</div>
+        </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="item" data-id="c5">
+      <div class="item-scope"><span class="scope-pill both">美容院 ＆ 工作室</span></div>
+      <div class="item-main">
+        <div>
+          <div class="item-text">服務前是否告知客戶使用產品資訊</div>
+          <div><span class="risk low">低風險</span></div>
+          <div class="item-note">主動告知品牌、成分，可有效降低糾紛發生率，建立客戶信任感。</div>
+        </div>
+        <div class="btn-group">
+          <button class="btn pass" onclick="mark(this,'pass')">符合</button>
+          <button class="btn fail" onclick="mark(this,'fail')">不符</button>
+          <button class="btn na" onclick="mark(this,'na')">N/A</button>
+
+        <div class="penalty-toggle" onclick="togglePenalty(this)">
+          ⚠ 違規罰則 <span class="arrow">▼</span>
+        </div>
+        <div class="penalty-box">
+          <div class="penalty-title">條例依據：消費者保護法</div>
+          <div class="penalty-text">未告知產品資訊：客訴發生時難以主張已盡告知義務，直接影響<strong>民事賠償</strong>結果。</div>
+        </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<!-- ══ SECTION 5 廣告宣傳 ══ -->
+<div class="section">
+  <div class="section-header" onclick="toggleSection(this)">
+    <div class="section-num">05</div>
+    <div class="section-title">廣告與宣傳合規</div>
+    <div class="section-tags"><span class="scope-tag both">共用</span></div>
+    <div class="section-count">4 項</div>
+    <div class="section-arrow open">▼</div>
+  </div>
+  <div class="items">
+
+    <div class="item" data-id="a1">
+      <div class="item-scope"><span class="scope-pill both">美容院 ＆ 工作室</span></div>
+      <div class="item-main">
+        <div>
+          <div class="item-text">社群宣傳是否涉及醫療效能宣稱</div>
+          <div><span class="risk high">高風險</span><span class="law">化粧品衛安法 §10</span></div>
+          <div class="item-note">IG、FB、Line 等社群上的「殺菌」「治療」「醫療級」均屬違規，工作室個人帳號同樣受規範。</div>
+        </div>
+        <div class="btn-group">
+          <button class="btn pass" onclick="mark(this,'pass')">符合</button>
+          <button class="btn fail" onclick="mark(this,'fail')">不符</button>
+          <button class="btn na" onclick="mark(this,'na')">N/A</button>
+
+        <div class="penalty-toggle" onclick="togglePenalty(this)">
+          ⚠ 違規罰則 <span class="arrow">▼</span>
+        </div>
+        <div class="penalty-box">
+          <div class="penalty-title">條例依據：化粧品衛安法 §10、§30</div>
+          <div class="penalty-text">醫療效能宣稱：處新臺幣<strong>四萬元以上二十萬元以下</strong>罰鍰；社群截圖即可作為證據，網路發文同樣受規範。</div>
+        </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="item" data-id="a2">
+      <div class="item-scope"><span class="scope-pill both">美容院 ＆ 工作室</span></div>
+      <div class="item-main">
+        <div>
+          <div class="item-text">產品照片標示是否與實物一致</div>
+          <div><span class="risk mid">中風險</span><span class="law">消費者保護法</span></div>
+          <div class="item-note">菜單、DM、社群圖片展示的產品須與實際使用一致，不得以劣品代替。</div>
+        </div>
+        <div class="btn-group">
+          <button class="btn pass" onclick="mark(this,'pass')">符合</button>
+          <button class="btn fail" onclick="mark(this,'fail')">不符</button>
+          <button class="btn na" onclick="mark(this,'na')">N/A</button>
+
+        <div class="penalty-toggle" onclick="togglePenalty(this)">
+          ⚠ 違規罰則 <span class="arrow">▼</span>
+        </div>
+        <div class="penalty-box">
+          <div class="penalty-title">條例依據：公平交易法 §21、消費者保護法</div>
+          <div class="penalty-text">不實廣告：公平交易委員會可處<strong>五萬元以上二千五百萬元以下</strong>罰鍰；消費者另得依消保法求償。</div>
+        </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="item" data-id="a3">
+      <div class="item-scope"><span class="scope-pill both">美容院 ＆ 工作室</span></div>
+      <div class="item-main">
+        <div>
+          <div class="item-text">是否使用誤導性絕對用語</div>
+          <div><span class="risk mid">中風險</span><span class="law">公平交易法</span></div>
+          <div class="item-note">「全台最低價」「永久保證」「100% 無副作用」等絕對性用語可能觸法。</div>
+        </div>
+        <div class="btn-group">
+          <button class="btn pass" onclick="mark(this,'pass')">符合</button>
+          <button class="btn fail" onclick="mark(this,'fail')">不符</button>
+          <button class="btn na" onclick="mark(this,'na')">N/A</button>
+
+        <div class="penalty-toggle" onclick="togglePenalty(this)">
+          ⚠ 違規罰則 <span class="arrow">▼</span>
+        </div>
+        <div class="penalty-box">
+          <div class="penalty-title">條例依據：公平交易法 §21</div>
+          <div class="penalty-text">虛偽不實廣告：可處<strong>五萬元以上二千五百萬元以下</strong>罰鍰。</div>
+        </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="item" data-id="a4">
+      <div class="item-scope"><span class="scope-pill both">美容院 ＆ 工作室</span></div>
+      <div class="item-main">
+        <div>
+          <div class="item-text">價目表是否公開標示且與實收一致</div>
+          <div><span class="risk low">低風險</span><span class="law">消費者保護法</span></div>
+          <div class="item-note">不得於結帳時收取未事先告知的費用，工作室以通訊軟體報價亦須留存紀錄。</div>
+        </div>
+        <div class="btn-group">
+          <button class="btn pass" onclick="mark(this,'pass')">符合</button>
+          <button class="btn fail" onclick="mark(this,'fail')">不符</button>
+          <button class="btn na" onclick="mark(this,'na')">N/A</button>
+
+        <div class="penalty-toggle" onclick="togglePenalty(this)">
+          ⚠ 違規罰則 <span class="arrow">▼</span>
+        </div>
+        <div class="penalty-box">
+          <div class="penalty-title">條例依據：消費者保護法 §4、§23</div>
+          <div class="penalty-text">價目不符：消費者得主張契約條款無效，業者須<strong>退還差額</strong>並可能面臨<strong>損害賠償</strong>請求。</div>
+        </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<!-- RESULT -->
+<div class="result-panel" id="resultPanel">
+  <div class="result-title">模擬稽查結果</div>
+  <div class="result-grade" id="resultGrade">—</div>
+  <div class="result-msg" id="resultMsg"></div>
+  <button class="reset-btn" onclick="resetAll()">▸ 重新查核</button>
+</div>
+
+</div><!-- wrap -->
+
+<script>
+let currentMode = 'salon';
+let results = {};
+
+function setMode(mode) {
+  currentMode = mode;
+  results = {};
+
+  document.body.className = mode;
+  document.querySelectorAll('.mode-btn').forEach(b => b.classList.remove('active'));
+  document.querySelector('.mode-btn.' + mode).classList.add('active');
+
+  const isSalon = mode === 'salon';
+  document.getElementById('modeLabel').textContent = isSalon ? '小型美容院' : '個人工作室';
+  document.getElementById('metaScope').textContent = isSalon
+    ? '📋 5 大類 · 適用小型美容院'
+    : '📋 5 大類 · 適用個人工作室';
+
+  // reset all UI
+  document.querySelectorAll('.btn').forEach(b => b.classList.remove('active-pass','active-fail','active-na'));
+  document.querySelectorAll('.item').forEach(i => i.classList.remove('checked-pass','checked-fail','checked-na'));
+  document.getElementById('progressText').textContent = '0 項';
+  document.getElementById('progressFill').style.width = '0%';
+  document.getElementById('passCount').textContent = '0';
+  document.getElementById('failCount').textContent = '0';
+  document.getElementById('scoreVal').textContent = '—';
+  document.getElementById('resultPanel').classList.remove('show');
+}
+
+function getVisibleItems() {
+  return Array.from(document.querySelectorAll('.item')).filter(el => {
+    return getComputedStyle(el).display !== 'none';
+  });
+}
+
+function mark(btn, type) {
+  const item = btn.closest('.item');
+  const id = item.dataset.id;
+  item.querySelectorAll('.btn').forEach(b => b.classList.remove('active-pass','active-fail','active-na'));
+  btn.classList.add('active-' + type);
+  item.classList.remove('checked-pass','checked-fail','checked-na');
+  item.classList.add(type === 'pass' ? 'checked-pass' : type === 'fail' ? 'checked-fail' : 'checked-na');
+  results[id] = type;
+  updateScore();
+}
+
+function updateScore() {
+  const visible = getVisibleItems();
+  const total = visible.length;
+  const answered = visible.filter(i => results[i.dataset.id]).length;
+  const passes = visible.filter(i => results[i.dataset.id] === 'pass').length;
+  const fails = visible.filter(i => results[i.dataset.id] === 'fail').length;
+  const applicable = visible.filter(i => results[i.dataset.id] && results[i.dataset.id] !== 'na').length;
+
+  document.getElementById('progressText').textContent = answered + ' / ' + total + ' 項';
+  document.getElementById('progressFill').style.width = (answered / total * 100) + '%';
+  document.getElementById('passCount').textContent = passes;
+  document.getElementById('failCount').textContent = fails;
+  if (applicable > 0) document.getElementById('scoreVal').textContent = Math.round(passes / applicable * 100) + '%';
+  if (answered >= total) showResult(passes, applicable);
+}
+
+function showResult(passes, applicable) {
+  const score = applicable > 0 ? Math.round(passes / applicable * 100) : 0;
+  const type = currentMode === 'salon' ? '美容院' : '工作室';
+  let grade, msg;
+  if (score >= 90) {
+    grade = '優良';
+    msg = '恭喜！' + type + '合規狀況優良。\n建議每季定期自查，維持現有標準。\nPatty Wu 建議：留存所有記錄文件，這是您最好的保護盾。';
+  } else if (score >= 75) {
+    grade = '尚可';
+    msg = '整體合規，但仍有幾項待改善。\n建議優先修補「高風險」項目，降低被開罰或客訴的風險。\n政府上門前，先把漏洞補好。';
+  } else if (score >= 60) {
+    grade = '待改善';
+    msg = '存在多項合規缺口，建議立即啟動改善計畫。\n高風險項目一旦被查，罰鍰遠高於修補成本。\n建議委託專業人士進行輔導查核。';
+  } else {
+    grade = '高風險';
+    msg = '合規狀況堪憂，存在被開罰、客訴或勞檢的高度風險。\n建議立即聯繫具職安乙級資格的專業人士\n進行全面美業合規查核與健檢。';
+  }
+  document.getElementById('resultGrade').textContent = grade;
+  document.getElementById('resultMsg').textContent = msg;
+  document.getElementById('resultPanel').classList.add('show');
+  document.getElementById('resultPanel').scrollIntoView({behavior:'smooth'});
+}
+
+function togglePenalty(el) {
+  el.classList.toggle('open');
+  const box = el.nextElementSibling;
+  box.classList.toggle('show');
+}
+
+function resetAll() {
+  results = {};
+  document.querySelectorAll('.btn').forEach(b => b.classList.remove('active-pass','active-fail','active-na'));
+  document.querySelectorAll('.item').forEach(i => i.classList.remove('checked-pass','checked-fail','checked-na'));
+  document.getElementById('progressText').textContent = '0 項';
+  document.getElementById('progressFill').style.width = '0%';
+  document.getElementById('passCount').textContent = '0';
+  document.getElementById('failCount').textContent = '0';
+  document.getElementById('scoreVal').textContent = '—';
+  document.getElementById('resultPanel').classList.remove('show');
+  document.querySelectorAll('.penalty-box').forEach(b=>b.classList.remove('show'));
+  document.querySelectorAll('.penalty-toggle').forEach(t=>t.classList.remove('open'));
+  window.scrollTo({top:0,behavior:'smooth'});
+}
+
+function toggleSection(header) {
+  const items = header.nextElementSibling;
+  const arrow = header.querySelector('.section-arrow');
+  items.classList.toggle('hidden');
+  arrow.classList.toggle('open');
+}
+</script>
+</body>
+</html>
