@@ -1,0 +1,307 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=3.0">
+<title>NUNU 化學品清單</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+TC:wght@400;700;900&family=Bebas+Neue&display=swap" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box;}
+:root{
+  --bg:#08060A;--bg2:#111018;--bg3:#1A1525;--bg4:#0F0C18;
+  --gold:#C9A84C;--gold2:#E4C97E;--gold3:#F5E4A8;
+  --cream:#F2EAD3;--red:#E07A85;--green:#52B788;
+  --border:rgba(201,168,76,0.2);
+}
+body{
+  background:var(--bg);color:var(--cream);
+  font-family:'Noto Serif TC',serif;
+  padding:0;margin:0;
+  font-size:16px;
+  -webkit-text-size-adjust:100%;
+}
+.wrap{max-width:600px;margin:0 auto;padding:0;}
+
+/* HEADER */
+.header{
+  background:var(--bg);
+  padding:24px 20px 16px;
+  border-bottom:2px solid var(--gold);
+  position:sticky;top:0;z-index:10;
+}
+.header-title{
+  font-family:'Noto Serif TC',serif;font-weight:900;
+  font-size:18px;color:var(--gold3);
+  letter-spacing:1px;margin-bottom:4px;
+}
+.header-sub{font-size:11px;color:var(--gold);opacity:.7;letter-spacing:1px;}
+
+/* INFO SECTION */
+.info-section{padding:16px 20px;background:var(--bg2);border-bottom:1px solid var(--border);}
+.info-row{
+  display:grid;grid-template-columns:100px 1fr;
+  gap:0;margin-bottom:10px;
+}
+.info-row:last-child{margin-bottom:0;}
+.info-label{
+  font-size:13px;color:var(--gold2);font-weight:700;
+  padding:10px 12px;background:var(--bg3);
+  border-radius:4px 0 0 4px;
+  display:flex;align-items:center;
+}
+.info-value{
+  font-size:14px;color:var(--cream);
+  padding:10px 14px;background:var(--bg2);
+  border:1px solid var(--border);border-left:none;
+  border-radius:0 4px 4px 0;
+  min-height:42px;display:flex;align-items:center;
+}
+.info-value.editable{
+  border-bottom:2px solid var(--gold);
+  color:var(--cream);opacity:.6;
+}
+.info-value.editable::after{content:'（請填寫）';font-size:11px;color:var(--gold);opacity:.5;margin-left:6px;}
+
+/* PRODUCT CARD */
+.product-card{margin:16px 20px;border-radius:8px;overflow:hidden;border:1px solid var(--border);}
+.product-header{
+  background:var(--gold);
+  padding:14px 18px;
+  display:flex;align-items:center;gap:10px;
+}
+.product-num{
+  font-family:'Bebas Neue',sans-serif;
+  font-size:28px;color:var(--bg);opacity:.4;
+  line-height:1;
+}
+.product-header-text{}
+.product-name-zh{
+  font-size:16px;font-weight:900;color:#08060A;
+  letter-spacing:.5px;
+}
+.product-name-en{font-size:11px;color:rgba(8,6,10,0.55);margin-top:2px;letter-spacing:1px;}
+
+/* FIELD ROWS */
+.field-row{
+  display:grid;grid-template-columns:100px 1fr;
+  border-bottom:1px solid rgba(201,168,76,0.1);
+}
+.field-row:last-child{border-bottom:none;}
+.field-label{
+  font-size:12px;font-weight:700;color:var(--gold2);
+  padding:12px 12px;
+  background:var(--bg3);
+  display:flex;align-items:center;justify-content:center;
+  text-align:center;line-height:1.5;
+  border-right:1px solid var(--border);
+}
+.field-value{
+  font-size:14px;color:var(--cream);
+  padding:12px 14px;
+  background:var(--bg2);
+  line-height:1.7;
+  display:flex;align-items:center;
+}
+.field-value.fill{
+  color:var(--cream);opacity:.4;
+  font-size:13px;
+}
+.field-value.fill::after{content:'請填寫';}
+.risk-mid{
+  font-size:20px;font-weight:900;color:var(--gold2);
+}
+.risk-high{font-size:20px;font-weight:900;color:var(--red);}
+.risk-low{font-size:20px;font-weight:900;color:var(--green);}
+
+/* NOTE ROW */
+.note-row{
+  background:var(--bg4);
+  padding:12px 16px;
+  font-size:12px;color:var(--gold);
+  line-height:1.8;
+  border-top:1px solid rgba(201,168,76,0.15);
+  display:flex;gap:8px;align-items:flex-start;
+}
+.note-icon{flex-shrink:0;font-size:14px;}
+
+/* SPACER */
+.spacer{height:8px;background:var(--bg);}
+
+/* LEGEND */
+.legend{
+  margin:8px 20px 0;
+  background:var(--bg2);border:1px solid var(--border);
+  border-radius:8px;padding:14px 16px;
+}
+.legend-title{
+  font-size:11px;letter-spacing:2px;color:var(--gold);opacity:.7;
+  font-family:'Bebas Neue',sans-serif;
+  margin-bottom:10px;
+}
+.legend-item{
+  display:flex;align-items:center;gap:8px;
+  font-size:12px;color:var(--cream);opacity:.7;
+  margin-bottom:6px;
+}
+.legend-item:last-child{margin-bottom:0;}
+.legend-dot{width:10px;height:10px;border-radius:50%;flex-shrink:0;}
+
+/* FOOTER */
+.footer{
+  margin:16px 20px 40px;
+  padding:14px 16px;
+  background:var(--bg2);border:1px solid var(--border);
+  border-radius:8px;
+  font-size:11px;color:var(--gold);opacity:.6;
+  text-align:center;line-height:2;
+}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<!-- HEADER -->
+<div class="header">
+  <div class="header-title">美業化學品清單</div>
+  <div class="header-sub">NUNU Solution 專屬版本　｜　依職安法第10條建立</div>
+</div>
+
+<!-- INFO -->
+<div class="info-section">
+  <div class="info-row">
+    <div class="info-label">店家名稱</div>
+    <div class="info-value editable"></div>
+  </div>
+  <div class="info-row">
+    <div class="info-label">建立日期</div>
+    <div class="info-value editable"></div>
+  </div>
+  <div class="info-row">
+    <div class="info-label">負責人</div>
+    <div class="info-value editable"></div>
+  </div>
+  <div class="info-row">
+    <div class="info-label">進口代理商</div>
+    <div class="info-value">艾昕全球美業有限公司<br><span style="font-size:12px;opacity:.6;">製造商：LASAEM COSMETICS CO.,LTD.</span></div>
+  </div>
+</div>
+
+<div class="spacer"></div>
+
+<!-- PRODUCT 1 -->
+<div class="product-card">
+  <div class="product-header">
+    <div class="product-num">01</div>
+    <div class="product-header-text">
+      <div class="product-name-zh">NUNU 高養護毛鱗亮澤乳</div>
+      <div class="product-name-en">Solution White｜第一劑｜10ml</div>
+    </div>
+  </div>
+
+  <div class="field-row">
+    <div class="field-label">主要危害成分</div>
+    <div class="field-value">Mineral Oil、Petrolatum、Paraffin（礦物油類）<br>1,2-Hexanediol（有機溶劑微量）<br>Sodium Citrate（pH調整劑）</div>
+  </div>
+  <div class="field-row">
+    <div class="field-label">危害類別</div>
+    <div class="field-value">皮膚刺激性、有機溶劑微量</div>
+  </div>
+  <div class="field-row">
+    <div class="field-label">風險等級</div>
+    <div class="field-value"><span class="risk-mid">中</span></div>
+  </div>
+  <div class="field-row">
+    <div class="field-label">用途</div>
+    <div class="field-value">毛髮美化與造型（第一劑）</div>
+  </div>
+  <div class="field-row">
+    <div class="field-label">存放位置</div>
+    <div class="field-value">陰涼乾燥處、避免高溫</div>
+  </div>
+  <div class="field-row">
+    <div class="field-label">SDS 取得狀態</div>
+    <div class="field-value fill"></div>
+  </div>
+  <div class="field-row">
+    <div class="field-label">危害告知日期</div>
+    <div class="field-value fill"></div>
+  </div>
+  <div class="field-row">
+    <div class="field-label">廢棄處理</div>
+    <div class="field-value">一般廢棄物（空管密封後丟棄）</div>
+  </div>
+  <div class="note-row">
+    <span class="note-icon">⚠</span>
+    <span>含微量有機溶劑，勿接觸眼睛。SGS 防腐效能通過（報告編號 PUG25501218）</span>
+  </div>
+</div>
+
+<div class="spacer"></div>
+
+<!-- PRODUCT 2 -->
+<div class="product-card">
+  <div class="product-header">
+    <div class="product-num">02</div>
+    <div class="product-header-text">
+      <div class="product-name-zh">NUNU 高養護毛質修復乳</div>
+      <div class="product-name-en">Solution Black｜第二劑｜10ml</div>
+    </div>
+  </div>
+
+  <div class="field-row">
+    <div class="field-label">主要危害成分</div>
+    <div class="field-value">Mineral Oil、Petrolatum（礦物油類）<br>1,2-Hexanediol（有機溶劑微量）<br>Etidronic Acid（抗氧化劑）<br>Disodium EDTA（螯合劑）</div>
+  </div>
+  <div class="field-row">
+    <div class="field-label">危害類別</div>
+    <div class="field-value">皮膚刺激性、微量抗氧化劑</div>
+  </div>
+  <div class="field-row">
+    <div class="field-label">風險等級</div>
+    <div class="field-value"><span class="risk-mid">中</span></div>
+  </div>
+  <div class="field-row">
+    <div class="field-label">用途</div>
+    <div class="field-value">毛髮美化與造型（第二劑）</div>
+  </div>
+  <div class="field-row">
+    <div class="field-label">存放位置</div>
+    <div class="field-value">陰涼乾燥處、避免高溫<br>避免與第一劑混存</div>
+  </div>
+  <div class="field-row">
+    <div class="field-label">SDS 取得狀態</div>
+    <div class="field-value fill"></div>
+  </div>
+  <div class="field-row">
+    <div class="field-label">危害告知日期</div>
+    <div class="field-value fill"></div>
+  </div>
+  <div class="field-row">
+    <div class="field-label">廢棄處理</div>
+    <div class="field-value">一般廢棄物（空管密封後丟棄）</div>
+  </div>
+  <div class="note-row">
+    <span class="note-icon">⚠</span>
+    <span>避免與第一劑混存，勿接觸眼睛。SGS 防腐效能通過（報告編號 PUG25501218）</span>
+  </div>
+</div>
+
+<div class="spacer"></div>
+
+<!-- LEGEND -->
+<div class="legend">
+  <div class="legend-title">SDS 取得狀態填寫說明</div>
+  <div class="legend-item"><div class="legend-dot" style="background:#52B788;"></div>已取得：已向供應商取得SDS文件</div>
+  <div class="legend-item"><div class="legend-dot" style="background:#E07A85;"></div>待索取：已發出索取請求，等待回覆</div>
+  <div class="legend-item"><div class="legend-dot" style="background:#C9A84C;"></div>不適用：該產品無需SDS</div>
+</div>
+
+<!-- FOOTER -->
+<div class="footer">
+  本清單由 Patty Wu（職業安全衛生管理乙級技術士）輔導建置<br>
+  依職業安全衛生法第10條規範，僅供內部管理使用
+</div>
+
+</div>
+</body>
+</html>
