@@ -293,6 +293,28 @@ body{
 .btn.active-fail{background:var(--fail);border-color:var(--fail);color:#fff;opacity:1;}
 .btn.active-na{background:rgba(255,255,255,0.08);border-color:rgba(255,255,255,0.2);color:#fff;opacity:1;}
 
+
+/* ── ADVISORY CARD (建議項目，不計評分) ── */
+.item-advisory{
+  border-bottom:1px solid var(--t-border2);
+  padding:14px 20px;
+  background:rgba(168,184,200,0.04);
+  transition:background .2s;
+}
+.item-advisory:last-child{border-bottom:none;}
+.advisory-label{
+  display:inline-block;
+  font-family:'Bebas Neue',sans-serif;
+  font-size:8px;letter-spacing:3px;
+  padding:2px 10px;margin-bottom:8px;
+  background:rgba(168,184,200,0.1);
+  border:1px solid rgba(168,184,200,0.3);
+  color:var(--silver2);
+}
+.advisory-text{font-size:13px;letter-spacing:.5px;line-height:1.8;margin-bottom:4px;opacity:.8;}
+.advisory-note{font-size:11px;letter-spacing:.5px;line-height:1.9;color:var(--silver2);opacity:.75;}
+.advisory-note strong{color:var(--accent2);}
+
 /* studio-only items hidden in salon mode and vice versa */
 body.salon .hide-in-salon{display:none;}
 body.studio .hide-in-studio{display:none;}
@@ -524,7 +546,7 @@ body.studio .hide-in-studio{display:none;}
         <div>
           <div class="item-text">是否向供應商索取並留存 SDS 危害物質安全資料表</div>
           <div><span class="risk mid">中風險</span><span class="law">職安法 §10</span></div>
-          <div class="item-note important">⚠ 建立 SDS 是製造商／代理商義務；店家義務是「索取並留存」供員工查閱。無 SDS 不直接罰款，但發生糾紛時無法自保。</div>
+          <div class="item-note important">⚠ 建立 SDS 是製造商／代理商義務；店家義務是「索取並留存」備查。有員工者須供員工查閱（強制）；個人工作室雖無強制義務，留存索取記錄仍是客訴時的重要自保依據（建議）。</div>
         </div>
         <div class="btn-group">
           <button class="btn pass" onclick="mark(this,'pass')">符合</button>
@@ -566,13 +588,13 @@ body.studio .hide-in-studio{display:none;}
       </div>
     </div>
 
-    <div class="item" data-id="p6">
-      <div class="item-scope"><span class="scope-pill both">美容院 ＆ 工作室</span></div>
+    <div class="item hide-in-studio" data-id="p6">
+      <div class="item-scope"><span class="scope-pill salon-only">美容院適用</span></div>
       <div class="item-main">
         <div>
           <div class="item-text">是否建立店內化學品清單</div>
           <div><span class="risk mid">中風險</span><span class="law">職安法 §10</span></div>
-          <div class="item-note">化學品清單需列品名、成分、用途、存放位置，不等於 SDS 但同樣重要。</div>
+          <div class="item-note">有員工者依法應建立化學品清單，需列品名、成分、用途、存放位置。</div>
         </div>
         <div class="btn-group">
           <button class="btn pass" onclick="mark(this,'pass')">符合</button>
@@ -604,13 +626,13 @@ body.studio .hide-in-studio{display:none;}
   </div>
   <div class="items">
 
-    <div class="item" data-id="e1">
-      <div class="item-scope"><span class="scope-pill both">美容院 ＆ 工作室</span></div>
+    <div class="item hide-in-studio" data-id="e1">
+      <div class="item-scope"><span class="scope-pill salon-only">美容院適用</span></div>
       <div class="item-main">
         <div>
           <div class="item-text">工作環境是否符合通風換氣標準</div>
           <div><span class="risk mid">中風險</span><span class="law">職安法 §6</span></div>
-          <div class="item-note">密閉空間長期使用膠水、去除液，員工可構成職業病認定，工作室尤需注意。</div>
+          <div class="item-note">密閉空間長期使用膠水、去除液，員工可構成職業病認定。有雇用員工的美容院須符合通風換氣標準。</div>
         </div>
         <div class="btn-group">
           <button class="btn pass" onclick="mark(this,'pass')">符合</button>
@@ -621,10 +643,19 @@ body.studio .hide-in-studio{display:none;}
           ⚠ 違規罰則 <span class="arrow">▼</span>
         </div>
         <div class="penalty-box">
-          <div class="penalty-title">條例依據：職安法 §6、§43</div>
-          <div class="penalty-text">未提供符合規定之工作環境：處雇主新臺幣<strong>三萬元以上三十萬元以下</strong>罰鍰；若導致職業病可加重裁處。</div>
+          <div class="penalty-title">條例依據：職安法 §6、§43（適用有員工之雇主）</div>
+          <div class="penalty-text">有員工者未提供符合規定之工作環境：處雇主新臺幣<strong>三萬元以上三十萬元以下</strong>罰鍰；若導致職業病可加重裁處。<br><span style="color:var(--accent2);opacity:.8;">個人工作室（無員工）：此罰則不適用，但自身健康風險仍存在。</span></div>
         </div>
         </div>
+      </div>
+    </div>
+
+    <div class="item-advisory hide-in-salon">
+      <div class="advisory-label">個人工作室・建議事項・不計入評分</div>
+      <div class="advisory-text">工作環境通風建議</div>
+      <div class="advisory-note">
+        職安法 §6 通風義務以<strong>有雇用員工的雇主</strong>為對象，個人工作室（無員工）<strong>無強制法律義務</strong>。<br>
+        但長期在密閉空間使用膠水、去除液，建議保持通風以保護自身健康。此項不計入合規評分。
       </div>
     </div>
 
@@ -658,7 +689,7 @@ body.studio .hide-in-studio{display:none;}
         <div>
           <div class="item-text">是否留存消毒記錄本</div>
           <div><span class="risk mid">中風險</span></div>
-          <div class="item-note">無記錄本不等於直接罰款，但客訴、員工感染發生時是最關鍵的自保文件。</div>
+          <div class="item-note">無記錄本不等於直接罰款，但客訴或感染糾紛發生時是最關鍵的自保文件。保護的是自己，不是應付稽查。</div>
         </div>
         <div class="btn-group">
           <button class="btn pass" onclick="mark(this,'pass')">符合</button>
