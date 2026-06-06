@@ -1,0 +1,430 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=3.0">
+<title>顧客服務消毒記錄表</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+TC:wght@400;700;900&family=Bebas+Neue&display=swap" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box;}
+:root{
+  --bg:#08060A;--bg2:#111018;--bg3:#1A1525;--bg4:#0F0C18;
+  --gold:#C9A84C;--gold2:#E4C97E;--gold3:#F5E4A8;
+  --cream:#F2EAD3;--red:#E07A85;--green:#52B788;--silver:#A8B8C8;
+  --border:rgba(201,168,76,0.2);--border2:rgba(201,168,76,0.08);
+}
+body{background:var(--bg);color:var(--cream);font-family:'Noto Serif TC',serif;padding:0 0 80px;-webkit-text-size-adjust:100%;}
+.wrap{max-width:640px;margin:0 auto;}
+
+/* HEADER */
+.header{background:var(--bg);padding:20px 20px 14px;border-bottom:2px solid var(--gold);position:sticky;top:0;z-index:20;}
+.header-top{display:flex;justify-content:space-between;align-items:flex-start;}
+.header-title{font-weight:900;font-size:18px;color:var(--gold3);margin-bottom:2px;}
+.header-sub{font-size:10px;color:var(--gold);opacity:.6;letter-spacing:1px;}
+.record-count{font-family:'Bebas Neue',sans-serif;font-size:11px;letter-spacing:2px;color:var(--gold);opacity:.6;text-align:right;margin-top:4px;}
+
+/* ADD BUTTON */
+.add-btn{display:flex;align-items:center;justify-content:center;gap:8px;width:calc(100% - 32px);margin:14px 16px 0;padding:14px;background:rgba(201,168,76,0.08);border:1px dashed rgba(201,168,76,0.4);color:var(--gold);font-family:'Noto Serif TC',serif;font-size:13px;letter-spacing:1px;cursor:pointer;transition:all .3s;border-radius:8px;}
+.add-btn:hover{background:rgba(201,168,76,0.14);}
+
+/* STORE INFO */
+.store-section{padding:14px 16px 0;}
+.store-card{background:var(--bg2);border:1px solid var(--border);border-radius:8px;padding:14px 16px;margin-bottom:4px;}
+.store-row{display:grid;grid-template-columns:76px 1fr;gap:8px;margin-bottom:8px;align-items:center;}
+.store-row:last-child{margin-bottom:0;}
+.store-label{font-size:11px;color:var(--gold2);font-weight:700;opacity:.8;}
+.store-input{background:transparent;border:none;border-bottom:1px solid rgba(201,168,76,0.3);color:var(--cream);font-family:'Noto Serif TC',serif;font-size:13px;padding:4px 0;width:100%;outline:none;}
+.store-input::placeholder{color:var(--cream);opacity:.2;font-size:11px;}
+
+/* STATS */
+.stats-bar{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:var(--border);border:1px solid var(--border);margin:14px 16px 0;border-radius:8px;overflow:hidden;}
+.stat-cell{background:var(--bg2);padding:12px;text-align:center;}
+.stat-num{font-family:'Bebas Neue',sans-serif;font-size:26px;display:block;}
+.stat-num.g{color:var(--green);}
+.stat-num.gold{color:var(--gold);}
+.stat-num.s{color:var(--silver);}
+.stat-desc{font-size:9px;letter-spacing:1px;opacity:.4;}
+
+/* NOTE */
+.note-box{margin:10px 16px 0;background:rgba(201,168,76,0.05);border:1px solid rgba(201,168,76,0.15);border-left:2px solid var(--gold);padding:12px 14px;font-size:11px;letter-spacing:.5px;line-height:2;opacity:.75;border-radius:0 4px 4px 0;}
+
+/* SECTION LABEL */
+.section-label{font-family:'Bebas Neue',sans-serif;font-size:9px;letter-spacing:4px;color:var(--gold);opacity:.6;padding:14px 16px 6px;}
+
+/* CLIENT CARD */
+.client-card{margin:0 16px 12px;background:var(--bg2);border:1px solid var(--border);border-radius:8px;overflow:hidden;animation:slideIn .4s ease;}
+@keyframes slideIn{from{opacity:0;transform:translateY(-8px)}to{opacity:1;transform:translateY(0)}}
+@keyframes fadeIn{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}
+
+.client-header{display:flex;align-items:center;gap:10px;padding:12px 14px;background:var(--bg3);border-bottom:1px solid var(--border2);cursor:pointer;user-select:none;}
+.client-num{font-family:'Bebas Neue',sans-serif;font-size:22px;color:var(--gold);opacity:.3;line-height:1;flex-shrink:0;min-width:28px;}
+.client-summary{flex:1;}
+.client-name-display{font-size:13px;font-weight:700;color:var(--gold2);}
+.client-date-display{font-size:10px;opacity:.45;margin-top:2px;letter-spacing:.5px;}
+.client-badge{font-size:9px;letter-spacing:1px;padding:3px 10px;border-radius:20px;flex-shrink:0;}
+.badge-done{background:rgba(82,183,136,0.15);color:var(--green);}
+.badge-partial{background:rgba(201,168,76,0.12);color:var(--gold);}
+.badge-empty{background:rgba(255,255,255,0.05);color:var(--cream);opacity:.4;}
+.client-arrow{font-size:9px;opacity:.3;flex-shrink:0;transition:transform .3s;}
+.client-arrow.open{transform:rotate(180deg);}
+
+.client-body{display:none;padding:14px;}
+.client-body.show{display:block;}
+
+/* FIELD GROUPS */
+.field-group{margin-bottom:14px;}
+.field-group-title{font-size:11px;font-weight:700;color:var(--gold2);margin-bottom:8px;padding-bottom:6px;border-bottom:1px solid var(--border2);display:flex;align-items:center;gap:6px;}
+.field-group-title .icon{font-size:13px;}
+
+.field-row{display:grid;grid-template-columns:80px 1fr;gap:8px;margin-bottom:8px;align-items:center;}
+.field-row:last-child{margin-bottom:0;}
+.field-label{font-size:11px;color:var(--gold2);opacity:.75;font-weight:700;}
+.field-input{background:var(--bg3);border:1px solid var(--border2);color:var(--cream);font-family:'Noto Serif TC',serif;font-size:13px;padding:8px 10px;outline:none;border-radius:4px;width:100%;}
+.field-input::placeholder{color:var(--cream);opacity:.2;font-size:11px;}
+.field-select{background:var(--bg3);border:1px solid var(--border2);color:var(--cream);font-family:'Noto Serif TC',serif;font-size:12px;padding:8px 10px;outline:none;border-radius:4px;width:100%;}
+.field-textarea{background:var(--bg3);border:1px solid var(--border2);color:var(--cream);font-family:'Noto Serif TC',serif;font-size:12px;padding:8px 10px;outline:none;border-radius:4px;width:100%;resize:none;min-height:48px;}
+.field-textarea::placeholder{color:var(--cream);opacity:.2;font-size:11px;}
+
+/* ALLERGY */
+.allergy-row{display:flex;align-items:center;gap:10px;margin-bottom:8px;}
+.allergy-label{font-size:11px;color:var(--gold2);opacity:.75;font-weight:700;flex-shrink:0;}
+.toggle-group{display:flex;gap:6px;}
+.toggle-btn{padding:6px 16px;border-radius:20px;border:1px solid rgba(255,255,255,0.12);background:none;color:var(--cream);opacity:.4;font-family:'Noto Serif TC',serif;font-size:12px;cursor:pointer;transition:all .2s;}
+.toggle-btn.active-no{background:rgba(82,183,136,0.15);border-color:var(--green);color:var(--green);opacity:1;}
+.toggle-btn.active-yes{background:rgba(224,122,133,0.15);border-color:var(--red);color:var(--red);opacity:1;}
+.allergy-detail{display:none;margin-top:8px;}
+.allergy-detail.show{display:block;}
+
+/* DISINFECT */
+.disinfect-grid{display:flex;flex-direction:column;gap:6px;}
+.disinfect-item{display:flex;align-items:center;gap:10px;padding:8px 10px;background:var(--bg4);border-radius:4px;border:1px solid rgba(255,255,255,0.04);}
+.disinfect-name{flex:1;font-size:12px;opacity:.8;line-height:1.5;}
+.disinfect-name small{font-size:10px;opacity:.5;display:block;}
+.disinfect-btns{display:flex;gap:5px;flex-shrink:0;}
+.disinfect-btn{width:30px;height:30px;border-radius:50%;border:1px solid rgba(255,255,255,0.12);background:none;cursor:pointer;font-size:13px;transition:all .2s;color:var(--cream);opacity:.3;display:flex;align-items:center;justify-content:center;}
+.disinfect-btn.btn-pass.active{background:rgba(82,183,136,0.2);border-color:var(--green);color:var(--green);opacity:1;}
+.disinfect-btn.btn-na.active{background:rgba(168,184,200,0.1);border-color:var(--silver);color:var(--silver);opacity:.7;}
+.disinfect-btn.btn-fail.active{background:rgba(224,122,133,0.2);border-color:var(--red);color:var(--red);opacity:1;}
+
+.method-inline{display:flex;align-items:center;gap:8px;margin-top:10px;}
+.method-inline-label{font-size:11px;color:var(--gold2);opacity:.75;font-weight:700;flex-shrink:0;}
+
+/* SIGN */
+.sign-section{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:12px;}
+.sign-box{background:var(--bg4);border-radius:4px;border:1px solid var(--border2);padding:10px 12px;}
+.sign-box-label{font-size:10px;color:var(--gold2);opacity:.6;margin-bottom:6px;}
+.sign-box-input{background:transparent;border:none;border-bottom:1px solid rgba(201,168,76,0.25);color:var(--cream);font-family:'Noto Serif TC',serif;font-size:13px;padding:4px 0;width:100%;outline:none;}
+.sign-box-input::placeholder{color:var(--cream);opacity:.2;font-size:11px;}
+
+/* DELETE */
+.delete-btn{display:block;width:100%;margin-top:12px;padding:10px;background:none;border:1px solid rgba(224,122,133,0.2);color:var(--red);font-family:'Noto Serif TC',serif;font-size:11px;letter-spacing:1px;cursor:pointer;border-radius:4px;opacity:.5;transition:all .2s;}
+.delete-btn:hover{opacity:1;background:rgba(224,122,133,0.08);}
+
+/* FOOTER */
+.page-footer{text-align:center;padding:20px 16px;margin-top:16px;font-size:9px;color:var(--gold);opacity:.4;letter-spacing:1px;line-height:2.2;border-top:1px solid var(--border2);}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<div class="header">
+  <div class="header-top">
+    <div>
+      <div class="header-title">顧客服務消毒記錄</div>
+      <div class="header-sub">每次服務獨立記錄　｜　依化粧品衛安法第17條</div>
+    </div>
+    <div class="record-count" id="recordCount">0 筆記錄</div>
+  </div>
+</div>
+
+<div class="store-section">
+  <div class="store-card">
+    <div class="store-row"><div class="store-label">店家名稱</div><input class="store-input" placeholder="請填寫" type="text"></div>
+    <div class="store-row"><div class="store-label">負責人</div><input class="store-input" placeholder="請填寫" type="text"></div>
+    <div class="store-row"><div class="store-label">記錄月份</div><input class="store-input" placeholder="例：2025年07月" type="text"></div>
+  </div>
+</div>
+
+<div class="stats-bar">
+  <div class="stat-cell"><span class="stat-num gold" id="totalRec">0</span><div class="stat-desc">總服務筆數</div></div>
+  <div class="stat-cell"><span class="stat-num g" id="doneRec">0</span><div class="stat-desc">消毒完整</div></div>
+  <div class="stat-cell"><span class="stat-num s" id="allergyRec">0</span><div class="stat-desc">有過敏紀錄</div></div>
+</div>
+
+<div class="note-box">每位顧客服務前請確認消毒完成，並取得顧客簽名。此記錄為客訴、稽查時的重要自保文件。</div>
+
+<button class="add-btn" onclick="addRecord()">＋ 新增服務記錄</button>
+
+<div class="section-label" id="recordsLabel" style="display:none;">服務記錄列表</div>
+<div id="recordsContainer"></div>
+
+<div class="page-footer">
+  本記錄表由 Patty Wu（職業安全衛生管理乙級技術士）設計提供<br>
+  依化粧品衛安法第17條規範　｜　建議每月存檔，保存至少三年<br>
+  記錄是保護自己，不只是應付稽查
+</div>
+
+</div>
+
+<script>
+let recordCount = 0;
+const allergyState = {};
+const disinfectState = {};
+
+const serviceOptions = ['睫毛嫁接','睫毛管理','睫毛卸除','美甲','光療指甲','美容護膚','眉毛整理','臉部除毛','其他'];
+
+const disinfectItems = [
+  {name:'鑷子 / 夾子', note:'酒精或高溫消毒'},
+  {name:'睫毛梳', note:'酒精棉片擦拭'},
+  {name:'眼部墊紙', note:'一客一換（一次性）'},
+  {name:'工作枕套 / 頭枕', note:'一客一換'},
+  {name:'工作台面', note:'每客消毒'},
+  {name:'操作器具', note:'酒精或紫外線消毒'},
+];
+
+function addRecord() {
+  recordCount++;
+  const id = recordCount;
+  document.getElementById('recordsLabel').style.display = 'block';
+  const card = document.createElement('div');
+  card.className = 'client-card';
+  card.id = 'record-' + id;
+  card.innerHTML = `
+    <div class="client-header" onclick="toggleRecord(${id})">
+      <div class="client-num">${String(id).padStart(2,'0')}</div>
+      <div class="client-summary">
+        <div class="client-name-display" id="nameDisplay-${id}">新增服務記錄</div>
+        <div class="client-date-display" id="dateDisplay-${id}">尚未填寫日期</div>
+      </div>
+      <span class="client-badge badge-empty" id="badge-${id}">未填寫</span>
+      <span class="client-arrow open" id="arrow-${id}">▼</span>
+    </div>
+    <div class="client-body show" id="body-${id}">
+
+      <div class="field-group">
+        <div class="field-group-title"><span class="icon">👤</span> 顧客基本資料</div>
+        <div class="field-row">
+          <div class="field-label">顧客姓名</div>
+          <input class="field-input" id="name-${id}" placeholder="姓名（可填暱稱）" type="text" oninput="updateDisplay(${id})">
+        </div>
+        <div class="field-row">
+          <div class="field-label">服務日期</div>
+          <input class="field-input" id="date-${id}" type="date" oninput="updateDisplay(${id})">
+        </div>
+        <div class="field-row">
+          <div class="field-label">服務時間</div>
+          <input class="field-input" id="time-${id}" type="time">
+        </div>
+        <div class="field-row">
+          <div class="field-label">服務項目</div>
+          <select class="field-select" id="service-${id}">
+            <option value="">請選擇</option>
+            ${serviceOptions.map(s => '<option>' + s + '</option>').join('')}
+          </select>
+        </div>
+        <div class="field-row">
+          <div class="field-label">執行人員</div>
+          <input class="field-input" id="staff-${id}" placeholder="服務人員姓名" type="text">
+        </div>
+      </div>
+
+      <div class="field-group">
+        <div class="field-group-title"><span class="icon">⚠️</span> 過敏史詢問記錄</div>
+        <div class="allergy-row">
+          <div class="allergy-label">是否有過敏史</div>
+          <div class="toggle-group">
+            <button class="toggle-btn" id="allergyNo-${id}" onclick="setAllergy(${id},'no')">無過敏史</button>
+            <button class="toggle-btn" id="allergyYes-${id}" onclick="setAllergy(${id},'yes')">有過敏史</button>
+          </div>
+        </div>
+        <div class="allergy-detail" id="allergyDetail-${id}">
+          <div class="field-row">
+            <div class="field-label">過敏項目</div>
+            <textarea class="field-textarea" id="allergyContent-${id}" placeholder="請記錄過敏原、過敏反應類型"></textarea>
+          </div>
+          <div class="field-row">
+            <div class="field-label">處理說明</div>
+            <textarea class="field-textarea" id="allergyHandle-${id}" placeholder="是否仍繼續服務、注意事項"></textarea>
+          </div>
+        </div>
+      </div>
+
+      <div class="field-group">
+        <div class="field-group-title"><span class="icon">🧴</span> 器具消毒確認</div>
+        <div class="disinfect-grid">
+          ${disinfectItems.map((item, i) => `
+            <div class="disinfect-item">
+              <div class="disinfect-name">${item.name}<small>${item.note}</small></div>
+              <div class="disinfect-btns">
+                <button class="disinfect-btn btn-pass" onclick="setDisinfect(${id},${i},'pass')" id="dp-${id}-${i}" title="已消毒">✓</button>
+                <button class="disinfect-btn btn-na" onclick="setDisinfect(${id},${i},'na')" id="dn-${id}-${i}" title="未使用">—</button>
+                <button class="disinfect-btn btn-fail" onclick="setDisinfect(${id},${i},'fail')" id="df-${id}-${i}" title="未消毒">✗</button>
+              </div>
+            </div>
+          `).join('')}
+        </div>
+        <div class="method-inline">
+          <div class="method-inline-label">消毒方式</div>
+          <select class="field-select" id="method-${id}">
+            <option value="">請選擇</option>
+            <option>75% 酒精消毒</option>
+            <option>紫外線燈照射（≥30分鐘）</option>
+            <option>高溫蒸氣消毒</option>
+            <option>化學消毒液浸泡</option>
+            <option>複合方式</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="field-group">
+        <div class="field-group-title"><span class="icon">📝</span> 備註</div>
+        <textarea class="field-textarea" id="notes-${id}" placeholder="服務過程特殊狀況、顧客反應、注意事項"></textarea>
+      </div>
+
+      <div class="field-group">
+        <div class="field-group-title"><span class="icon">✅</span> 顧客知情同意確認</div>
+        <div style="background:var(--bg4);border:1px solid var(--border2);border-radius:6px;padding:14px 16px;margin-bottom:10px;">
+          <div style="font-size:12px;letter-spacing:.5px;line-height:2.2;opacity:.8;margin-bottom:12px;">
+            本人已知悉本次服務內容、使用產品及注意事項，並同意店家留存本次服務記錄作為服務管理之用途。
+          </div>
+          <div style="display:flex;align-items:center;gap:10px;cursor:pointer;" onclick="toggleConsent(${id})">
+            <div id="consentBox-${id}" style="width:22px;height:22px;border:1px solid rgba(201,168,76,0.4);border-radius:4px;flex-shrink:0;display:flex;align-items:center;justify-content:center;font-size:14px;transition:all .2s;"></div>
+            <div style="font-size:13px;color:var(--gold2);font-weight:700;">顧客已知悉並同意</div>
+          </div>
+        </div>
+        <div class="field-row">
+          <div class="field-label">執行人員</div>
+          <input class="sign-box-input" id="staffSign-${id}" placeholder="執行人員姓名確認" type="text" style="background:var(--bg3);border:1px solid var(--border2);border-radius:4px;padding:8px 10px;width:100%;color:var(--cream);font-family:'Noto Serif TC',serif;font-size:13px;outline:none;">
+        </div>
+      </div>
+
+      <button class="delete-btn" id="deleteBtn-${id}" onclick="deleteRecord(${id}, this)">✕ 點兩下刪除此筆記錄</button>
+    </div>
+  `;
+  document.getElementById('recordsContainer').prepend(card);
+  const today = new Date().toISOString().split('T')[0];
+  document.getElementById('date-' + id).value = today;
+  updateDisplay(id);
+  updateStats();
+}
+
+function toggleRecord(id) {
+  document.getElementById('body-' + id).classList.toggle('show');
+  document.getElementById('arrow-' + id).classList.toggle('open');
+}
+
+function updateDisplay(id) {
+  const name = document.getElementById('name-' + id).value;
+  const date = document.getElementById('date-' + id).value;
+  document.getElementById('nameDisplay-' + id).textContent = name || '（未填姓名）';
+  if (date) {
+    const d = new Date(date);
+    document.getElementById('dateDisplay-' + id).textContent =
+      (d.getFullYear()) + '年' + (d.getMonth()+1) + '月' + (d.getDate()) + '日';
+  }
+}
+
+function setAllergy(id, val) {
+  allergyState[id] = val;
+  document.getElementById('allergyNo-' + id).className = 'toggle-btn' + (val==='no' ? ' active-no' : '');
+  document.getElementById('allergyYes-' + id).className = 'toggle-btn' + (val==='yes' ? ' active-yes' : '');
+  document.getElementById('allergyDetail-' + id).classList.toggle('show', val==='yes');
+  updateBadge(id);
+  updateStats();
+}
+
+function setDisinfect(id, item, type) {
+  if (!disinfectState[id]) disinfectState[id] = {};
+  disinfectState[id][item] = type;
+  ['pass','na','fail'].forEach(function(t) {
+    var map = {pass:'dp', na:'dn', fail:'df'};
+    var btn = document.getElementById(map[t] + '-' + id + '-' + item);
+    if (btn) btn.classList.remove('active');
+  });
+  var map = {pass:'dp', na:'dn', fail:'df'};
+  var btn = document.getElementById(map[type] + '-' + id + '-' + item);
+  if (btn) btn.classList.add('active');
+  updateBadge(id);
+}
+
+function updateBadge(id) {
+  var badge = document.getElementById('badge-' + id);
+  var ds = disinfectState[id] || {};
+  var answered = Object.keys(ds).length;
+  var hasFail = Object.values(ds).some(function(v){return v==='fail';});
+  var allergy = allergyState[id];
+  if (answered === 0 && !allergy) {
+    badge.textContent = '未填寫'; badge.className = 'client-badge badge-empty';
+  } else if (hasFail) {
+    badge.textContent = '有異常'; badge.className = 'client-badge';
+    badge.style.cssText = 'background:rgba(224,122,133,0.15);color:#E07A85;font-size:9px;letter-spacing:1px;padding:3px 10px;border-radius:20px;';
+  } else if (answered >= disinfectItems.length && allergy) {
+    badge.textContent = '✓ 完整'; badge.className = 'client-badge badge-done'; badge.style.cssText = '';
+  } else {
+    badge.textContent = '填寫中'; badge.className = 'client-badge badge-partial'; badge.style.cssText = '';
+  }
+}
+
+const deleteConfirm = {};
+function deleteRecord(id, btn) {
+  if (!deleteConfirm[id]) {
+    deleteConfirm[id] = true;
+    btn.textContent = '⚠ 再按一次確認刪除';
+    btn.style.opacity = '1';
+    btn.style.borderColor = 'var(--red)';
+    btn.style.color = 'var(--red)';
+    setTimeout(function() {
+      deleteConfirm[id] = false;
+      btn.textContent = '✕ 點兩下刪除此筆記錄';
+      btn.style.opacity = '';
+      btn.style.borderColor = '';
+      btn.style.color = '';
+    }, 3000);
+    return;
+  }
+  var card = document.getElementById('record-' + id);
+  if (card) card.remove();
+  delete allergyState[id];
+  delete disinfectState[id];
+  delete deleteConfirm[id];
+  updateStats();
+  if (document.getElementById('recordsContainer').children.length === 0) {
+    document.getElementById('recordsLabel').style.display = 'none';
+  }
+}
+
+function toggleConsent(id) {
+  var box = document.getElementById('consentBox-' + id);
+  var checked = box.textContent === '✓';
+  if (checked) {
+    box.textContent = '';
+    box.style.background = 'transparent';
+    box.style.borderColor = 'rgba(201,168,76,0.4)';
+    box.style.color = '';
+  } else {
+    box.textContent = '✓';
+    box.style.background = 'rgba(82,183,136,0.2)';
+    box.style.borderColor = 'var(--green)';
+    box.style.color = 'var(--green)';
+  }
+  updateBadge(id);
+}
+
+function updateStats() {
+  var cards = document.querySelectorAll('.client-card');
+  var total = cards.length;
+  var done = 0, allergyCount = 0;
+  cards.forEach(function(card) {
+    var id = card.id.replace('record-','');
+    var ds = disinfectState[id] || {};
+    if (Object.keys(ds).length >= disinfectItems.length && !Object.values(ds).some(function(v){return v==='fail';})) done++;
+    if (allergyState[id] === 'yes') allergyCount++;
+  });
+  document.getElementById('totalRec').textContent = total;
+  document.getElementById('doneRec').textContent = done;
+  document.getElementById('allergyRec').textContent = allergyCount;
+  document.getElementById('recordCount').textContent = total + ' 筆記錄';
+}
+</script>
+</body>
+</html>
