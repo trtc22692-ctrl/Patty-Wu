@@ -1,0 +1,795 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>睫毛軟化完整指南</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+TC:wght@400;600;700&family=Noto+Sans+TC:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --ink: #1a1410;
+    --paper: #faf8f4;
+    --warm: #c8a96e;
+    --warm-light: #f0e8d8;
+    --warm-mid: #e8d5b0;
+    --accent: #8b5e3c;
+    --muted: #7a6a5a;
+    --divider: #d4c4a8;
+    --danger: #b04040;
+    --success: #4a7c59;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: 'Noto Sans TC', sans-serif;
+    background: var(--paper);
+    color: var(--ink);
+    font-size: 15px;
+    line-height: 1.8;
+  }
+
+  /* ── HEADER ── */
+  header {
+    background: var(--ink);
+    color: var(--paper);
+    padding: 48px 40px 40px;
+    position: relative;
+    overflow: hidden;
+  }
+  header::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0; bottom: 0;
+    background: repeating-linear-gradient(
+      45deg,
+      transparent,
+      transparent 40px,
+      rgba(200,169,110,0.04) 40px,
+      rgba(200,169,110,0.04) 41px
+    );
+  }
+  .header-inner { position: relative; max-width: 860px; margin: 0 auto; }
+  .header-tag {
+    font-size: 11px;
+    letter-spacing: 3px;
+    color: var(--warm);
+    text-transform: uppercase;
+    margin-bottom: 12px;
+  }
+  header h1 {
+    font-family: 'Noto Serif TC', serif;
+    font-size: clamp(24px, 4vw, 36px);
+    font-weight: 700;
+    line-height: 1.3;
+    margin-bottom: 12px;
+  }
+  header p {
+    color: rgba(250,248,244,0.65);
+    font-size: 13px;
+    font-weight: 300;
+    letter-spacing: 0.5px;
+  }
+
+  /* ── LAYOUT ── */
+  .wrapper {
+    max-width: 860px;
+    margin: 0 auto;
+    padding: 0 24px 60px;
+  }
+
+  /* ── SECTION ── */
+  .section {
+    margin-top: 48px;
+  }
+  .section-title {
+    font-family: 'Noto Serif TC', serif;
+    font-size: 19px;
+    font-weight: 700;
+    color: var(--ink);
+    padding-bottom: 10px;
+    border-bottom: 2px solid var(--warm);
+    margin-bottom: 24px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  .section-title .num {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 28px; height: 28px;
+    background: var(--warm);
+    color: white;
+    font-size: 13px;
+    font-family: 'Noto Sans TC', sans-serif;
+    font-weight: 500;
+    border-radius: 50%;
+    flex-shrink: 0;
+  }
+
+  /* ── DEFINITION BOX ── */
+  .def-box {
+    background: var(--ink);
+    color: var(--paper);
+    border-radius: 4px;
+    padding: 28px 32px;
+    margin-bottom: 20px;
+  }
+  .def-box .def-label {
+    font-size: 11px;
+    letter-spacing: 3px;
+    color: var(--warm);
+    margin-bottom: 10px;
+  }
+  .def-box p {
+    font-size: 15px;
+    line-height: 1.9;
+    color: rgba(250,248,244,0.88);
+  }
+  .def-box p em {
+    color: var(--warm);
+    font-style: normal;
+    font-weight: 600;
+  }
+  .def-box .sub-items {
+    margin-top: 14px;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+  .def-box .sub-item {
+    display: flex;
+    gap: 10px;
+    font-size: 14px;
+    color: rgba(250,248,244,0.75);
+  }
+  .def-box .sub-item .label {
+    color: var(--warm);
+    font-weight: 600;
+    white-space: nowrap;
+  }
+
+  /* ── STANDARD BOX ── */
+  .standard-box {
+    background: var(--warm-light);
+    border-left: 4px solid var(--warm);
+    border-radius: 0 4px 4px 0;
+    padding: 20px 24px;
+    margin-bottom: 20px;
+  }
+  .standard-box .standard-label {
+    font-size: 11px;
+    letter-spacing: 2px;
+    color: var(--accent);
+    margin-bottom: 6px;
+    font-weight: 500;
+  }
+  .standard-box .standard-text {
+    font-size: 16px;
+    font-weight: 600;
+    font-family: 'Noto Serif TC', serif;
+    color: var(--ink);
+  }
+
+  /* ── WARNING ROW ── */
+  .warning-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+    margin-bottom: 8px;
+  }
+  .warn-card {
+    padding: 16px 18px;
+    border-radius: 4px;
+    font-size: 13.5px;
+  }
+  .warn-card .warn-label {
+    font-size: 11px;
+    letter-spacing: 2px;
+    font-weight: 600;
+    margin-bottom: 5px;
+  }
+  .warn-card.under {
+    background: rgba(176,64,64,0.07);
+    border: 1px solid rgba(176,64,64,0.25);
+  }
+  .warn-card.under .warn-label { color: var(--danger); }
+  .warn-card.over {
+    background: rgba(176,64,64,0.07);
+    border: 1px solid rgba(176,64,64,0.25);
+  }
+  .warn-card.over .warn-label { color: var(--danger); }
+
+  /* ── HAIR TYPE TABLE ── */
+  .hair-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 13.5px;
+    margin-top: 4px;
+  }
+  .hair-table thead tr {
+    background: var(--ink);
+    color: var(--paper);
+  }
+  .hair-table thead th {
+    padding: 11px 14px;
+    text-align: left;
+    font-weight: 500;
+    font-size: 12px;
+    letter-spacing: 1px;
+  }
+  .hair-table tbody tr:nth-child(even) {
+    background: var(--warm-light);
+  }
+  .hair-table tbody tr:nth-child(odd) {
+    background: white;
+  }
+  .hair-table td {
+    padding: 13px 14px;
+    border-bottom: 1px solid var(--divider);
+    vertical-align: top;
+    line-height: 1.7;
+  }
+  .hair-table td:first-child {
+    font-weight: 600;
+    color: var(--accent);
+    white-space: nowrap;
+  }
+  .pct-badge {
+    display: inline-block;
+    background: var(--warm);
+    color: white;
+    font-size: 12px;
+    font-weight: 700;
+    padding: 2px 9px;
+    border-radius: 20px;
+    white-space: nowrap;
+  }
+
+  /* ── TEST METHODS ── */
+  .test-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 14px;
+  }
+  .test-card {
+    border: 1px solid var(--divider);
+    border-radius: 6px;
+    overflow: hidden;
+  }
+  .test-card-head {
+    background: var(--ink);
+    color: var(--paper);
+    padding: 12px 16px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  .test-num {
+    width: 22px; height: 22px;
+    background: var(--warm);
+    border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 11px;
+    font-weight: 700;
+    flex-shrink: 0;
+  }
+  .test-card-head .test-name {
+    font-size: 13.5px;
+    font-weight: 500;
+  }
+  .test-card-head .test-name small {
+    display: block;
+    font-size: 11px;
+    color: rgba(250,248,244,0.5);
+    font-weight: 300;
+    letter-spacing: 0.5px;
+  }
+  .test-card-body {
+    padding: 14px 16px;
+    background: white;
+    font-size: 13px;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+  .test-step {
+    font-size: 12.5px;
+    color: var(--muted);
+    padding-bottom: 8px;
+    border-bottom: 1px dashed var(--divider);
+  }
+  .test-row {
+    display: flex;
+    gap: 8px;
+    font-size: 13px;
+    line-height: 1.6;
+  }
+  .test-row .badge {
+    font-size: 11px;
+    font-weight: 700;
+    padding: 1px 7px;
+    border-radius: 3px;
+    white-space: nowrap;
+    height: fit-content;
+    margin-top: 2px;
+    flex-shrink: 0;
+  }
+  .badge.fail { background: rgba(176,64,64,0.1); color: var(--danger); }
+  .badge.pass { background: rgba(74,124,89,0.1); color: var(--success); }
+  .test-tip {
+    font-size: 12px;
+    color: var(--accent);
+    background: var(--warm-light);
+    padding: 7px 10px;
+    border-radius: 3px;
+    margin-top: 2px;
+  }
+  .test-tip::before { content: '💡 '; }
+
+  /* ── TECHNIQUE GRID ── */
+  .technique-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 14px;
+  }
+  .tech-card {
+    border: 1px solid var(--divider);
+    border-radius: 6px;
+    overflow: hidden;
+  }
+  .tech-head {
+    background: var(--warm-mid);
+    padding: 12px 16px;
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+  }
+  .tech-icon {
+    font-size: 18px;
+    margin-top: 2px;
+  }
+  .tech-head-text .tech-name {
+    font-size: 13.5px;
+    font-weight: 700;
+    color: var(--ink);
+  }
+  .tech-head-text .tech-name-en {
+    font-size: 11px;
+    color: var(--accent);
+    letter-spacing: 0.5px;
+  }
+  .tech-body {
+    background: white;
+    padding: 14px 16px;
+    font-size: 13px;
+    color: var(--ink);
+    line-height: 1.75;
+  }
+  .tech-body ol {
+    padding-left: 16px;
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+  }
+  .tech-body ol li {
+    color: var(--muted);
+  }
+  .tech-body ol li strong {
+    color: var(--ink);
+  }
+  .tech-warning {
+    font-size: 12px;
+    color: var(--danger);
+    margin-top: 8px;
+    padding: 6px 10px;
+    background: rgba(176,64,64,0.07);
+    border-radius: 3px;
+  }
+  .tech-warning::before { content: '⚠️ '; }
+
+  /* ── NOTICE ── */
+  .notice-box {
+    background: rgba(176,64,64,0.06);
+    border: 1px solid rgba(176,64,64,0.3);
+    border-radius: 4px;
+    padding: 16px 20px;
+    font-size: 13.5px;
+    color: var(--danger);
+    margin-top: 16px;
+  }
+  .notice-box::before { content: '🚫 注意：'; font-weight: 700; }
+
+  /* ── FOOTER ── */
+  /* ── PRODUCT TOOLKIT ── */
+  .product-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 14px;
+  }
+  .product-card {
+    background: var(--ink);
+    border-radius: 8px;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+  }
+  .product-card-top {
+    padding: 18px 18px 12px;
+    display: flex;
+    align-items: flex-start;
+    gap: 14px;
+  }
+  .product-icon-box {
+    width: 52px; height: 52px;
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    font-size: 22px;
+    position: relative;
+    overflow: hidden;
+  }
+  .product-icon-box.sol1 { background: #111; border: 1px solid #333; }
+  .product-icon-box.sol2 { background: #e8e8e8; border: 1px solid #ccc; }
+  .product-icon-box.filltox { background: #f5f5f5; border: 1px solid #ddd; }
+  .product-icon-box.rod-wave { background: #d4eef7; border: 1px solid #a8d8ea; }
+  .product-icon-box.rod-loop { background: #f5e6d3; border: 1px solid #d4b896; }
+  /* text-based icon inside box */
+  .icon-label {
+    font-family: 'Noto Serif TC', serif;
+    font-weight: 700;
+    line-height: 1;
+    text-align: center;
+  }
+  .sol1 .icon-label { color: var(--warm); font-size: 26px; }
+  .sol2 .icon-label { color: #555; font-size: 26px; }
+  .filltox .icon-label { color: #333; font-size: 13px; letter-spacing: -0.5px; }
+  .rod-wave .icon-label { color: #3a8fa8; font-size: 11px; letter-spacing: 0; }
+  .rod-loop .icon-label { color: #9a6a40; font-size: 11px; letter-spacing: 0; }
+  .product-info { flex: 1; min-width: 0; }
+  .product-brand {
+    font-size: 10px;
+    letter-spacing: 2px;
+    color: var(--warm);
+    margin-bottom: 3px;
+  }
+  .product-name {
+    font-size: 15px;
+    font-weight: 700;
+    color: var(--paper);
+    font-family: 'Noto Serif TC', serif;
+    line-height: 1.3;
+  }
+  .product-name-en {
+    font-size: 11px;
+    color: rgba(250,248,244,0.45);
+    margin-top: 2px;
+    letter-spacing: 0.5px;
+  }
+  .product-card-bottom {
+    padding: 0 18px 16px;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+  }
+  .product-tag {
+    font-size: 11px;
+    padding: 3px 9px;
+    border-radius: 20px;
+    border: 1px solid rgba(200,169,110,0.35);
+    color: rgba(250,248,244,0.65);
+  }
+  .product-tag.highlight {
+    background: rgba(200,169,110,0.15);
+    border-color: var(--warm);
+    color: var(--warm);
+  }
+  .product-divider {
+    height: 1px;
+    background: rgba(200,169,110,0.15);
+    margin: 0 18px 14px;
+  }
+  /* nunu logo text */
+  .nunu-logo {
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 3px;
+    color: rgba(250,248,244,0.25);
+    font-family: 'Noto Sans TC', sans-serif;
+    padding: 0 18px 14px;
+  }
+
+  /* ── FOOTER ── */
+  footer {
+    margin-top: 56px;
+    border-top: 1px solid var(--divider);
+    padding: 24px 0 8px;
+    text-align: center;
+    font-size: 12px;
+    color: var(--muted);
+    letter-spacing: 1px;
+  }
+
+  @media (max-width: 600px) {
+    header { padding: 36px 20px 28px; }
+    .wrapper { padding: 0 16px 48px; }
+    .warning-row, .test-grid, .technique-grid { grid-template-columns: 1fr; }
+    .hair-table thead { display: none; }
+    .hair-table td { display: block; padding: 8px 12px; }
+    .hair-table tr { border-bottom: 2px solid var(--divider); margin-bottom: 8px; display: block; }
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="header-inner">
+    <div class="header-tag">Lash Management · Professional Reference</div>
+    <h1>睫毛軟化完整指南</h1>
+    <p>定義 · 標準 · 測試方法 · 操作技巧</p>
+  </div>
+</header>
+
+<div class="wrapper">
+
+  <!-- SECTION 1: 定義 -->
+  <div class="section">
+    <div class="section-title">
+      <span class="num">1</span>什麼是「軟化」？
+    </div>
+
+    <div class="def-box">
+      <div class="def-label">DEFINITION</div>
+      <p>塗抹第一劑後，睫毛失去原有彈性並變得柔軟的狀態，稱為 <em>「軟化」</em>。<br>
+      睫毛管理的核心原理，在於透過第一劑進行正確的 <em>「軟化」</em> 與 <em>「還原」</em>。</p>
+      <div class="sub-items">
+        <div class="sub-item">
+          <span class="label">還原（Reduction）</span>
+          <span>第一劑中的還原劑傳遞至毛髮內部的過程。</span>
+        </div>
+        <div class="sub-item">
+          <span class="label">視覺觀察</span>
+          <span>由於還原過程無法用肉眼直接觀察，需透過觀察「軟化」效果——即內部鏈結放鬆後的視覺變化——確認第一劑是否發揮作用。</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- SECTION 2: 軟化標準 -->
+  <div class="section">
+    <div class="section-title">
+      <span class="num">2</span>軟化到什麼程度才夠？
+    </div>
+
+    <div class="warning-row">
+      <div class="warn-card under">
+        <div class="warn-label">▼ 軟化不足</div>
+        捲度無法形成，或持久度差。
+      </div>
+      <div class="warn-card over">
+        <div class="warn-label">▲ 軟化過度</div>
+        導致睫毛受損、毛躁甚至斷裂。
+      </div>
+    </div>
+
+    <div class="standard-box">
+      <div class="standard-label">理想標準</div>
+      <div class="standard-text">「睫毛輕柔地失去彈力，並能順著理想方向自然移動。」</div>
+    </div>
+
+    <table class="hair-table">
+      <thead>
+        <tr>
+          <th>毛質類型</th>
+          <th>軟化程度</th>
+          <th>特點與判斷</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>健康毛 / 粗硬毛</td>
+          <td><span class="pct-badge">減少 80%</span></td>
+          <td>角質層堅固，一劑滲透較慢，需較長停留或額外加時。<br><small style="color:#7a6a5a">判斷：貼合墊片時，睫毛不彈起，能滑順服貼。</small></td>
+        </tr>
+        <tr>
+          <td>一般毛</td>
+          <td><span class="pct-badge">減少 70–80%</span></td>
+          <td>適用產品標示的標準操作時間。</td>
+        </tr>
+        <tr>
+          <td>受損毛 / 細軟毛</td>
+          <td><span class="pct-badge">減少 50–60%</span></td>
+          <td>本身彈力已弱，蛋白質結構不穩，藥劑滲透極快。<br><small style="color:#b04040">⚠ 必須縮短時間並嚴密監測，避免過度軟化。</small></td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- SECTION 3: 測試方法 -->
+  <div class="section">
+    <div class="section-title">
+      <span class="num">3</span>4 種實用軟化測試方法
+    </div>
+
+    <div class="test-grid">
+
+      <div class="test-card">
+        <div class="test-card-head">
+          <span class="test-num">1</span>
+          <div class="test-name">推動測試<small>Push Test</small></div>
+        </div>
+        <div class="test-card-body">
+          <div class="test-step">從根部輕輕將睫毛推成「L」型（上方或側邊）。</div>
+          <div class="test-row"><span class="badge fail">不足</span>感受到強大阻力，睫毛試圖彈回原位。</div>
+          <div class="test-row"><span class="badge pass">成功</span>睫毛無阻力地移動並維持新形狀。</div>
+          <div class="test-tip">中段軟化但根部仍彈回時，針對根部再加強 1–2 分鐘。</div>
+        </div>
+      </div>
+
+      <div class="test-card">
+        <div class="test-card-head">
+          <span class="test-num">2</span>
+          <div class="test-name">柔軟度測試<small>Flexibility Test</small></div>
+        </div>
+        <div class="test-card-body">
+          <div class="test-step">輕輕提起睫毛，朝墊片相反方向彎曲。</div>
+          <div class="test-row"><span class="badge fail">不足</span>睫毛感覺僵硬且筆直。</div>
+          <div class="test-row"><span class="badge pass">成功</span>睫毛能滑順地彎曲。</div>
+        </div>
+      </div>
+
+      <div class="test-card">
+        <div class="test-card-head">
+          <span class="test-num">3</span>
+          <div class="test-name">彈性測試<small>Elasticity Test</small></div>
+        </div>
+        <div class="test-card-body">
+          <div class="test-step">將睫毛纏繞墊片後，暫時移開墊片觀察。</div>
+          <div class="test-row"><span class="badge fail">不足</span>捲度消失，睫毛立即回復平直。</div>
+          <div class="test-row"><span class="badge pass">成功</span>睫毛能維持墊片的弧度。</div>
+        </div>
+      </div>
+
+      <div class="test-card">
+        <div class="test-card-head">
+          <span class="test-num">4</span>
+          <div class="test-name">服貼度測試<small>Adhesion Test</small></div>
+        </div>
+        <div class="test-card-body">
+          <div class="test-step">將睫毛壓向墊片。</div>
+          <div class="test-row"><span class="badge fail">不足</span>睫毛彈開或與墊片分離。</div>
+          <div class="test-row"><span class="badge pass">成功</span>睫毛滑順地包裹並服貼於墊片弧度。</div>
+          <div class="test-tip">新生短毛若合理加時後仍不服貼，可改用物理加壓後進入第二劑，勿硬追軟化。</div>
+        </div>
+      </div>
+
+    </div>
+
+    <div class="notice-box">
+      不建議用「拉扯」睫毛的方式測試，這會導致睫毛拉長變形並造成永久損傷。
+    </div>
+  </div>
+
+  <!-- SECTION 4: 操作技巧 -->
+  <div class="section">
+    <div class="section-title">
+      <span class="num">4</span>6 種專業軟化操作技巧
+    </div>
+
+    <div class="technique-grid">
+
+      <div class="tech-card">
+        <div class="tech-head">
+          <span class="tech-icon">✦</span>
+          <div class="tech-head-text">
+            <div class="tech-name">差別塗佈法</div>
+            <div class="tech-name-en">Differential Application</div>
+          </div>
+        </div>
+        <div class="tech-body">
+          <ol>
+            <li><strong>第一階段：</strong>全區塗佈，停留標準時間的 80%。</li>
+            <li><strong>第二階段：</strong>僅在根部補強，依需求追加時間。</li>
+            <li><strong>第三階段：</strong>針對極粗硬或未軟化部分局部加強。</li>
+          </ol>
+        </div>
+      </div>
+
+      <div class="tech-card">
+        <div class="tech-head">
+          <span class="tech-icon">✦</span>
+          <div class="tech-head-text">
+            <div class="tech-name">時差塗佈法</div>
+            <div class="tech-name-en">Time-Difference Application</div>
+          </div>
+        </div>
+        <div class="tech-body">
+          <ol>
+            <li><strong>遮蓋：</strong>先用膠帶、軟化紙或防護膏遮蓋睫毛中後段。</li>
+            <li><strong>塗佈：</strong>先塗根部，待一段時間後再塗其餘部分。</li>
+            <li><strong>目的：</strong>利用時間差保護受損毛尖，確保整體均勻軟化。</li>
+          </ol>
+        </div>
+      </div>
+
+      <div class="tech-card">
+        <div class="tech-head">
+          <span class="tech-icon">✦</span>
+          <div class="tech-head-text">
+            <div class="tech-name">直接保護法</div>
+            <div class="tech-name-en">Direct / Tip Protection</div>
+          </div>
+        </div>
+        <div class="tech-body">
+          <ol>
+            <li><strong>塗佈：</strong>一次性塗佈，根部厚塗，毛尖薄塗。</li>
+            <li><strong>留白：</strong>毛尖保留 1–2 mm 不塗藥。</li>
+            <li><strong>保護：</strong>可在毛尖塗防護膏（Wax/Balm）減緩藥劑滲透。</li>
+          </ol>
+        </div>
+      </div>
+
+      <div class="tech-card">
+        <div class="tech-head">
+          <span class="tech-icon">✦</span>
+          <div class="tech-head-text">
+            <div class="tech-name">根部強化法</div>
+            <div class="tech-name-en">Root-Focused Method</div>
+          </div>
+        </div>
+        <div class="tech-body">
+          <ol>
+            <li><strong>主塗：</strong>第一劑僅塗抹於根部至中段，待完全軟化。</li>
+            <li><strong>收尾：</strong>最後僅在毛尖處快速帶過極少量藥劑。</li>
+          </ol>
+        </div>
+      </div>
+
+      <div class="tech-card">
+        <div class="tech-head">
+          <span class="tech-icon">✦</span>
+          <div class="tech-head-text">
+            <div class="tech-name">雙重軟化法</div>
+            <div class="tech-name-en">Double Softening</div>
+          </div>
+        </div>
+        <div class="tech-body">
+          <ol>
+            <li><strong>第一階段：</strong>使用溫和型藥劑進行 50% 基礎軟化。</li>
+            <li><strong>第二階段：</strong>使用強效型一劑完成剩餘軟化。</li>
+          </ol>
+          <div style="margin-top:8px;font-size:12px;color:var(--accent);">💡 可增加一劑黏稠度來減緩滲透速度。</div>
+        </div>
+      </div>
+
+      <div class="tech-card">
+        <div class="tech-head">
+          <span class="tech-icon">✦</span>
+          <div class="tech-head-text">
+            <div class="tech-name">加溫軟化法</div>
+            <div class="tech-name-en">Heat-Assisted Method</div>
+          </div>
+        </div>
+        <div class="tech-body">
+          <ol>
+            <li><strong>原理：</strong>溫度能顯著加速化學反應。</li>
+            <li><strong>操作：</strong>塗抹第一劑後，使用加熱眼罩縮短等待時間。</li>
+          </ol>
+          <div class="tech-warning">高溫易造成嚴重受損，對受損毛需極度謹慎使用。</div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+</div>
+
+<footer>
+  Lash Management Professional Reference &nbsp;·&nbsp; Aixin Global Beauty
+</footer>
+
+</body>
+</html>
