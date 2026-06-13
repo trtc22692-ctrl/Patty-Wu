@@ -1,0 +1,516 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>PIF建置時機｜核心判斷邏輯</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Noto+Serif+TC:wght@400;700;900&family=Noto+Sans+TC:wght@300;400;500;700&display=swap');
+
+  :root {
+    --bg:      #090c13;
+    --bg2:     #10131e;
+    --bg3:     #171b28;
+    --gold:    #c9973a;
+    --gold2:   #e8c97a;
+    --gold3:   #f5e4a8;
+    --goldDim: #6a4e18;
+    --border:  #252c44;
+    --bGold:   #3d2c08;
+    --text:    #d4d8e6;
+    --dim:     #6e7a94;
+    --r:       10px;
+    --fs:      1rem; /* base font size — user can zoom browser */
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  html { font-size: 16px; } /* respects browser zoom */
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'Noto Sans TC', sans-serif;
+    font-size: var(--fs);
+    line-height: 1.5;
+    background-image:
+      radial-gradient(ellipse 70% 50% at 15% 0%, #1a1230 0%, transparent 100%),
+      radial-gradient(ellipse 60% 40% at 85% 100%, #0c1a18 0%, transparent 100%);
+    min-height: 100dvh;
+  }
+
+  /* ── font-size controls ── */
+  .fs-bar {
+    position: fixed; top: 12px; right: 12px; z-index: 999;
+    display: flex; align-items: center; gap: 6px;
+    background: rgba(10,12,20,.88); border: 1px solid var(--goldDim);
+    border-radius: 24px; padding: 6px 12px;
+    backdrop-filter: blur(8px);
+  }
+  .fs-bar span { font-size: .7rem; color: var(--gold2); letter-spacing: 1px; }
+  .fs-btn {
+    width: 28px; height: 28px; border-radius: 50%;
+    background: linear-gradient(135deg, #1e1608, #2a2010);
+    border: 1px solid var(--goldDim); color: var(--gold2);
+    font-size: 1rem; font-weight: 700; cursor: pointer;
+    display: flex; align-items: center; justify-content: center;
+    transition: background .15s;
+  }
+  .fs-btn:hover { background: linear-gradient(135deg, #2a2010, #3a3018); }
+  #fs-val { font-size: .75rem; color: var(--gold3); min-width: 30px; text-align: center; }
+
+  /* ── poster ── */
+  .poster {
+    max-width: 52rem;   /* ~832px at 16px base — scales with zoom */
+    margin: 0 auto;
+    padding: 0 0 2rem;
+  }
+
+  /* ── HEADER ── */
+  .hd {
+    background: linear-gradient(150deg, #12101c 0%, #0a0d16 60%, #0e1019 100%);
+    border-bottom: 2px solid var(--gold);
+    padding: 1.8rem 2rem 1.4rem;
+    position: relative; overflow: hidden;
+  }
+  .hd::before {
+    content: ''; position: absolute; inset: 0; pointer-events: none;
+    background:
+      repeating-linear-gradient(90deg, transparent 0, transparent 59px, rgba(201,151,58,.04) 59px, rgba(201,151,58,.04) 60px),
+      repeating-linear-gradient(0deg,  transparent 0, transparent 59px, rgba(201,151,58,.04) 59px, rgba(201,151,58,.04) 60px);
+  }
+  .hd-inner { position: relative; z-index: 1; display: flex; align-items: center; gap: 1.2rem; flex-wrap: wrap; }
+  .hd-title {
+    font-family: 'Noto Serif TC', serif;
+    font-size: clamp(1.8rem, 5vw, 3rem);
+    font-weight: 900; line-height: 1;
+    background: linear-gradient(135deg, #f5e4a8 0%, #c9973a 55%, #e8c97a 100%);
+    -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+    white-space: nowrap;
+  }
+  .hd-sep {
+    width: 2px; height: 3.2rem; flex-shrink: 0;
+    background: linear-gradient(to bottom, transparent, var(--gold), transparent);
+  }
+  .hd-right { flex: 1; min-width: 160px; }
+  .hd-sub {
+    font-family: 'Noto Serif TC', serif;
+    font-size: clamp(.9rem, 2vw, 1.2rem);
+    font-weight: 700; color: var(--gold2); letter-spacing: .15em; margin-bottom: .3rem;
+  }
+  .hd-tag { font-size: .72rem; color: var(--dim); line-height: 1.7; }
+  .hd-tag b { color: var(--gold3); font-weight: 700; }
+  .hd-pill {
+    display: inline-block; margin-top: .5rem;
+    background: linear-gradient(135deg, var(--gold), var(--goldDim));
+    color: #fff; font-size: .62rem; font-weight: 700; letter-spacing: .15em;
+    padding: .25rem .7rem; border-radius: 4px;
+  }
+
+  /* ── 2×2 grid ── */
+  .grid4 {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1rem;
+    padding: 1.1rem 1.3rem;
+  }
+  @media (max-width: 560px) {
+    .grid4 { grid-template-columns: 1fr; }
+    .hd-sep { display: none; }
+  }
+
+  /* ── card ── */
+  .card {
+    background: linear-gradient(145deg, #171c2e, #111420);
+    border: 1px solid var(--border);
+    border-radius: var(--r);
+    padding: 1.1rem 1.1rem .9rem;
+    position: relative; overflow: hidden;
+    display: flex; flex-direction: column; gap: .5rem;
+  }
+  .card::after {
+    content: ''; position: absolute; top: 0; left: 0; right: 0; height: 2px;
+    background: linear-gradient(90deg, transparent, rgba(201,151,58,.5), transparent);
+  }
+  .card-gold {
+    background: linear-gradient(145deg, #1c1508, #11100a);
+    border-color: var(--bGold);
+  }
+  .card-gold::after { background: linear-gradient(90deg, transparent, var(--gold), transparent); }
+
+  /* ── section label ── */
+  .slabel { display: flex; align-items: center; gap: .6rem; }
+  .snum {
+    background: linear-gradient(135deg, var(--gold), var(--goldDim));
+    color: #fff; font-size: .6rem; font-weight: 900; letter-spacing: .15em;
+    padding: .15rem .55rem; border-radius: 3px; flex-shrink: 0;
+  }
+  .stitle {
+    font-family: 'Noto Serif TC', serif;
+    font-size: .78rem; font-weight: 700; color: var(--gold2); letter-spacing: .08em;
+  }
+  .sline { flex: 1; height: 1px; background: linear-gradient(to right, var(--goldDim), transparent); }
+
+  /* ── 01 flow ── */
+  .fstep {
+    display: flex; gap: .7rem; align-items: flex-start;
+    background: var(--bg3); border: 1px solid var(--border);
+    border-radius: 8px; padding: .65rem .75rem;
+  }
+  .ficon {
+    width: 2rem; height: 2rem; flex-shrink: 0;
+    background: linear-gradient(135deg, #1e1c12, #2a2010);
+    border: 1px solid var(--goldDim); border-radius: 6px;
+    display: flex; align-items: center; justify-content: center; font-size: .9rem;
+  }
+  .fq { font-size: .73rem; font-weight: 700; color: var(--text); line-height: 1.5; }
+  .fhint { font-size: .62rem; color: var(--dim); margin-top: .15rem; line-height: 1.4; }
+
+  .fbranch { display: flex; gap: .4rem; flex-wrap: wrap; }
+  .byes, .bno {
+    font-size: .62rem; font-weight: 700; padding: .2rem .6rem; border-radius: 20px;
+  }
+  .byes { background: linear-gradient(135deg, #164228, #0c2016); border: 1px solid #2a6b40; color: #72e49a; }
+  .bno  { background: linear-gradient(135deg, #38190a, #1e0e06); border: 1px solid #6b3a18; color: #e0a06a; }
+
+  .fresult {
+    background: linear-gradient(135deg, #1e1608, #13100a);
+    border: 1px solid var(--gold); border-radius: 8px; padding: .7rem .9rem;
+    flex: 1;
+  }
+  .fresult-label { font-size: .6rem; color: var(--gold); font-weight: 700; letter-spacing: .08em; margin-bottom: .25rem; }
+  .fresult-main  { font-family: 'Noto Serif TC', serif; font-size: .95rem; font-weight: 900; color: var(--gold2); }
+  .fresult-sub   { font-size: .6rem; color: var(--dim); margin-top: .2rem; line-height: 1.4; }
+
+  .faside {
+    background: #0e1118; border: 1px solid var(--border);
+    border-radius: 8px; padding: .55rem .75rem;
+    font-size: .62rem; color: var(--dim); line-height: 1.6;
+  }
+  .faside b { color: var(--gold3); }
+
+  /* ── 02 recognition ── */
+  .rlist { list-style: none; display: flex; flex-direction: column; gap: .35rem; }
+  .rlist li { display: flex; gap: .5rem; font-size: .68rem; color: var(--text); line-height: 1.5; }
+  .rlist li::before { content: '▸'; color: var(--gold); flex-shrink: 0; }
+
+  .rsub { font-size: .6rem; color: var(--gold); font-weight: 700; letter-spacing: .08em; }
+
+  .rgrid { display: grid; grid-template-columns: 1fr 1fr; gap: .5rem; }
+  .ritem { background: var(--bg); border: 1px solid var(--border); border-radius: 7px; padding: .6rem .65rem; }
+  .ritem-icon  { font-size: 1rem; margin-bottom: .25rem; }
+  .ritem-label { font-size: .68rem; font-weight: 700; color: var(--gold2); margin-bottom: .1rem; }
+  .ritem-desc  { font-size: .6rem; color: var(--dim); line-height: 1.4; }
+
+  .rkp {
+    background: linear-gradient(135deg, #1c1508, #110f08);
+    border: 1px solid var(--gold); border-radius: 7px;
+    padding: .55rem .75rem; display: flex; gap: .5rem; align-items: flex-start;
+    font-size: .68rem; color: var(--gold3); line-height: 1.6;
+  }
+
+  /* ── 03 exception ── */
+  .chips4 { display: grid; grid-template-columns: repeat(4,1fr); gap: .5rem; }
+  @media (max-width: 560px) { .chips4 { grid-template-columns: repeat(2,1fr); } }
+
+  .chip {
+    background: linear-gradient(145deg, #1c1508, #13100a);
+    border: 1px solid var(--bGold); border-radius: 8px;
+    padding: .75rem .5rem; text-align: center;
+    display: flex; flex-direction: column; align-items: center; gap: .3rem;
+  }
+  .chip-icon { font-size: 1.4rem; }
+  .chip-txt  { font-size: .65rem; font-weight: 700; color: var(--gold2); line-height: 1.5; }
+  .chip-sub  { font-size: .57rem; color: var(--dim); line-height: 1.3; }
+
+  .exc-result {
+    background: linear-gradient(135deg, #0c1c10, #081008);
+    border: 2px solid #2a7040; border-radius: 8px;
+    padding: .75rem 1rem; display: flex; align-items: center; gap: .85rem;
+  }
+  .exc-icon  { font-size: 1.5rem; flex-shrink: 0; }
+  .exc-label { font-size: .6rem; color: #6bde9a; font-weight: 700; letter-spacing: .08em; margin-bottom: .2rem; }
+  .exc-main  { font-family: 'Noto Serif TC', serif; font-size: 1.05rem; font-weight: 900; color: #a0f0be; }
+  .exc-note  { margin-left: auto; font-size: .6rem; color: #6bde9a; text-align: right; line-height: 1.6; flex-shrink: 0; }
+
+  /* ── 04 checklist ── */
+  .ctable { width: 100%; border-collapse: collapse; }
+  .ctable th {
+    background: linear-gradient(90deg, #1c1508, #181208);
+    color: var(--gold); font-size: .62rem; font-weight: 700; letter-spacing: .12em;
+    padding: .45rem .7rem; text-align: left; border-bottom: 1px solid var(--goldDim);
+  }
+  .ctable td {
+    padding: .6rem .7rem; font-size: .68rem;
+    border-bottom: 1px solid var(--border); vertical-align: middle; line-height: 1.5;
+  }
+  .ctable tr:last-child td { border-bottom: none; }
+  .ctable tr:hover td { background: rgba(201,151,58,.04); }
+
+  .scell { display: flex; align-items: center; gap: .4rem; }
+  .sico  { font-size: .9rem; }
+  .stxt  { font-size: .68rem; font-weight: 700; }
+  .s-red   { color: #e06060; }
+  .s-gold  { color: var(--gold2); }
+  .s-amber { color: #c9b86b; }
+  .s-gray  { color: var(--dim); }
+
+  .amain { color: var(--text); font-weight: 500; }
+  .asub  { color: var(--dim); font-size: .6rem; margin-top: .15rem; }
+  .atag  {
+    display: inline-block; margin-top: .25rem; margin-right: .2rem;
+    background: linear-gradient(135deg, #1e1608, #13100a);
+    border: 1px solid var(--goldDim); color: var(--gold3);
+    font-size: .57rem; font-weight: 700; padding: .1rem .45rem; border-radius: 3px;
+  }
+
+  /* ── footer ── */
+  .footer { padding: 0 1.3rem; }
+  .footer-box {
+    background: linear-gradient(135deg, #1c1508, #13100a);
+    border: 1px solid var(--gold); border-radius: var(--r);
+    padding: .9rem 1.2rem; display: flex; align-items: center; gap: .8rem; margin-bottom: .7rem;
+  }
+  .f-ico   { font-size: 1.4rem; flex-shrink: 0; }
+  .f-label { font-size: .55rem; color: var(--gold); font-weight: 700; letter-spacing: .15em; margin-bottom: .15rem; }
+  .f-text  { font-family: 'Noto Serif TC', serif; font-size: .82rem; font-weight: 700; color: var(--gold3); line-height: 1.6; }
+  .footer-sub { text-align: center; font-size: .65rem; color: var(--dim); letter-spacing: .25em; padding-bottom: .5rem; }
+  .footer-sub b { color: var(--gold); font-weight: 400; }
+</style>
+</head>
+<body>
+
+<!-- 字體大小控制列 -->
+<div class="fs-bar">
+  <span>字級</span>
+  <button class="fs-btn" onclick="changeFs(-1)" title="縮小">−</button>
+  <span id="fs-val">100%</span>
+  <button class="fs-btn" onclick="changeFs(1)"  title="放大">＋</button>
+  <button class="fs-btn" onclick="resetFs()"    title="重設" style="font-size:.7rem">↺</button>
+</div>
+
+<div class="poster">
+
+  <!-- HEADER -->
+  <div class="hd">
+    <div class="hd-inner">
+      <div class="hd-title">PIF建置時機</div>
+      <div class="hd-sep"></div>
+      <div class="hd-right">
+        <div class="hd-sub">核心判斷邏輯</div>
+        <div class="hd-tag"><b>有交易意圖就要PIF</b>；純預告、無價格、無供應，才能暫時不做。</div>
+        <div class="hd-pill">化粧品衛生安全管理法 × PIF制度</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 2×2 GRID -->
+  <div class="grid4">
+
+    <!-- 01 判斷流程 -->
+    <div class="card">
+      <div class="slabel">
+        <span class="snum">01</span>
+        <span class="stitle">PIF建置時機判斷流程</span>
+        <span class="sline"></span>
+      </div>
+
+      <div class="fstep">
+        <div class="ficon">🌐</div>
+        <div>
+          <div class="fq">產品資訊是否在網路或其他平台上公開展示？</div>
+          <div class="fhint">官網、DM、社群、電商等</div>
+        </div>
+      </div>
+      <div class="fbranch">
+        <span class="bno">否 → 暫不需要PIF</span>
+        <span class="byes">是 → 繼續下一個判斷</span>
+      </div>
+
+      <div class="fstep">
+        <div class="ficon">🛒</div>
+        <div>
+          <div class="fq">是否具備交易意圖？</div>
+          <div class="fhint">招商DM、報價、預購連結、可聯絡洽詢購買等</div>
+        </div>
+      </div>
+      <div class="fbranch">
+        <span class="bno">否 → 純預告？需符合第03區四條件</span>
+      </div>
+
+      <div class="fresult">
+        <div class="fresult-label">是 → 屬於公開陳列／供應前準備</div>
+        <div class="fresult-main">必須已完成 PIF</div>
+        <div class="fresult-sub">且經安全簽署人員簽署後，方可展示或販售</div>
+      </div>
+    </div>
+
+    <!-- 02 認定範圍 -->
+    <div class="card">
+      <div class="slabel">
+        <span class="snum">02</span>
+        <span class="stitle">公開陳列的認定範圍</span>
+        <span class="sline"></span>
+      </div>
+
+      <ul class="rlist">
+        <li>不限實體，網路展示同樣算</li>
+        <li>只要產品資訊公開、具備交易意圖，就可能被認定</li>
+        <li>招商DM、報價、預購連結 → 必須已完成PIF</li>
+      </ul>
+
+      <div class="rsub">▸ 可能被認定為公開陳列的情境</div>
+
+      <div class="rgrid">
+        <div class="ritem">
+          <div class="ritem-icon">🖥</div>
+          <div class="ritem-label">官網產品頁</div>
+          <div class="ritem-desc">介紹具體功效與外觀</div>
+        </div>
+        <div class="ritem">
+          <div class="ritem-icon">💰</div>
+          <div class="ritem-label">招商DM／報價</div>
+          <div class="ritem-desc">提供給通路或代理商</div>
+        </div>
+        <div class="ritem">
+          <div class="ritem-icon">🛍</div>
+          <div class="ritem-label">預購連結／早鳥</div>
+          <div class="ritem-desc">開放登記或預購</div>
+        </div>
+        <div class="ritem">
+          <div class="ritem-icon">💬</div>
+          <div class="ritem-label">社群或電商平台</div>
+          <div class="ritem-desc">可私訊購買、洽詢</div>
+        </div>
+      </div>
+
+      <div class="rkp">
+        <span>⚠️</span>
+        <span>只要產品已具備「供應或交易」的意圖，就可能被視為公開陳列！</span>
+      </div>
+    </div>
+
+    <!-- 03 例外條件 -->
+    <div class="card card-gold">
+      <div class="slabel">
+        <span class="snum">03</span>
+        <span class="stitle">例外：預告期不需要PIF的條件（全部同時成立）</span>
+        <span class="sline"></span>
+      </div>
+
+      <div class="chips4">
+        <div class="chip">
+          <div class="chip-icon">📢</div>
+          <div class="chip-txt">明確標示<br>「尚未販售<br>／即將上市」</div>
+        </div>
+        <div class="chip">
+          <div class="chip-icon">🏷</div>
+          <div class="chip-txt">不標示價格</div>
+          <div class="chip-sub">頁面上不出現任何售價資訊</div>
+        </div>
+        <div class="chip">
+          <div class="chip-icon">🔗</div>
+          <div class="chip-txt">無預購連結<br>無招商報價</div>
+          <div class="chip-sub">不提供任何交易入口</div>
+        </div>
+        <div class="chip">
+          <div class="chip-icon">📦</div>
+          <div class="chip-txt">未實際出貨<br>或供應</div>
+          <div class="chip-sub">無庫存，不接單</div>
+        </div>
+      </div>
+
+      <div class="exc-result">
+        <div class="exc-icon">🛡</div>
+        <div>
+          <div class="exc-label">此時衛生局認定為「廣告預告」</div>
+          <div class="exc-main">不查 PIF</div>
+        </div>
+        <div class="exc-note">＊以上四條<br>須全部符合</div>
+      </div>
+    </div>
+
+    <!-- 04 整理清單 -->
+    <div class="card">
+      <div class="slabel">
+        <span class="snum">04</span>
+        <span class="stitle">7/1前官網整理清單</span>
+        <span class="sline"></span>
+      </div>
+
+      <table class="ctable">
+        <thead>
+          <tr>
+            <th style="width:5rem">狀態</th>
+            <th>對應行動</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><div class="scell"><span class="sico">🗑</span><span class="stxt s-red">確定不賣</span></div></td>
+            <td>
+              <div class="amain">直接下架</div>
+              <div class="asub">避免成為公開陳列，降低法規風險</div>
+            </td>
+          </tr>
+          <tr>
+            <td><div class="scell"><span class="sico">✅</span><span class="stxt s-gold">繼續銷售</span></div></td>
+            <td>
+              <div class="amain">PIF + SA 完成後才能留</div>
+              <div class="asub">產品登錄 + PIF建置 + 安全簽署人員簽署</div>
+            </td>
+          </tr>
+          <tr>
+            <td><div class="scell"><span class="sico">📢</span><span class="stxt s-amber">預告展示</span></div></td>
+            <td>
+              <div class="amain">標明研發中／不預售／不標價</div>
+              <div class="asub">符合例外條件，衛生局不查PIF</div>
+              <div><span class="atag">廣告預告</span><span class="atag">研發中│即將上市</span></div>
+            </td>
+          </tr>
+          <tr>
+            <td><div class="scell"><span class="sico">🔒</span><span class="stxt s-gray">還沒決定</span></div></td>
+            <td>
+              <div class="amain">7/1 起先關閉瀏覽</div>
+              <div class="asub">避免公開展示造成風險，最省事的做法</div>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+  </div><!-- /grid4 -->
+
+  <!-- FOOTER -->
+  <div class="footer">
+    <div class="footer-box">
+      <div class="f-ico">🛡</div>
+      <div>
+        <div class="f-label">一句話記憶</div>
+        <div class="f-text">有交易意圖就要PIF；純預告，無價格，無供應，才能暫時不做。</div>
+      </div>
+    </div>
+    <div class="footer-sub"><b>合規經營</b> &nbsp;·&nbsp; <b>降低風險</b> &nbsp;·&nbsp; <b>安心上市</b></div>
+  </div>
+
+</div><!-- /poster -->
+
+<script>
+  const BASE = 16;
+  let step = 0; // -5 to +10 steps of 1px
+
+  function apply() {
+    const size = BASE + step;
+    document.documentElement.style.fontSize = size + 'px';
+    document.getElementById('fs-val').textContent = Math.round(size / BASE * 100) + '%';
+  }
+  function changeFs(dir) {
+    step = Math.max(-6, Math.min(10, step + dir));
+    apply();
+  }
+  function resetFs() {
+    step = 0; apply();
+  }
+</script>
+</body>
+</html>
