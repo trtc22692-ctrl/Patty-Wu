@@ -215,17 +215,9 @@ body{background:var(--bg);color:var(--text);font-family:'Noto Sans TC',sans-seri
 <table class="tool-table"><thead><tr><th>成分名稱（INCI）</th><th>中文名稱</th><th>作用說明</th><th>判定</th></tr></thead><tbody>
 <tr><td>Thioglycolic Acid / TGA</td><td>硫乙醇酸</td><td>燙髮還原劑核心成分，打斷毛髮雙硫鍵</td><td><span class="pill" style="color:#8b2a1a;border-color:#e0a898;background:#fdf0ed;">禁止</span></td></tr>
 <tr><td>Ammonium Thioglycolate / ATG</td><td>硫乙醇酸銨</td><td>燙髮劑主要活性成分，效力強</td><td><span class="pill" style="color:#8b2a1a;border-color:#e0a898;background:#fdf0ed;">禁止</span></td></tr>
-
 <tr><td>Glyceryl Thioglycolate</td><td>硫乙醇酸甘油酯</td><td>燙髮還原劑，常見於酸性燙</td><td><span class="pill" style="color:#8b2a1a;border-color:#e0a898;background:#fdf0ed;">禁止</span></td></tr>
-<tr><td>L-Cysteine</td><td>半胱胺酸</td><td>胺基酸類還原劑，高濃度時具燙髮效力</td><td><span class="pill" style="color:#8b2a1a;border-color:#e0a898;background:#fdf0ed;">高濃度禁止</span></td></tr>
 </tbody></table>
-<div class="sec-lbl" style="color:#7a5010;margin-top:16px;">第二區 · 需進一步確認</div>
-<table class="tool-table"><thead><tr><th>成分名稱</th><th>說明</th><th>判定</th></tr></thead><tbody>
-<tr><td>Sodium Bromate / 溴酸鈉</td><td>燙髮第二劑（定型劑），單獨出現需確認用途</td><td><span class="pill" style="color:#7a5010;border-color:#d4b870;background:#fdf6e4;">確認用途</span></td></tr>
-<tr><td>Hydrogen Peroxide / 過氧化氫</td><td>廣泛用於漂白、定型，高濃度需注意</td><td><span class="pill" style="color:#7a5010;border-color:#d4b870;background:#fdf6e4;">確認濃度</span></td></tr>
-<tr><td>Keratin Protein（高分子量）</td><td>單獨存在通常安全，需確認無同時含第一區成分</td><td><span class="pill" style="color:#7a5010;border-color:#d4b870;background:#fdf6e4;">對照第一區</span></td></tr>
-</tbody></table>
-<div class="sec-lbl" style="color:#2a5a3a;margin-top:16px;">第三區 · 一般安全成分</div>
+<div class="sec-lbl" style="color:#2a5a3a;margin-top:16px;">第二區 · 一般安全成分</div>
 <table class="tool-table"><thead><tr><th>成分名稱</th><th>說明</th><th>判定</th></tr></thead><tbody>
 <tr><td>Hydrolyzed Keratin / 水解角蛋白</td><td>護髮、修護用途，廣泛存在於保養品</td><td><span class="pill" style="color:#2a5a3a;border-color:#90c4a0;background:#edf5ee;">安全</span></td></tr>
 <tr><td>Keratin Amino Acids / 角蛋白胺基酸</td><td>小分子修護成分，不具還原功效</td><td><span class="pill" style="color:#2a5a3a;border-color:#90c4a0;background:#edf5ee;">安全</span></td></tr>
@@ -313,7 +305,7 @@ body{background:var(--bg);color:var(--text);font-family:'Noto Sans TC',sans-seri
 <div class="t04-premise">很多人以為「法律沒有寫到我，我就沒事」。這個認知是錯的。<br><strong>不是沒有寫到你——是寫到你的方式，你還不知道。</strong></div>
 <div class="sec-lbl" style="color:var(--p-muted);">違規觸發條件（三個同時成立才構成違規）</div>
 <div class="t04-trigger-row">
-<div class="t04-trig-card"><div class="t04-tc-icon">條件一</div><div class="t04-tc-text">產品含燙髮還原劑成分<br>TGA / ATG 等</div></div>
+<div class="t04-trig-card"><div class="t04-tc-icon">條件一</div><div class="t04-tc-text">產品含燙髮還原劑成分<br>TGA / ATG / Glyceryl Thioglycolate</div></div>
 <div class="t04-trig-card"><div class="t04-tc-icon">條件二</div><div class="t04-tc-text">使用部位是睫毛</div></div>
 <div class="t04-trig-card"><div class="t04-tc-icon">條件三</div><div class="t04-tc-text">無合規 PIF 文件或查驗登記</div></div>
 </div>
@@ -445,7 +437,7 @@ body{background:var(--bg);color:var(--text);font-family:'Noto Sans TC',sans-seri
 <div class="dim-head" style="background:#fdf0ed;border-color:#e0a898;"><div class="dh-icon" style="background:#8b2a1a;color:#fdf0ed;">P</div><div><div class="dh-title" style="color:#8b2a1a;">產品維度</div></div><div class="dh-desc">你現在使用的產品，合規風險在哪裡</div></div>
 <div class="qr-row qr-header"><div class="qr-q">問題</div><div class="qr-opt">確認</div><div class="qr-opt">不確定</div><div class="qr-opt">不知道</div></div>
 <div class="qr-row"><div class="qr-q">我看過現在使用的主要產品的完整成分表</div><label class="qr-opt" onclick="markQ(this,'g')"><div class="radio-circle" style="border-color:#90c4a0;"></div></label><label class="qr-opt" onclick="markQ(this,'a')"><div class="radio-circle" style="border-color:#d4b870;"></div></label><label class="qr-opt" onclick="markQ(this,'r')"><div class="radio-circle" style="border-color:#e0a898;"></div></label></div>
-<div class="qr-row"><div class="qr-q">我能確認產品不含 TGA、ATG</div><label class="qr-opt" onclick="markQ(this,'g')"><div class="radio-circle" style="border-color:#90c4a0;"></div></label><label class="qr-opt" onclick="markQ(this,'a')"><div class="radio-circle" style="border-color:#d4b870;"></div></label><label class="qr-opt" onclick="markQ(this,'r')"><div class="radio-circle" style="border-color:#e0a898;"></div></label></div>
+<div class="qr-row"><div class="qr-q">我能確認產品不含 TGA、ATG、Glyceryl Thioglycolate</div><label class="qr-opt" onclick="markQ(this,'g')"><div class="radio-circle" style="border-color:#90c4a0;"></div></label><label class="qr-opt" onclick="markQ(this,'a')"><div class="radio-circle" style="border-color:#d4b870;"></div></label><label class="qr-opt" onclick="markQ(this,'r')"><div class="radio-circle" style="border-color:#e0a898;"></div></label></div>
 <div class="qr-row"><div class="qr-q">我使用的產品有台灣合法進口管道或PIF登錄紀錄</div><label class="qr-opt" onclick="markQ(this,'g')"><div class="radio-circle" style="border-color:#90c4a0;"></div></label><label class="qr-opt" onclick="markQ(this,'a')"><div class="radio-circle" style="border-color:#d4b870;"></div></label><label class="qr-opt" onclick="markQ(this,'r')"><div class="radio-circle" style="border-color:#e0a898;"></div></label></div>
 <div class="qr-row"><div class="qr-q">我使用的產品有完整中文標示</div><label class="qr-opt" onclick="markQ(this,'g')"><div class="radio-circle" style="border-color:#90c4a0;"></div></label><label class="qr-opt" onclick="markQ(this,'a')"><div class="radio-circle" style="border-color:#d4b870;"></div></label><label class="qr-opt" onclick="markQ(this,'r')"><div class="radio-circle" style="border-color:#e0a898;"></div></label></div>
 </div>
@@ -478,7 +470,7 @@ body{background:var(--bg);color:var(--text);font-family:'Noto Sans TC',sans-seri
 <div class="dim-head" style="background:#fdf0ed;border-color:#e0a898;"><div class="dh-icon" style="background:#8b2a1a;color:#fdf0ed;">P</div><div><div class="dh-title" style="color:#8b2a1a;">產品維度</div></div></div>
 <div class="qr-row qr-header"><div class="qr-q">問題</div><div class="qr-opt">確認</div><div class="qr-opt">不確定</div><div class="qr-opt">不知道</div></div>
 <div class="qr-row"><div class="qr-q">我看過現在使用的主要產品的完整成分表</div><label class="qr-opt" onclick="markQ(this,'g')"><div class="radio-circle" style="border-color:#90c4a0;"></div></label><label class="qr-opt" onclick="markQ(this,'a')"><div class="radio-circle" style="border-color:#d4b870;"></div></label><label class="qr-opt" onclick="markQ(this,'r')"><div class="radio-circle" style="border-color:#e0a898;"></div></label></div>
-<div class="qr-row"><div class="qr-q">我能確認產品不含 TGA、ATG</div><label class="qr-opt" onclick="markQ(this,'g')"><div class="radio-circle" style="border-color:#90c4a0;"></div></label><label class="qr-opt" onclick="markQ(this,'a')"><div class="radio-circle" style="border-color:#d4b870;"></div></label><label class="qr-opt" onclick="markQ(this,'r')"><div class="radio-circle" style="border-color:#e0a898;"></div></label></div>
+<div class="qr-row"><div class="qr-q">我能確認產品不含 TGA、ATG、Glyceryl Thioglycolate</div><label class="qr-opt" onclick="markQ(this,'g')"><div class="radio-circle" style="border-color:#90c4a0;"></div></label><label class="qr-opt" onclick="markQ(this,'a')"><div class="radio-circle" style="border-color:#d4b870;"></div></label><label class="qr-opt" onclick="markQ(this,'r')"><div class="radio-circle" style="border-color:#e0a898;"></div></label></div>
 <div class="qr-row"><div class="qr-q">我使用的產品有台灣合法進口管道或PIF登錄紀錄</div><label class="qr-opt" onclick="markQ(this,'g')"><div class="radio-circle" style="border-color:#90c4a0;"></div></label><label class="qr-opt" onclick="markQ(this,'a')"><div class="radio-circle" style="border-color:#d4b870;"></div></label><label class="qr-opt" onclick="markQ(this,'r')"><div class="radio-circle" style="border-color:#e0a898;"></div></label></div>
 <div class="qr-row"><div class="qr-q">我使用的產品有完整中文標示</div><label class="qr-opt" onclick="markQ(this,'g')"><div class="radio-circle" style="border-color:#90c4a0;"></div></label><label class="qr-opt" onclick="markQ(this,'a')"><div class="radio-circle" style="border-color:#d4b870;"></div></label><label class="qr-opt" onclick="markQ(this,'r')"><div class="radio-circle" style="border-color:#e0a898;"></div></label></div>
 </div>
@@ -545,7 +537,7 @@ body{background:var(--bg);color:var(--text);font-family:'Noto Sans TC',sans-seri
 <div class="sec-lbl" style="margin-top:16px;">重要聯絡窗口</div>
 <table class="tool-table"><thead><tr><th>機關</th><th>用途</th><th>聯絡方式</th></tr></thead><tbody>
 <tr><td>法律扶助基金會</td><td>免費法律諮詢</td><td style="font-family:'DM Mono',monospace;font-size:.75rem;color:#2a4080;">laf.org.tw · 412-8518</td></tr>
-<tr><td>衛福部食藥署</td><td>化粧品法規查詢</td><td style="font-family:'DM Mono',monospace;font-size:.75rem;color:#2a4080;">fda.gov.tw · 1800-010-120</td></tr>
+<tr><td>衛福部食藥署</td><td>化粧品法規查詢</td><td style="font-family:'DM Mono',monospace;font-size:.75rem;color:#2a4080;">fda.gov.tw · 02-2787-8200</td></tr>
 <tr><td>行政院消費者保護會</td><td>消費爭議申訴</td><td style="font-family:'DM Mono',monospace;font-size:.75rem;color:#2a4080;">cpc.ey.gov.tw · 1950</td></tr>
 </tbody></table>
 <div style="background:#fdf0ed;border:1px solid #e0a898;border-left:3px solid #8b2a1a;padding:14px 18px;margin-top:12px;"><div style="font-family:'DM Mono',monospace;font-size:8px;letter-spacing:2px;text-transform:uppercase;color:#8b2a1a;margin-bottom:6px;">最重要的一件事</div><div style="font-size:.85rem;color:#8b2a1a;font-family:'Noto Serif TC',serif;line-height:1.7;">收到裁處書，<strong>先標注救濟期限日期</strong>，再去找人諮詢。不是找到人再看期限。期限過了，所有選項都消失了。</div></div>
@@ -667,7 +659,7 @@ body{background:var(--bg);color:var(--text);font-family:'Noto Sans TC',sans-seri
 <div class="sec-lbl">台灣</div>
 <table class="tool-table"><thead><tr><th>機關</th><th>用途</th><th>網址</th></tr></thead><tbody>
 <tr><td style="font-weight:500;">衛福部食藥署</td><td>化粧品法規查詢、PIF登錄確認</td><td style="font-family:'DM Mono',monospace;font-size:.75rem;color:#2a4080;">fda.gov.tw</td></tr>
-<tr><td style="font-weight:500;">食藥署消費者服務</td><td>法規諮詢專線</td><td style="font-family:'DM Mono',monospace;font-size:.75rem;color:#2a4080;">1800-010-120（免費）</td></tr>
+<tr><td style="font-weight:500;">食藥署消費者服務</td><td>法規諮詢專線</td><td style="font-family:'DM Mono',monospace;font-size:.75rem;color:#2a4080;">02-2787-8200 或 1919（免費）</td></tr>
 </tbody></table>
 <div class="sec-lbl" style="margin-top:14px;">香港</div>
 <table class="tool-table"><thead><tr><th>機關</th><th>用途</th><th>網址</th></tr></thead><tbody>
