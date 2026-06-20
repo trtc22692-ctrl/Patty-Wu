@@ -1,0 +1,424 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>操作者法律責任圖示</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@300;400;500;700;900&display=swap');
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: 'Noto Sans TC', sans-serif;
+    background: #0f1419;
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 32px 16px;
+  }
+
+  .card {
+    width: 100%;
+    max-width: 700px;
+    background: #161d26;
+    border-radius: 20px;
+    overflow: hidden;
+    box-shadow: 0 32px 80px rgba(0,0,0,0.6);
+  }
+
+  .header {
+    background: linear-gradient(135deg, #1a2a3a 0%, #0d1f30 100%);
+    padding: 32px 36px 28px;
+    border-bottom: 1px solid #243040;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .header::before {
+    content: '';
+    position: absolute;
+    top: -40px; right: -40px;
+    width: 180px; height: 180px;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(220,60,60,0.12) 0%, transparent 70%);
+  }
+
+  .header-label {
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 3px;
+    color: #e05555;
+    text-transform: uppercase;
+    margin-bottom: 10px;
+  }
+
+  .header-title {
+    font-size: 22px;
+    font-weight: 900;
+    color: #f0f4f8;
+    line-height: 1.3;
+    margin-bottom: 6px;
+  }
+
+  .header-sub {
+    font-size: 12px;
+    color: #5a7080;
+    font-weight: 400;
+  }
+
+  .body { padding: 28px 36px 36px; }
+
+  .section-label {
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 2.5px;
+    color: #3d5a70;
+    text-transform: uppercase;
+    margin-bottom: 16px;
+  }
+
+  .law-block {
+    position: relative;
+    border-radius: 14px;
+    padding: 20px 22px;
+    margin-bottom: 12px;
+    display: grid;
+    grid-template-columns: 1fr auto;
+    gap: 12px;
+    align-items: start;
+    transition: transform 0.2s ease;
+  }
+
+  .law-block:hover { transform: translateX(4px); }
+
+  .block-a {
+    background: rgba(220, 60, 60, 0.07);
+    border: 1px solid rgba(220, 60, 60, 0.22);
+    border-left: 3px solid #dc3c3c;
+  }
+
+  .block-b {
+    background: rgba(220, 140, 30, 0.07);
+    border: 1px solid rgba(220, 140, 30, 0.22);
+    border-left: 3px solid #dc8c1e;
+  }
+
+  .block-c {
+    background: rgba(40, 160, 120, 0.07);
+    border: 1px solid rgba(40, 160, 120, 0.22);
+    border-left: 3px solid #28a078;
+    margin-bottom: 0;
+  }
+
+  .law-id {
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 1px;
+    margin-bottom: 6px;
+  }
+  .block-a .law-id { color: #e57070; }
+  .block-b .law-id { color: #e5a040; }
+  .block-c .law-id { color: #40c096; }
+
+  .law-name {
+    font-size: 15px;
+    font-weight: 700;
+    color: #dce8f0;
+    margin-bottom: 6px;
+    line-height: 1.4;
+  }
+
+  .law-desc {
+    font-size: 12px;
+    color: #5a7888;
+    line-height: 1.6;
+    margin-bottom: 10px;
+  }
+
+  .fine-pill {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    border-radius: 7px;
+    padding: 5px 10px;
+    margin-bottom: 5px;
+  }
+
+  .fine-pill-red {
+    background: rgba(220,60,60,0.1);
+    border: 1px solid rgba(220,60,60,0.2);
+  }
+  .fine-pill-orange {
+    background: rgba(220,140,30,0.1);
+    border: 1px solid rgba(220,140,30,0.2);
+  }
+  .fine-pill-green {
+    background: rgba(40,160,120,0.1);
+    border: 1px solid rgba(40,160,120,0.2);
+  }
+  .fine-pill-purple {
+    background: rgba(160,128,220,0.1);
+    border: 1px solid rgba(160,128,220,0.2);
+  }
+
+  .fine-pill-label {
+    font-size: 9px;
+    font-weight: 700;
+    letter-spacing: 1px;
+    white-space: nowrap;
+    padding: 2px 6px;
+    border-radius: 4px;
+    flex-shrink: 0;
+  }
+  .fine-pill-red .fine-pill-label    { color: #e57070; background: rgba(220,60,60,0.15); }
+  .fine-pill-orange .fine-pill-label { color: #e5a040; background: rgba(220,140,30,0.15); }
+  .fine-pill-green .fine-pill-label  { color: #40c096; background: rgba(40,160,120,0.15); }
+  .fine-pill-purple .fine-pill-label { color: #a080e0; background: rgba(160,128,220,0.15); }
+
+  .fine-pill-amount {
+    font-size: 11px;
+    font-weight: 600;
+    color: #8aaabb;
+  }
+
+  /* 重點金額強調 */
+  .fine-pill-amount strong {
+    color: #dce8f0;
+    font-weight: 800;
+  }
+
+  .condition {
+    display: inline-block;
+    font-size: 10px;
+    color: #8a9aaa;
+    background: rgba(255,255,255,0.04);
+    border: 1px solid rgba(255,255,255,0.08);
+    border-radius: 6px;
+    padding: 3px 8px;
+    margin-top: 8px;
+  }
+
+  .badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    border-radius: 20px;
+    padding: 5px 11px;
+    font-size: 11px;
+    font-weight: 700;
+    white-space: nowrap;
+    flex-shrink: 0;
+  }
+  .badge-red    { background: rgba(220,60,60,0.15);  color: #e57070; border: 1px solid rgba(220,60,60,0.3); }
+  .badge-orange { background: rgba(220,140,30,0.15); color: #e5a040; border: 1px solid rgba(220,140,30,0.3); }
+  .badge-green  { background: rgba(40,160,120,0.15); color: #40c096; border: 1px solid rgba(40,160,120,0.3); }
+
+  .dot { width: 6px; height: 6px; border-radius: 50%; display: inline-block; }
+  .dot-red    { background: #e57070; }
+  .dot-orange { background: #e5a040; }
+  .dot-green  { background: #40c096; }
+
+  /* 法條關聯說明 */
+  .law-link-note {
+    font-size: 10px;
+    color: #3d5060;
+    background: rgba(255,255,255,0.02);
+    border: 1px solid #1e2e3e;
+    border-radius: 6px;
+    padding: 5px 10px;
+    margin-top: 8px;
+    line-height: 1.5;
+  }
+
+  /* Summary */
+  .fine-summary {
+    margin-top: 20px;
+    background: rgba(255,255,255,0.02);
+    border: 1px solid #1e2e3e;
+    border-radius: 14px;
+    padding: 20px 24px;
+  }
+
+  .fine-summary-title {
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 2px;
+    color: #3d5a70;
+    text-transform: uppercase;
+    margin-bottom: 16px;
+  }
+
+  .fine-summary-grid {
+    display: flex;
+    align-items: center;
+  }
+
+  .fine-summary-item {
+    flex: 1;
+    text-align: center;
+  }
+
+  .fine-summary-divider {
+    width: 1px;
+    height: 52px;
+    background: #1e2e3e;
+    flex-shrink: 0;
+  }
+
+  .fine-summary-type {
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 1px;
+    margin-bottom: 6px;
+  }
+
+  .fine-summary-num {
+    font-size: 20px;
+    font-weight: 900;
+    color: #dce8f0;
+    line-height: 1;
+    margin-bottom: 5px;
+  }
+
+  .fine-summary-sub {
+    font-size: 10px;
+    color: #3d5060;
+    line-height: 1.5;
+  }
+
+  .footer {
+    background: #0d1318;
+    padding: 14px 36px;
+    border-top: 1px solid #1a2530;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  .footer-text  { font-size: 10px; color: #2d4050; letter-spacing: 1px; }
+  .footer-badge { font-size: 10px; font-weight: 700; color: #2d5070; letter-spacing: 1.5px; }
+</style>
+</head>
+<body>
+
+<div class="card">
+
+  <div class="header">
+    <div class="header-label">法律責任分析</div>
+    <div class="header-title">現場操作者適用罰則</div>
+    <div class="header-sub">化粧品衛生安全管理法 × 消費者保護法 × 刑法</div>
+  </div>
+
+  <div class="body">
+
+    <div class="section-label">適用條文 · 三層框架</div>
+
+    <!-- Block A -->
+    <div class="law-block block-a">
+      <div>
+        <div class="law-id">化粧品衛安法 · 第 16 條 ＋ 第 23 條第 12 款</div>
+        <div class="law-name">供應、陳列、提供消費者試用違規產品</div>
+        <div class="law-desc">現場使用未核准特定用途化粧品施術，即構成「提供消費者試用違規產品」，衛生局依第23條第12款直接開罰。</div>
+        <div class="fine-pill fine-pill-red">
+          <span class="fine-pill-label">行政罰鍰</span>
+          <span class="fine-pill-amount"><strong>NT$ 1萬 ～ 100萬</strong>　· 按次處罰</span>
+        </div>
+        <div class="fine-pill fine-pill-red">
+          <span class="fine-pill-label">情節重大</span>
+          <span class="fine-pill-amount">停業 1個月～1年　· 廢止登錄／許可證</span>
+        </div>
+        <div class="fine-pill fine-pill-red">
+          <span class="fine-pill-label">附加處分</span>
+          <span class="fine-pill-amount">命令回收 · 沒入銷毀　· 1年內不得再登錄</span>
+        </div>
+        <div class="law-link-note">※ 第16條為禁止行為規定，罰則依據為第23條第12款——兩條配套適用</div>
+        <span class="condition">✦ 直接適用 · 現場施術即構成，無需販售行為</span>
+      </div>
+      <div>
+        <span class="badge badge-red"><span class="dot dot-red"></span>直接適用</span>
+      </div>
+    </div>
+
+    <!-- Block B -->
+    <div class="law-block block-b">
+      <div>
+        <div class="law-id">化粧品衛安法 · 第 5 條 ＋ 第 23 條</div>
+        <div class="law-name">製造、輸入、販售未核准特定用途化粧品</div>
+        <div class="law-desc">操作者若同時販售產品，或收費服務中含材料費，符合「販賣業者」定義，適用最重裁罰。</div>
+        <div class="fine-pill fine-pill-orange">
+          <span class="fine-pill-label">行政罰鍰</span>
+          <span class="fine-pill-amount"><strong>NT$ 1萬 ～ 100萬</strong>　· 按次處罰</span>
+        </div>
+        <div class="fine-pill fine-pill-orange">
+          <span class="fine-pill-label">情節重大</span>
+          <span class="fine-pill-amount">停業 1個月 ～ 1年　· 廢止登錄或許可證</span>
+        </div>
+        <span class="condition">✦ 有販售行為時適用（與第16條可併罰）</span>
+      </div>
+      <div>
+        <span class="badge badge-orange"><span class="dot dot-orange"></span>條件適用</span>
+      </div>
+    </div>
+
+    <!-- Block C -->
+    <div class="law-block block-c">
+      <div>
+        <div class="law-id">消費者保護法 · 第 7 條　＋　刑法 · 第 284 條</div>
+        <div class="law-name">提供服務應確保安全 · 過失傷害責任</div>
+        <div class="law-desc">美容施術屬提供服務，操作者須確保服務安全。客戶受傷即負連帶賠償，舉證責任在操作者，知情者另涉刑責。</div>
+        <div class="fine-pill fine-pill-green">
+          <span class="fine-pill-label">民事</span>
+          <span class="fine-pill-amount">連帶損害賠償　· 依實際損害額計算（<strong>無上限</strong>）</span>
+        </div>
+        <div class="fine-pill fine-pill-green">
+          <span class="fine-pill-label">刑事一般</span>
+          <span class="fine-pill-amount">過失傷害　· <strong>1年以下</strong>有期徒刑或 NT$ <strong>10萬</strong>以下罰金</span>
+        </div>
+        <div class="fine-pill fine-pill-purple">
+          <span class="fine-pill-label">刑事重傷</span>
+          <span class="fine-pill-amount">致重傷加重　· <strong>3年以下</strong>有期徒刑（刑法第284條但書）</span>
+        </div>
+        <span class="condition">✦ 直接適用 · 無過失亦需舉證</span>
+      </div>
+      <div>
+        <span class="badge badge-green"><span class="dot dot-green"></span>直接適用</span>
+      </div>
+    </div>
+
+    <!-- Summary -->
+    <div class="fine-summary">
+      <div class="fine-summary-title">最重累計責任一覽</div>
+      <div class="fine-summary-grid">
+        <div class="fine-summary-item">
+          <div class="fine-summary-type" style="color:#e57070;">行政罰鍰</div>
+          <div class="fine-summary-num" style="color:#e57070;">100萬</div>
+          <div class="fine-summary-sub">按次處罰<br>＋停業最長1年<br>第16條＋第23條</div>
+        </div>
+        <div class="fine-summary-divider"></div>
+        <div class="fine-summary-item">
+          <div class="fine-summary-type" style="color:#40c096;">民事賠償</div>
+          <div class="fine-summary-num" style="color:#40c096;">無上限</div>
+          <div class="fine-summary-sub">依實際損害<br>連帶負責<br>消保法第7條</div>
+        </div>
+        <div class="fine-summary-divider"></div>
+        <div class="fine-summary-item">
+          <div class="fine-summary-type" style="color:#a080e0;">刑事責任</div>
+          <div class="fine-summary-num" style="color:#a080e0;">3年</div>
+          <div class="fine-summary-sub">重傷加重條款<br>刑法第284條<br>但書規定</div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <div class="footer">
+    <span class="footer-text">NUNU 睫毛管理法規透析課程 · 教學參考資料</span>
+    <span class="footer-badge">化粧品衛安法 · 消保法 · 刑法</span>
+  </div>
+
+</div>
+
+</body>
+</html>
